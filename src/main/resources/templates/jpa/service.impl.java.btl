@@ -1,0 +1,28 @@
+package ${basePackage}.service.impl;
+
+<% if(isNotEmpty(superServiceImplClassPackage)){ %>
+import ${superServiceImplClassPackage};
+<% } %>
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import ${basePackage}.entity.${entityName};
+import ${basePackage}.repository.${entityName}Repository;
+import ${basePackage}.service.${entityName}Service;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ * <p>
+ * ${entityName} Service implement
+ * </p>
+ *
+ * @author ${author}
+ * @date ${date}
+ */
+@Service
+@Transactional(rollbackFor = Exception.class)
+public class ${entityName}ServiceImpl <% if(isNotEmpty(superServiceImplName)){ %>extends ${superServiceImplName}<${entityName}, ${idPropertyType!}, ${entityName}Repository><% } %> implements ${entityName}Service {
+
+    @Autowired
+    private ${entityName}Repository ${entityVariableName}Repository;
+
+}

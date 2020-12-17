@@ -1,0 +1,16 @@
+package ${basePackage}.service;
+
+import ${basePackage}.entity.${entityName};
+import ${superServiceClassPackage};
+
+/**
+ * <p>
+ * ${table.comment!} 服务类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+public interface ${entityName}Service <% if(isNotEmpty(superServiceName)){ %>extends ${superServiceName}<${entityName}><% } %> {
+
+}

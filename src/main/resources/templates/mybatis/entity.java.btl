@@ -1,0 +1,49 @@
+package ${basePackage}.entity;
+
+<% if(isNotEmpty(superEntityClassPackage)){ %>
+import ${superEntityClassPackage};
+<% }else{ %>
+import java.io.Serializable;
+<% } %>
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+<% for(pkg in fieldImportPackages){ %>
+import ${pkg};
+<% } %>
+
+/**
+ * <p>
+ * ${table.comment!}
+ * </p>
+ *
+ * @author ${author}
+ * @date ${date}
+ */
+@Data
+@Accessors(chain = true)
+<% if(isNotEmpty(superEntityName)){ %>
+@EqualsAndHashCode(callSuper = true)
+<% }else{ %>
+@EqualsAndHashCode(callSuper = false)
+<% } %>
+<% if(isNotEmpty(superEntityName)){ %>
+public class ${entityName} extends ${superEntityName} {
+<% }else{ %>
+public class ${entityName} implements Serializable {
+<% } %>
+
+    private static final long serialVersionUID = 1L;
+<% /** -----------BEGIN 字段循环遍历----------- **/ %>
+<% for(field in table.fields){ %>
+
+    <% if(isNotEmpty(field.comment)){ %>
+    /**
+     * ${field.comment!}
+     */
+    <% } %>
+    private ${field.propertyType} ${field.propertyName};
+<% } %>
+<% /** -----------END 字段循环遍历----------- **/ %>
+
+}

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${basePackage}.mapper.${entityName}Mapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="${basePackage}.entity.${entityName}">
+    <% for(field in allFieldList){ %>
+    <% /** 生成主键排在第一位 **/ %>
+       <% if(field.keyFlag){ %>
+       <id column="${field.name}" property="${field.propertyName}" />
+       <% } %>
+    <% } %>
+    <% for(field in allFieldList){ %>
+       <% /** 生成普通字段 **/ %>
+       <% if(!field.keyFlag){ %>
+       <result column="${field.name}" property="${field.propertyName}" />
+       <% } %>
+    <% } %>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="SelectVO">
+        select
+        <% for(field in allFieldList){ %>
+            ${field.name}<% if(!fieldLP.last){ %>,<%}%>
+        <% } %>
+        from ${table.name}
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="SQLWhereSearch">
+        <where>
+            <% for(field in allFieldList){ %>
+            <if test="${field.propertyName} != null<% if(field.columnType=="STRING"){ %> and ${field.propertyName} != ''<%}%>">
+                and ${field.name} = #{${field.propertyName}}
+            </if>
+            <% } %>
+        </where>
+    </sql>
+
+    <select id="getById" parameterType="${idPropertyType}" resultMap="BaseResultMap">
+        <include refid="SelectVO"/>
+        <where>
+            ${idField.name} = #{${idField.propertyName}}
+        </where>
+    </select>
+
+    <select id="selectList" parameterType="${basePackage}.entity.${entityName}" resultMap="BaseResultMap">
+        <include refid="SelectVO"/>
+        <include refid="SQLWhereSearch"/>
+    </select>
+
+    <insert id="save" parameterType="${basePackage}.entity.${entityName}">
+        insert into ${table.name} (
+            <% for(field in allFieldList){ %>
+            <if test="${field.propertyName} != null<% if(field.columnType=="STRING"){ %> and ${field.propertyName} != ''<%}%>">
+                ${field.name}<% if(!fieldLP.last){ %>,<%}%>
+            </if>
+            <% } %>
+        )values(
+            <% for(field in allFieldList){ %>
+            <if test="${field.propertyName} != null<% if(field.columnType=="STRING"){ %> and ${field.propertyName} != ''<%}%>">
+                #{${field.propertyName}}<% if(!fieldLP.last){ %>,<%}%>
+            </if>
+            <% } %>
+		)
+    </insert>
+
+    <update id="updateById" parameterType="${basePackage}.entity.${entityName}">
+        update ${table.name}
+        <set>
+            <% for(field in allFieldList){ %>
+            <if test="${field.propertyName} != null<% if(field.columnType=="STRING"){ %> and ${field.propertyName} != ''<%}%>">
+                ${field.name} = #{${field.propertyName}}<% if(!fieldLP.last){ %>,<%}%>
+            </if>
+            <% } %>
+        </set>
+        <where>
+            ${idField.name} = #{${idField.propertyName}}
+        </where>
+    </update>
+
+    <delete id="removeById" parameterType="${idPropertyType}">
+        delete from ${table.name}
+        <where>
+            ${idField.name} = #{${idField.propertyName}}
+        </where>
+    </delete>
+
+    <delete id="deleteBatchByIds" parameterType="${idPropertyType}">
+        delete from ${table.name} where ${idField.name} in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

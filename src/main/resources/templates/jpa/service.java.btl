@@ -1,0 +1,19 @@
+package ${basePackage}.service;
+
+<% if(isNotEmpty(superServiceClassPackage)){ %>
+import ${superServiceClassPackage};
+<% } %>
+import ${basePackage}.entity.${entityName};
+import ${basePackage}.repository.${entityName}Repository;
+
+/**
+ * <p>
+ * ${entityName} Service
+ * </p>
+ *
+ * @author ${author}
+ * @date ${date}
+ */
+public interface ${entityName}Service <% if(isNotEmpty(superServiceName)){ %>extends ${superServiceName}<${entityName}, ${idPropertyType!}, ${entityName}Repository><% } %> {
+
+}

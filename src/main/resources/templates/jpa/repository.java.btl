@@ -1,0 +1,20 @@
+package ${basePackage}.repository;
+
+<% if(isNotEmpty(superDaoClassPackage)){ %>
+import ${superDaoClassPackage};
+<% } %>
+import org.springframework.stereotype.Repository;
+import ${basePackage}.entity.${entityName};
+
+/**
+ * <p>
+ * ${entityName} Repository
+ * </p>
+ *
+ * @author ${author}
+ * @date ${date}
+ */
+@Repository
+public interface ${entityName}Repository <% if(isNotEmpty(superDaoName)){ %>extends ${superDaoName}<${entityName}, ${idPropertyType!}><% } %> {
+
+}

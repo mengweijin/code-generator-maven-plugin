@@ -1,0 +1,55 @@
+package ${basePackage}.service;
+
+import ${basePackage}.entity.${entityName};
+import java.util.List;
+
+/**
+ * <p>
+ * ${entityName} Service
+ * </p>
+ *
+ * @author ${author}
+ * @date ${date}
+ */
+public interface ${entityName}Service {
+
+    /**
+     * <p>
+     * Find ${entityName} by ${idField.propertyName}
+     * </p>
+     * @param id id
+     */
+    ${entityName} getById(${idPropertyType!} id);
+
+    /**
+     * <p>
+     * Select List<${entityName}>
+     * </p>
+     * @param ${entityVariableName} ${entityVariableName}
+     */
+    List<${entityName}> list(${entityName} ${entityVariableName});
+
+    /**
+     * <p>
+     * Add ${entityName}
+     * </p>
+     * @param ${entityVariableName} ${entityVariableName}
+     */
+    void save(${entityName} ${entityVariableName});
+
+    /**
+     * <p>
+     * Update ${entityName}
+     * </p>
+     * @param ${entityVariableName} ${entityVariableName}
+     */
+    void updateById(${entityName} ${entityVariableName});
+
+    /**
+     * <p>
+     * Delete ${entityName} by id
+     * </p>
+     * @param id id
+     */
+    void removeById(${idPropertyType!} id);
+}

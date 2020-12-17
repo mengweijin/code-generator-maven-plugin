@@ -1,0 +1,20 @@
+package ${basePackage}.mapper;
+
+import ${basePackage}.entity.${entityName};
+<% if(isNotEmpty(superDaoClassPackage)){ %>
+import ${superDaoClassPackage};
+<% } %>
+import org.apache.ibatis.annotations.Mapper;
+
+/**
+ * <p>
+ * ${table.comment!} Mapper
+ * </p>
+ *
+ * @author ${author}
+ * @date ${date}
+ */
+@Mapper
+public interface ${entityName}Mapper <% if(isNotEmpty(superDaoName)){ %>extends ${superDaoName}<${entityName}><% } %> {
+
+}
