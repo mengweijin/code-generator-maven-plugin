@@ -19,6 +19,7 @@
         <velocity.version>2.2</velocity.version>
         <freemarker.version>2.3.30</freemarker.version>
         <hutool.version>5.5.2</hutool.version>
+        <snakeyaml.version>1.27</snakeyaml.version>
 
         <maven-core.version>3.6.3</maven-core.version>
         <maven-plugin-api.version>3.6.3</maven-plugin-api.version>
@@ -37,6 +38,12 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>${hutool.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>${snakeyaml.version}</version>
         </dependency>
 
         <dependency>

@@ -1,11 +1,12 @@
-package com.github.mengweijin.generator.code;
+package com.github.mengweijin.dto;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.system.SystemUtil;
+import com.github.mengweijin.generator.enums.TemplateType;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * @author mengweijin
@@ -17,7 +18,7 @@ public class ConfigProperty {
     /**
      * 可选项：类注释中的@author的值
      */
-    private String author;
+    private String author = SystemUtil.getUserInfo().getName();
 
     /**
      * 必填项：用来生成文件的模板的位置(resources目录下):
@@ -32,7 +33,7 @@ public class ConfigProperty {
     /**
      * 必填项：生成的代码文件的位置，在src/main/java下的包路径，最后一个小数点后面的名字会作为模块名
      */
-    private String outputPackage;
+    private String outputPackage = "target/code-generator/";
 
     /**
      * 必填项：要生成代码的数据库表名称（不区分大小写）
@@ -78,13 +79,13 @@ public class ConfigProperty {
     /**
      * btl, ftl, vm
      */
-    private String templateSuffix;
+    private TemplateType templateType = TemplateType.beetl;
 
     public void init() {
-        this.author = Optional.ofNullable(this.author).orElse(SystemUtil.getUserInfo().getName());
+        if (this.template != null) {
+            this.template = this.template.endsWith(StrUtil.SLASH) ? this.template : this.template + StrUtil.SLASH;
+        }
 
-
-        this.templateSuffix = Optional.ofNullable(this.templateSuffix).orElse(ETemplateSuffix.beetl.getSuffix());
 
     }
 

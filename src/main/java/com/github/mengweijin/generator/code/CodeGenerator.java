@@ -3,8 +3,10 @@ package com.github.mengweijin.generator.code;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.FileOutConfig;
+import com.github.mengweijin.dto.ConfigParameter;
 import com.github.mengweijin.generator.config.ConfigFactory;
 import com.github.mengweijin.generator.config.InjectionConfigImpl;
+import com.github.mengweijin.generator.util.FileOutConfigUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -20,37 +22,36 @@ public class CodeGenerator {
      */
     private final AutoGenerator autoGenerator = new AutoGenerator();
 
-    private final ConfigProperty configProperty;
+    private final ConfigParameter configParameter;
 
-    public CodeGenerator(ConfigProperty configProperty) {
-        this.configProperty = configProperty;
+    public CodeGenerator(ConfigParameter configParameter) {
+        this.configParameter = configParameter;
     }
 
     public void run() {
         // 全局配置
-        autoGenerator.setGlobalConfig(ConfigFactory.getGlobalConfig(configProperty));
+        autoGenerator.setGlobalConfig(ConfigFactory.getGlobalConfig(configParameter));
         // 数据源配置
-        autoGenerator.setDataSource(ConfigFactory.getDataSourceConfig(configProperty));
+        autoGenerator.setDataSource(ConfigFactory.getDataSourceConfig(configParameter));
         // 包配置
-        autoGenerator.setPackageInfo(ConfigFactory.getPackageConfig(configProperty));
+        autoGenerator.setPackageInfo(ConfigFactory.getPackageConfig(configParameter));
         // Mybatis-plus自己的模板配置
-        autoGenerator.setTemplate(ConfigFactory.getTemplateConfig(configProperty));
+        autoGenerator.setTemplate(ConfigFactory.getTemplateConfig(configParameter));
 
         // 自定义配置, 会被优先输出
-        InjectionConfig injectionConfig = new InjectionConfigImpl(configProperty, autoGenerator);
-        List<FileOutConfig> fileOutConfigList = FileOutConfigUtils.loadTemplatesToGetFileOutConfig(configProperty, autoGenerator);
-        boolean notContainExistsFiles = FileOutConfigUtils.checkNotContainExistsFiles(fileOutConfigList);
-        if (notContainExistsFiles) {
-            log.error("Generator failure!!!");
-            return;
-        }
+        InjectionConfig injectionConfig = new InjectionConfigImpl(configParameter, autoGenerator);
+        List<FileOutConfig> fileOutConfigList = FileOutConfigUtils.loadTemplatesToGetFileOutConfig(configParameter, autoGenerator);
+
+        // TODO check file exits.
+
+
         injectionConfig.setFileOutConfigList(fileOutConfigList);
         autoGenerator.setCfg(injectionConfig);
 
         // 策略配置
-        autoGenerator.setStrategy(ConfigFactory.getStrategyConfig(configProperty));
+        autoGenerator.setStrategy(ConfigFactory.getStrategyConfig(configParameter));
         // 模板引擎
-        autoGenerator.setTemplateEngine(ConfigFactory.getTemplateEngine(configProperty));
+        autoGenerator.setTemplateEngine(ConfigFactory.getTemplateEngine(configParameter));
 
         autoGenerator.execute();
     }

@@ -10,35 +10,35 @@ import com.baomidou.mybatisplus.generator.engine.AbstractTemplateEngine;
 import com.baomidou.mybatisplus.generator.engine.BeetlTemplateEngine;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
-import com.github.mengweijin.generator.code.ConfigProperty;
-import com.github.mengweijin.generator.code.ETemplateSuffix;
+import com.github.mengweijin.dto.ConfigParameter;
+import com.github.mengweijin.generator.enums.TemplateType;
 
 import java.io.File;
 
 public class ConfigFactory {
 
-    public static GlobalConfig getGlobalConfig(ConfigProperty configProperty) {
+    public static GlobalConfig getGlobalConfig(ConfigParameter configParameter) {
         GlobalConfig globalConfig = new GlobalConfig();
         globalConfig.setOutputDir(System.getProperty("user.dir") + File.separator + "src/main/java");
-        globalConfig.setAuthor(configProperty.getAuthor());
+        globalConfig.setAuthor(configParameter.getAuthor());
         globalConfig.setOpen(false);
         globalConfig.setFileOverride(false);
         return globalConfig;
     }
 
-    public static DataSourceConfig getDataSourceConfig(ConfigProperty configProperty) {
+    public static DataSourceConfig getDataSourceConfig(ConfigParameter configParameter) {
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
-        dataSourceConfig.setUrl(configProperty.getDbUrl());
-        dataSourceConfig.setDriverName(configProperty.getDbDriverName());
-        dataSourceConfig.setUsername(configProperty.getDbUsername());
-        dataSourceConfig.setPassword(configProperty.getDbPassword());
+        dataSourceConfig.setUrl(configParameter.getDbUrl());
+        dataSourceConfig.setDriverName(configParameter.getDbDriverName());
+        dataSourceConfig.setUsername(configParameter.getDbUsername());
+        dataSourceConfig.setPassword(configParameter.getDbPassword());
         return dataSourceConfig;
     }
 
-    public static PackageConfig getPackageConfig(ConfigProperty configProperty) {
+    public static PackageConfig getPackageConfig(ConfigParameter configParameter) {
         PackageConfig packageConfig = new PackageConfig();
-        packageConfig.setParent(configProperty.getOutputPackage().substring(0, configProperty.getOutputPackage().lastIndexOf(".")));
-        packageConfig.setModuleName(configProperty.getOutputPackage().substring(configProperty.getOutputPackage().lastIndexOf(".") + 1));
+        packageConfig.setParent(configParameter.getOutputPackage().substring(0, configParameter.getOutputPackage().lastIndexOf(".")));
+        packageConfig.setModuleName(configParameter.getOutputPackage().substring(configParameter.getOutputPackage().lastIndexOf(".") + 1));
         packageConfig.setEntity(null);
         packageConfig.setService(null);
         packageConfig.setServiceImpl(null);
@@ -53,10 +53,10 @@ public class ConfigFactory {
      * Mybatis-plus自己的模板配置, 不想生成的就设为null。
      * 这里不使用Mybatis-plus自己的，我们使用自定义的
      *
-     * @param configProperty
+     * @param configParameter
      * @return
      */
-    public static TemplateConfig getTemplateConfig(ConfigProperty configProperty) {
+    public static TemplateConfig getTemplateConfig(ConfigParameter configParameter) {
         TemplateConfig templateConfig = new TemplateConfig();
         templateConfig.setEntity(null);
         templateConfig.setEntityKt(null);
@@ -68,35 +68,35 @@ public class ConfigFactory {
         return templateConfig;
     }
 
-    public static StrategyConfig getStrategyConfig(ConfigProperty configProperty) {
+    public static StrategyConfig getStrategyConfig(ConfigParameter configParameter) {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
 
-        strategy.setSuperEntityClass(configProperty.getSuperEntityClass());
-        strategy.setSuperEntityColumns(configProperty.getSuperEntityColumns());
-        strategy.setSuperMapperClass(configProperty.getSuperDaoClass());
-        strategy.setSuperServiceClass(configProperty.getSuperServiceClass());
-        strategy.setSuperServiceImplClass(configProperty.getSuperServiceImplClass());
-        strategy.setSuperControllerClass(configProperty.getSuperControllerClass());
+        strategy.setSuperEntityClass(configParameter.getSuperEntityClass());
+        strategy.setSuperEntityColumns(configParameter.getSuperEntityColumns());
+        strategy.setSuperMapperClass(configParameter.getSuperDaoClass());
+        strategy.setSuperServiceClass(configParameter.getSuperServiceClass());
+        strategy.setSuperServiceImplClass(configParameter.getSuperServiceImplClass());
+        strategy.setSuperControllerClass(configParameter.getSuperControllerClass());
 
-        strategy.setInclude(configProperty.getTables());
+        strategy.setInclude(configParameter.getTables());
         strategy.setControllerMappingHyphenStyle(true);
-        strategy.setTablePrefix(configProperty.getTablePrefix());
+        strategy.setTablePrefix(configParameter.getTablePrefix());
         return strategy;
     }
 
-    public static AbstractTemplateEngine getTemplateEngine(ConfigProperty configProperty) {
+    public static AbstractTemplateEngine getTemplateEngine(ConfigParameter configParameter) {
         AbstractTemplateEngine templateEngine;
-        String suffix = configProperty.getTemplateSuffix();
-        if (ETemplateSuffix.velocity.getSuffix().equalsIgnoreCase(suffix)) {
+        TemplateType templateType = configParameter.getTemplateType();
+        if (TemplateType.velocity == templateType) {
             templateEngine = new VelocityTemplateEngine();
-        } else if (ETemplateSuffix.freemarker.getSuffix().equalsIgnoreCase(suffix)) {
+        } else if (TemplateType.freemarker == templateType) {
             templateEngine = new FreemarkerTemplateEngine();
         } else {
-            // default btl
+            // default beetl
             templateEngine = new BeetlTemplateEngine();
         }
 

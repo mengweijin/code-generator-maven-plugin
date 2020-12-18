@@ -1,0 +1,36 @@
+package com.github.mengweijin.dto;
+
+import com.github.mengweijin.generator.enums.TemplateType;
+import lombok.Data;
+import lombok.experimental.Accessors;
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * @author mengweijin
+ */
+@Slf4j
+@Data
+@Accessors(chain = true)
+public class ConfigParameter {
+
+    private String author;
+
+    private String templateLocation;
+
+    private TemplateType templateType;
+
+    private String outputPackage;
+
+    private String[] tables;
+
+    private String tablePrefix;
+
+    private String superEntityClass;
+    private String superDaoClass;
+    private String superServiceClass;
+    private String superServiceImplClass;
+    private String superControllerClass;
+    private String[] superEntityColumns;
+
+    private DbInfo dbInfo;
+}

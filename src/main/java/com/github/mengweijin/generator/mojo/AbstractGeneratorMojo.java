@@ -1,19 +1,20 @@
 package com.github.mengweijin.generator.mojo;
 
-import com.github.mengweijin.generator.code.ConfigProperty;
+import cn.hutool.core.bean.BeanUtil;
+import com.github.mengweijin.dto.ConfigParameter;
+import com.github.mengweijin.dto.GeneratorConfig;
 import lombok.Getter;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
-import org.apache.maven.toolchain.ToolchainManager;
 
 import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author mengweijin
@@ -21,28 +22,44 @@ import java.util.List;
 @Getter
 public abstract class AbstractGeneratorMojo extends AbstractMojo {
 
-    @Parameter(defaultValue = "${project}")
-    public MavenProject project;
     @Parameter
-    private ConfigProperty configProperty;
+    private ConfigParameter configParameter;
+
+    @Parameter(defaultValue = "${project}")
+    private MavenProject project;
+
     @Parameter(defaultValue = "${basedir}")
     private File baseDir;
+
     @Parameter(defaultValue = "${project.build.resources}", readonly = true, required = true)
     private List<Resource> resources;
+
     @Parameter(defaultValue = "${project.build.sourceDirectory}", required = true, readonly = true)
     private File sourceDir;
+
     @Parameter(defaultValue = "${project.build.testResources}", readonly = true, required = true)
     private List<Resource> testResources;
+
     @Parameter(defaultValue = "${project.build.testSourceDirectory}", readonly = true, required = true)
     private File testSourceDir;
+
     @Parameter(defaultValue = "${project.compileClasspathElements}", readonly = true, required = true)
     private List<String> compilePath;
 
     @Parameter(defaultValue = "${session}", readonly = true)
     private MavenSession session;
 
-    @Component
-    private ToolchainManager toolchainManager;
+    protected GeneratorConfig getGeneratorConfig() {
+        this.configParameter = Optional.ofNullable(this.configParameter).orElse(new ConfigParameter());
+        GeneratorConfig generatorConfig = BeanUtil.copyProperties(configParameter, GeneratorConfig.class);
+        generatorConfig.setClassLoader(this.getClassLoader());
+        generatorConfig.setMavenSession(this.getSession());
+        generatorConfig.setMavenProject(this.getProject());
+        generatorConfig.setResourceList(this.getResources());
+        generatorConfig.setBaseDir(this.baseDir);
+        generatorConfig.setSourceDir(this.sourceDir);
+        return generatorConfig;
+    }
 
     /**
      * getClassLoader(this.project).loadClass("com.somepackage.SomeClass")
@@ -69,4 +86,5 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo {
             return this.getClass().getClassLoader();
         }
     }
+
 }

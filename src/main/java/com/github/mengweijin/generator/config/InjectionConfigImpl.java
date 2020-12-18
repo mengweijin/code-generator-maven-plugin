@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.generator.config.po.TableField;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
-import com.github.mengweijin.generator.code.ConfigProperty;
+import com.github.mengweijin.dto.ConfigParameter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,12 +22,12 @@ import java.util.Set;
  */
 public class InjectionConfigImpl extends InjectionConfig {
 
-    private final ConfigProperty configProperty;
+    private final ConfigParameter configParameter;
 
     private final AutoGenerator autoGenerator;
 
-    public InjectionConfigImpl(ConfigProperty configProperty, AutoGenerator autoGenerator) {
-        this.configProperty = configProperty;
+    public InjectionConfigImpl(ConfigParameter configParameter, AutoGenerator autoGenerator) {
+        this.configParameter = configParameter;
         this.autoGenerator = autoGenerator;
     }
 
@@ -41,22 +41,22 @@ public class InjectionConfigImpl extends InjectionConfig {
         Map<String, Object> map = new HashMap<>();
         map.put("author", objectMap.get("author"));
         map.put("date", objectMap.get("date"));
-        map.put("superEntityClassPackage", configProperty.getSuperEntityClass());
-        map.put("superDaoClassPackage", configProperty.getSuperDaoClass());
-        map.put("superServiceClassPackage", configProperty.getSuperServiceClass());
-        map.put("superServiceImplClassPackage", configProperty.getSuperServiceImplClass());
-        map.put("superControllerClassPackage", configProperty.getSuperControllerClass());
+        map.put("superEntityClassPackage", configParameter.getSuperEntityClass());
+        map.put("superDaoClassPackage", configParameter.getSuperDaoClass());
+        map.put("superServiceClassPackage", configParameter.getSuperServiceClass());
+        map.put("superServiceImplClassPackage", configParameter.getSuperServiceImplClass());
+        map.put("superControllerClassPackage", configParameter.getSuperControllerClass());
 
-        map.put("superEntityName", StrUtil.subAfter(configProperty.getSuperEntityClass(), StrUtil.DOT, true));
-        map.put("superDaoName", StrUtil.subAfter(configProperty.getSuperDaoClass(), StrUtil.DOT, true));
-        map.put("superServiceName", StrUtil.subAfter(configProperty.getSuperServiceClass(), StrUtil.DOT, true));
-        map.put("superServiceImplName", StrUtil.subAfter(configProperty.getSuperServiceImplClass(), StrUtil.DOT, true));
-        map.put("superControllerName", StrUtil.subAfter(configProperty.getSuperControllerClass(), StrUtil.DOT, true));
+        map.put("superEntityName", StrUtil.subAfter(configParameter.getSuperEntityClass(), StrUtil.DOT, true));
+        map.put("superDaoName", StrUtil.subAfter(configParameter.getSuperDaoClass(), StrUtil.DOT, true));
+        map.put("superServiceName", StrUtil.subAfter(configParameter.getSuperServiceClass(), StrUtil.DOT, true));
+        map.put("superServiceImplName", StrUtil.subAfter(configParameter.getSuperServiceImplClass(), StrUtil.DOT, true));
+        map.put("superControllerName", StrUtil.subAfter(configParameter.getSuperControllerClass(), StrUtil.DOT, true));
 
         map.put("entityName", objectMap.get("entity"));
         map.put("entityVariableName", StrUtil.lowerFirst(String.valueOf(objectMap.get("entity"))));
 
-        map.put("basePackage", configProperty.getOutputPackage());
+        map.put("basePackage", configParameter.getOutputPackage());
         map.put("moduleName", autoGenerator.getPackageInfo().getModuleName());
 
         map.put("table", objectMap.get("table"));

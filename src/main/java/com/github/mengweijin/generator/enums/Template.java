@@ -1,10 +1,10 @@
-package com.github.mengweijin.generator.code;
+package com.github.mengweijin.generator.enums;
 
 /**
  * @author mengweijin
  */
 
-public enum ETemplate {
+public enum Template {
 
     JPA("templates/jpa/"),
     MYBATIS("templates/mybatis/"),
@@ -12,7 +12,7 @@ public enum ETemplate {
 
     private final String path;
 
-    ETemplate(String path) {
+    Template(String path) {
         this.path = path;
     }
 
