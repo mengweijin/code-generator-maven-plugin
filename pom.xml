@@ -20,6 +20,7 @@
         <freemarker.version>2.3.30</freemarker.version>
         <hutool.version>5.5.2</hutool.version>
         <snakeyaml.version>1.27</snakeyaml.version>
+        <fastjson.vsersion>1.2.75</fastjson.vsersion>
 
         <maven-core.version>3.6.3</maven-core.version>
         <maven-plugin-api.version>3.6.3</maven-plugin-api.version>
@@ -38,6 +39,12 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>${hutool.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.vsersion}</version>
         </dependency>
 
         <dependency>

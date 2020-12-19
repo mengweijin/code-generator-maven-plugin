@@ -2,11 +2,13 @@ package com.github.mengweijin.dto;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.system.SystemUtil;
+import com.alibaba.fastjson.JSON;
 import com.github.mengweijin.generator.enums.TemplateType;
-import com.github.mengweijin.generator.util.BootFileReader;
+import com.github.mengweijin.generator.reader.BootFileReaderFactory;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
@@ -92,14 +94,24 @@ public class GeneratorConfig extends ConfigParameter {
 
     private DbInfo generateDefaultDbInfo() {
         Resource resource = resourceList.stream().filter(res -> res.getDirectory().endsWith("\\resources")).findFirst().get();
-        // The latter field overrides the previous field. For example,
-        // if the same configuration is found in both application.yml and bootstrap.yml, the configuration in bootstrap is preferred.
+        //File bootstrapFile = this.getBootFile(resource, BOOTSTRAP_FILE);
+
         File applicationFile = this.getBootFile(resource, APPLICATION_FILE);
-        File bootstrapFile = this.getBootFile(resource, BOOTSTRAP_FILE);
-        String activeProfilesEnv = BootFileReader.getActiveProfilesEnv(applicationFile, bootstrapFile);
+        if (applicationFile == null) {
+            throw new RuntimeException("Can't find any file " + JSON.toJSONString(APPLICATION_FILE));
+        }
+        String activeProfilesEnv = BootFileReaderFactory.getActiveProfilesEnv(applicationFile);
+        DbInfo dbInfo;
+        if (StrUtil.isBlank(activeProfilesEnv)) {
+            dbInfo = BootFileReaderFactory.getDbInfo(applicationFile);
+        } else {
+            String activeBootFilePath = resource.getDirectory() + File.separator +
+                    "application-" + activeProfilesEnv + StrUtil.DOT + FileNameUtil.getSuffix(applicationFile);
+            File activeBootFile = FileUtil.file(activeBootFilePath);
+            dbInfo = BootFileReaderFactory.getDbInfo(activeBootFile);
+        }
 
-
-        return null;
+        return dbInfo;
     }
 
     private File getBootFile(Resource resource, String[] filterNames) {

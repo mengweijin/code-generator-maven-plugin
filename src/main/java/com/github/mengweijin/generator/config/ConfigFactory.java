@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.generator.engine.BeetlTemplateEngine;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
 import com.github.mengweijin.dto.ConfigParameter;
+import com.github.mengweijin.dto.DbInfo;
 import com.github.mengweijin.generator.enums.TemplateType;
 
 import java.io.File;
@@ -27,11 +28,12 @@ public class ConfigFactory {
     }
 
     public static DataSourceConfig getDataSourceConfig(ConfigParameter configParameter) {
+        DbInfo dbInfo = configParameter.getDbInfo();
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
-        dataSourceConfig.setUrl(configParameter.getDbUrl());
-        dataSourceConfig.setDriverName(configParameter.getDbDriverName());
-        dataSourceConfig.setUsername(configParameter.getDbUsername());
-        dataSourceConfig.setPassword(configParameter.getDbPassword());
+        dataSourceConfig.setUrl(dbInfo.getUrl());
+        dataSourceConfig.setDriverName(dbInfo.getDriverName());
+        dataSourceConfig.setUsername(dbInfo.getUsername());
+        dataSourceConfig.setPassword(dbInfo.getPassword());
         return dataSourceConfig;
     }
 
