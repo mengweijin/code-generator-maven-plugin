@@ -28,7 +28,7 @@ import java.util.Optional;
 @Slf4j
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class GeneratorConfig extends ConfigParameter {
+public class DefaultConfigParameter extends ConfigParameter {
 
     private static final String[] BOOTSTRAP_FILE = {
             "bootstrap.yml",
@@ -56,7 +56,7 @@ public class GeneratorConfig extends ConfigParameter {
 
     private File sourceDir;
 
-    public GeneratorConfig initDefaultValue() {
+    public DefaultConfigParameter initDefaultValue() {
         this.setAuthor(Optional.ofNullable(this.getAuthor()).orElse(SystemUtil.getUserInfo().getName()));
         this.setTemplateType(Optional.ofNullable(this.getTemplateType()).orElse(TemplateType.beetl));
         this.setOutputPackage(Optional.ofNullable(this.getOutputPackage()).orElse("target/code-generator/"));

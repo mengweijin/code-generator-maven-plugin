@@ -1,8 +1,8 @@
 package com.github.mengweijin.generator.mojo;
 
-import com.github.mengweijin.dto.GeneratorConfig;
-import com.github.mengweijin.generator.code.CodeGenerator;
+import com.github.mengweijin.dto.DefaultConfigParameter;
 import com.github.mengweijin.generator.enums.Template;
+import com.github.mengweijin.generator.main.CodeGenerator;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -15,11 +15,11 @@ public class JpaGeneratorMojo extends AbstractGeneratorMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        GeneratorConfig generatorConfig = this.getGeneratorConfig();
-        generatorConfig.initDefaultValue();
-        generatorConfig.setTemplateLocation(Template.JPA.getPath());
+        DefaultConfigParameter defaultConfigParameter = this.getGeneratorConfig();
+        defaultConfigParameter.initDefaultValue();
+        defaultConfigParameter.setTemplateLocation(Template.JPA.getPath());
 
-        new CodeGenerator(generatorConfig).run();
+        new CodeGenerator(defaultConfigParameter).run();
     }
 
 

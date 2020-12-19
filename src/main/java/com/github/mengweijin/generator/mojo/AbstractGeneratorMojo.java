@@ -2,7 +2,7 @@ package com.github.mengweijin.generator.mojo;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.github.mengweijin.dto.ConfigParameter;
-import com.github.mengweijin.dto.GeneratorConfig;
+import com.github.mengweijin.dto.DefaultConfigParameter;
 import lombok.Getter;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.model.Resource;
@@ -49,16 +49,16 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo {
     @Parameter(defaultValue = "${session}", readonly = true)
     private MavenSession session;
 
-    protected GeneratorConfig getGeneratorConfig() {
+    protected DefaultConfigParameter getGeneratorConfig() {
         this.configParameter = Optional.ofNullable(this.configParameter).orElse(new ConfigParameter());
-        GeneratorConfig generatorConfig = BeanUtil.copyProperties(configParameter, GeneratorConfig.class);
-        generatorConfig.setClassLoader(this.getClassLoader());
-        generatorConfig.setMavenSession(this.getSession());
-        generatorConfig.setMavenProject(this.getProject());
-        generatorConfig.setResourceList(this.getResources());
-        generatorConfig.setBaseDir(this.baseDir);
-        generatorConfig.setSourceDir(this.sourceDir);
-        return generatorConfig;
+        DefaultConfigParameter defaultConfigParameter = BeanUtil.copyProperties(configParameter, DefaultConfigParameter.class);
+        defaultConfigParameter.setClassLoader(this.getClassLoader());
+        defaultConfigParameter.setMavenSession(this.getSession());
+        defaultConfigParameter.setMavenProject(this.getProject());
+        defaultConfigParameter.setResourceList(this.getResources());
+        defaultConfigParameter.setBaseDir(this.baseDir);
+        defaultConfigParameter.setSourceDir(this.sourceDir);
+        return defaultConfigParameter;
     }
 
     /**

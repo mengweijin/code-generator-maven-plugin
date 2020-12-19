@@ -1,4 +1,4 @@
-package com.github.mengweijin.generator.code;
+package com.github.mengweijin.generator.main;
 
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
