@@ -1,4 +1,4 @@
-package com.github.mengweijin.dto;
+package com.github.mengweijin.generator.dto;
 
 import lombok.Data;
 

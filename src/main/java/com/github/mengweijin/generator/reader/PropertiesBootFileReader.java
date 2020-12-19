@@ -2,7 +2,7 @@ package com.github.mengweijin.generator.reader;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.dialect.Props;
-import com.github.mengweijin.dto.DbInfo;
+import com.github.mengweijin.generator.dto.DbInfo;
 
 import java.io.File;
 import java.net.MalformedURLException;

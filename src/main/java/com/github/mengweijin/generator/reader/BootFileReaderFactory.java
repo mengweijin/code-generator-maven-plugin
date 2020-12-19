@@ -2,7 +2,7 @@ package com.github.mengweijin.generator.reader;
 
 import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.EnumUtil;
-import com.github.mengweijin.dto.DbInfo;
+import com.github.mengweijin.generator.dto.DbInfo;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;

@@ -10,8 +10,8 @@ import com.baomidou.mybatisplus.generator.engine.AbstractTemplateEngine;
 import com.baomidou.mybatisplus.generator.engine.BeetlTemplateEngine;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
-import com.github.mengweijin.dto.ConfigParameter;
-import com.github.mengweijin.dto.DbInfo;
+import com.github.mengweijin.generator.dto.ConfigParameter;
+import com.github.mengweijin.generator.dto.DbInfo;
 import com.github.mengweijin.generator.enums.TemplateType;
 
 import java.io.File;

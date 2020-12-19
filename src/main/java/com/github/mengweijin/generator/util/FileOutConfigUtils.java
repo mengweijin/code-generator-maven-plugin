@@ -6,8 +6,8 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.URLUtil;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.FileOutConfig;
-import com.github.mengweijin.dto.ConfigParameter;
 import com.github.mengweijin.generator.config.FileOutConfigImpl;
+import com.github.mengweijin.generator.dto.ConfigParameter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;

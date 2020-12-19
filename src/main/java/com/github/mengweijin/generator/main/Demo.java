@@ -1,7 +1,7 @@
 package com.github.mengweijin.generator.main;
 
-import com.github.mengweijin.dto.ConfigParameter;
-import com.github.mengweijin.dto.DbInfo;
+import com.github.mengweijin.generator.dto.ConfigParameter;
+import com.github.mengweijin.generator.dto.DbInfo;
 import com.github.mengweijin.generator.enums.Template;
 
 /**

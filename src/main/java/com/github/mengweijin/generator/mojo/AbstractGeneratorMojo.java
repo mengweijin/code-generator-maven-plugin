@@ -1,8 +1,8 @@
 package com.github.mengweijin.generator.mojo;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.github.mengweijin.dto.ConfigParameter;
-import com.github.mengweijin.dto.DefaultConfigParameter;
+import com.github.mengweijin.generator.dto.ConfigParameter;
+import com.github.mengweijin.generator.dto.DefaultConfigParameter;
 import lombok.Getter;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.model.Resource;

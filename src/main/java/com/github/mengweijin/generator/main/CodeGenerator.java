@@ -3,9 +3,9 @@ package com.github.mengweijin.generator.main;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.FileOutConfig;
-import com.github.mengweijin.dto.ConfigParameter;
 import com.github.mengweijin.generator.config.ConfigFactory;
 import com.github.mengweijin.generator.config.InjectionConfigImpl;
+import com.github.mengweijin.generator.dto.ConfigParameter;
 import com.github.mengweijin.generator.util.FileOutConfigUtils;
 import lombok.extern.slf4j.Slf4j;
 

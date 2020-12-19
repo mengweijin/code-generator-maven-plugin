@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.generator.config.po.TableField;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
-import com.github.mengweijin.dto.ConfigParameter;
+import com.github.mengweijin.generator.dto.ConfigParameter;
 
 import java.util.ArrayList;
 import java.util.HashMap;

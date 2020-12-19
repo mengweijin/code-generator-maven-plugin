@@ -1,6 +1,6 @@
 package com.github.mengweijin.generator.mojo;
 
-import com.github.mengweijin.dto.DefaultConfigParameter;
+import com.github.mengweijin.generator.dto.DefaultConfigParameter;
 import com.github.mengweijin.generator.enums.Template;
 import com.github.mengweijin.generator.main.CodeGenerator;
 import org.apache.maven.plugin.MojoExecutionException;
