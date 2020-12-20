@@ -1,11 +1,12 @@
 package com.github.mengweijin.generator.main;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.FileOutConfig;
 import com.github.mengweijin.generator.config.ConfigFactory;
 import com.github.mengweijin.generator.config.InjectionConfigImpl;
-import com.github.mengweijin.generator.dto.ConfigParameter;
+import com.github.mengweijin.generator.dto.DefaultConfigParameter;
 import com.github.mengweijin.generator.util.FileOutConfigUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,7 +15,6 @@ import java.util.List;
 /**
  * @author mengweijin
  */
-@Slf4j
 public class CodeGenerator {
 
     /**
@@ -22,25 +22,25 @@ public class CodeGenerator {
      */
     private final AutoGenerator autoGenerator = new AutoGenerator();
 
-    private final ConfigParameter configParameter;
+    private final DefaultConfigParameter parameter;
 
-    public CodeGenerator(ConfigParameter configParameter) {
-        this.configParameter = configParameter;
+    public CodeGenerator(DefaultConfigParameter parameter) {
+        this.parameter = parameter;
     }
 
     public void run() {
         // 全局配置
-        autoGenerator.setGlobalConfig(ConfigFactory.getGlobalConfig(configParameter));
+        autoGenerator.setGlobalConfig(ConfigFactory.getGlobalConfig(parameter));
         // 数据源配置
-        autoGenerator.setDataSource(ConfigFactory.getDataSourceConfig(configParameter));
+        autoGenerator.setDataSource(ConfigFactory.getDataSourceConfig(parameter));
         // 包配置
-        autoGenerator.setPackageInfo(ConfigFactory.getPackageConfig(configParameter));
+        autoGenerator.setPackageInfo(ConfigFactory.getPackageConfig(parameter));
         // Mybatis-plus自己的模板配置
-        autoGenerator.setTemplate(ConfigFactory.getTemplateConfig(configParameter));
+        autoGenerator.setTemplate(ConfigFactory.getTemplateConfig(parameter));
 
         // 自定义配置, 会被优先输出
-        InjectionConfig injectionConfig = new InjectionConfigImpl(configParameter, autoGenerator);
-        List<FileOutConfig> fileOutConfigList = FileOutConfigUtils.loadTemplatesToGetFileOutConfig(configParameter, autoGenerator);
+        InjectionConfig injectionConfig = new InjectionConfigImpl(parameter, autoGenerator);
+        List<FileOutConfig> fileOutConfigList = FileOutConfigUtils.loadTemplatesToGetFileOutConfig(parameter, autoGenerator);
 
         // TODO check file exits.
 
@@ -49,10 +49,11 @@ public class CodeGenerator {
         autoGenerator.setCfg(injectionConfig);
 
         // 策略配置
-        autoGenerator.setStrategy(ConfigFactory.getStrategyConfig(configParameter));
+        autoGenerator.setStrategy(ConfigFactory.getStrategyConfig(parameter));
         // 模板引擎
-        autoGenerator.setTemplateEngine(ConfigFactory.getTemplateEngine(configParameter));
+        autoGenerator.setTemplateEngine(ConfigFactory.getTemplateEngine(parameter));
 
+        System.out.println("AutoGenerator: " + JSON.toJSONString(autoGenerator));
         autoGenerator.execute();
     }
 

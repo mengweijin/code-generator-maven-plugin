@@ -25,7 +25,8 @@ public class YamlBootFileReader implements BootFileReader {
         Object url = JSONPath.eval(map, "$." + SPRING_DATASOURCE_URL);
         Object driverName = JSONPath.eval(map, "$." + SPRING_DATASOURCE_DRIVERCLASSNAME);
         if (driverName == null) {
-            driverName = JSONPath.eval(map, "$." + SPRING_DATASOURCE_DRIVER_CLASS_NAME);
+            // JSONPath中，中划线是特殊字符
+            driverName = JSONPath.eval(map, "$.spring.datasource['driver-class-name']");
         }
         Object username = JSONPath.eval(map, "$." + SPRING_DATASOURCE_USERNAME);
         Object password = JSONPath.eval(map, "$." + SPRING_DATASOURCE_PASSWORD);

@@ -14,13 +14,14 @@ import com.github.mengweijin.generator.dto.ConfigParameter;
 import com.github.mengweijin.generator.dto.DbInfo;
 import com.github.mengweijin.generator.enums.TemplateType;
 
-import java.io.File;
-
+/**
+ * @author mengweijin
+ */
 public class ConfigFactory {
 
     public static GlobalConfig getGlobalConfig(ConfigParameter configParameter) {
         GlobalConfig globalConfig = new GlobalConfig();
-        globalConfig.setOutputDir(System.getProperty("user.dir") + File.separator + "src/main/java");
+        globalConfig.setOutputDir(configParameter.getOutputPath());
         globalConfig.setAuthor(configParameter.getAuthor());
         globalConfig.setOpen(false);
         globalConfig.setFileOverride(false);
@@ -39,8 +40,8 @@ public class ConfigFactory {
 
     public static PackageConfig getPackageConfig(ConfigParameter configParameter) {
         PackageConfig packageConfig = new PackageConfig();
-        packageConfig.setParent(configParameter.getOutputPackage().substring(0, configParameter.getOutputPackage().lastIndexOf(".")));
-        packageConfig.setModuleName(configParameter.getOutputPackage().substring(configParameter.getOutputPackage().lastIndexOf(".") + 1));
+        packageConfig.setParent(null);
+        packageConfig.setModuleName(null);
         packageConfig.setEntity(null);
         packageConfig.setService(null);
         packageConfig.setServiceImpl(null);

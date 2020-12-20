@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * @author mengweijin
  */
-@Slf4j
 @Data
 @Accessors(chain = true)
 public class ConfigParameter {
@@ -19,11 +18,15 @@ public class ConfigParameter {
 
     private TemplateType templateType;
 
-    private String outputPackage;
+    /**
+     * default: target/code-generator/
+     * sample: src/main/java/com/mengweijin/aaaaaaaaaaa
+     */
+    private String outputPath;
 
     private String[] tables;
 
-    private String tablePrefix;
+    private String[] tablePrefix;
 
     private String superEntityClass;
     private String superDaoClass;

@@ -12,7 +12,6 @@ import java.util.Map;
 /**
  * @author mengweijin
  */
-@Slf4j
 public class BootFileReaderFactory {
 
     private static final Map<BootFileType, Class> map = new HashMap<>();

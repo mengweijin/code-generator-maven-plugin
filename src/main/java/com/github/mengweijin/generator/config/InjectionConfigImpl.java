@@ -56,7 +56,7 @@ public class InjectionConfigImpl extends InjectionConfig {
         map.put("entityName", objectMap.get("entity"));
         map.put("entityVariableName", StrUtil.lowerFirst(String.valueOf(objectMap.get("entity"))));
 
-        map.put("basePackage", configParameter.getOutputPackage());
+        map.put("basePackage", configParameter.getOutputPath());
         map.put("moduleName", autoGenerator.getPackageInfo().getModuleName());
 
         map.put("table", objectMap.get("table"));

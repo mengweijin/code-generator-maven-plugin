@@ -3,6 +3,7 @@ package com.github.mengweijin.generator.dto;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileNameUtil;
+import cn.hutool.core.util.ClassLoaderUtil;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.system.SystemUtil;
@@ -11,6 +12,7 @@ import com.github.mengweijin.generator.enums.TemplateType;
 import com.github.mengweijin.generator.reader.BootFileReaderFactory;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.model.Resource;
@@ -25,7 +27,6 @@ import java.util.Optional;
 /**
  * @author mengweijin
  */
-@Slf4j
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class DefaultConfigParameter extends ConfigParameter {
@@ -44,8 +45,6 @@ public class DefaultConfigParameter extends ConfigParameter {
 
     private static final String APPLICATION_CONFIG_FILE_REGEX = "^((application)|(bootstrap))((-\\S*)?)\\.((yaml)|(yml)|(properties))$";
 
-    private ClassLoader classLoader;
-
     private MavenSession mavenSession;
 
     private MavenProject mavenProject;
@@ -59,7 +58,7 @@ public class DefaultConfigParameter extends ConfigParameter {
     public DefaultConfigParameter initDefaultValue() {
         this.setAuthor(Optional.ofNullable(this.getAuthor()).orElse(SystemUtil.getUserInfo().getName()));
         this.setTemplateType(Optional.ofNullable(this.getTemplateType()).orElse(TemplateType.beetl));
-        this.setOutputPackage(Optional.ofNullable(this.getOutputPackage()).orElse("target/code-generator/"));
+        this.setOutputPath(Optional.ofNullable(this.getOutputPath()).orElse("target/code-generator/"));
 
         if (this.getSuperEntityClass() != null && this.getSuperEntityColumns() == null) {
             this.setSuperEntityColumns(this.generateDefaultSuperEntityColumns());
@@ -82,12 +81,13 @@ public class DefaultConfigParameter extends ConfigParameter {
      */
     private String[] generateDefaultSuperEntityColumns() {
         try {
-            Class<?> cls = classLoader.loadClass(this.getSuperEntityClass());
+            ClassLoader classLoader = ClassLoaderUtil.getClassLoader();
+            Class<?> cls = Class.forName(this.getSuperEntityClass(), true, classLoader);
             Field[] declaredFields = ClassUtil.getDeclaredFields(cls);
             return Arrays.stream(declaredFields)
                     .map(field -> StrUtil.toUnderlineCase(field.getName())).toArray(String[]::new);
         } catch (ClassNotFoundException e) {
-            log.error(e.getMessage());
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
@@ -126,5 +126,22 @@ public class DefaultConfigParameter extends ConfigParameter {
         });
 
         return CollectionUtil.isEmpty(fileList) ? null : fileList.get(0);
+    }
+
+    @Override
+    public String toString() {
+        return "ConfigParameter(author=" + this.getAuthor() +
+                ", templateLocation=" + this.getTemplateLocation() +
+                ", templateType=" + this.getTemplateType() +
+                ", outputPath=" + this.getOutputPath() +
+                ", tables=" + Arrays.deepToString(this.getTables()) +
+                ", tablePrefix=" + Arrays.deepToString(this.getTablePrefix()) +
+                ", superEntityClass=" + this.getSuperEntityClass() +
+                ", superDaoClass=" + this.getSuperDaoClass() +
+                ", superServiceClass=" + this.getSuperServiceClass() +
+                ", superServiceImplClass=" + this.getSuperServiceImplClass() +
+                ", superControllerClass=" + this.getSuperControllerClass() +
+                ", superEntityColumns=" + Arrays.deepToString(this.getSuperEntityColumns()) +
+                ", dbInfo=" + this.getDbInfo() + ")";
     }
 }
