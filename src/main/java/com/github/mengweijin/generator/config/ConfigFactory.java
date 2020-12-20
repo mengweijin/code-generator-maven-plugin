@@ -1,6 +1,5 @@
 package com.github.mengweijin.generator.config;
 
-import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;
@@ -21,10 +20,10 @@ import com.github.mengweijin.generator.enums.TemplateType;
  */
 public class ConfigFactory {
 
-    public static GlobalConfig getGlobalConfig(ConfigParameter configParameter) {
+    public static GlobalConfig getGlobalConfig(ConfigParameter parameter) {
         GlobalConfig globalConfig = new GlobalConfig();
-        globalConfig.setOutputDir(configParameter.getOutputPath());
-        globalConfig.setAuthor(configParameter.getAuthor());
+        globalConfig.setOutputDir(parameter.getOutputPackage());
+        globalConfig.setAuthor(parameter.getAuthor());
         globalConfig.setOpen(false);
         globalConfig.setFileOverride(false);
         return globalConfig;
@@ -43,12 +42,7 @@ public class ConfigFactory {
     public static PackageConfig getPackageConfig(ConfigParameter configParameter) {
         PackageConfig packageConfig = new PackageConfig();
         packageConfig.setParent(null);
-        String moduleName;
-        if(ReUtil.isMatch(InjectionConfigImpl.OUTPUT_PATH_PREFIX_REGEX, configParameter.getOutputPath())) {
-            moduleName = StrUtil.subAfter(configParameter.getOutputPath(), StrUtil.SLASH, false);
-        } else {
-            moduleName = null;
-        }
+        String moduleName = StrUtil.subAfter(configParameter.getOutputPackage(), StrUtil.SLASH, true);
         packageConfig.setModuleName(moduleName);
         packageConfig.setEntity(null);
         packageConfig.setService(null);

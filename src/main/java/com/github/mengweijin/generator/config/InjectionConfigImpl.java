@@ -1,6 +1,5 @@
 package com.github.mengweijin.generator.config;
 
-import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
@@ -23,14 +22,12 @@ import java.util.Set;
  */
 public class InjectionConfigImpl extends InjectionConfig {
 
-    public static final String OUTPUT_PATH_PREFIX_REGEX = "^src/((main)|(test))/java/";
-
-    private final ConfigParameter configParameter;
+    private final ConfigParameter parameter;
 
     private final AutoGenerator autoGenerator;
 
-    public InjectionConfigImpl(ConfigParameter configParameter, AutoGenerator autoGenerator) {
-        this.configParameter = configParameter;
+    public InjectionConfigImpl(ConfigParameter parameter, AutoGenerator autoGenerator) {
+        this.parameter = parameter;
         this.autoGenerator = autoGenerator;
     }
 
@@ -44,28 +41,22 @@ public class InjectionConfigImpl extends InjectionConfig {
         Map<String, Object> map = new HashMap<>();
         map.put("author", objectMap.get("author"));
         map.put("date", objectMap.get("date"));
-        map.put("superEntityClassPackage", configParameter.getSuperEntityClass());
-        map.put("superDaoClassPackage", configParameter.getSuperDaoClass());
-        map.put("superServiceClassPackage", configParameter.getSuperServiceClass());
-        map.put("superServiceImplClassPackage", configParameter.getSuperServiceImplClass());
-        map.put("superControllerClassPackage", configParameter.getSuperControllerClass());
+        map.put("superEntityClassPackage", parameter.getSuperEntityClass());
+        map.put("superDaoClassPackage", parameter.getSuperDaoClass());
+        map.put("superServiceClassPackage", parameter.getSuperServiceClass());
+        map.put("superServiceImplClassPackage", parameter.getSuperServiceImplClass());
+        map.put("superControllerClassPackage", parameter.getSuperControllerClass());
 
-        map.put("superEntityName", StrUtil.subAfter(configParameter.getSuperEntityClass(), StrUtil.DOT, true));
-        map.put("superDaoName", StrUtil.subAfter(configParameter.getSuperDaoClass(), StrUtil.DOT, true));
-        map.put("superServiceName", StrUtil.subAfter(configParameter.getSuperServiceClass(), StrUtil.DOT, true));
-        map.put("superServiceImplName", StrUtil.subAfter(configParameter.getSuperServiceImplClass(), StrUtil.DOT, true));
-        map.put("superControllerName", StrUtil.subAfter(configParameter.getSuperControllerClass(), StrUtil.DOT, true));
+        map.put("superEntityName", StrUtil.subAfter(parameter.getSuperEntityClass(), StrUtil.DOT, true));
+        map.put("superDaoName", StrUtil.subAfter(parameter.getSuperDaoClass(), StrUtil.DOT, true));
+        map.put("superServiceName", StrUtil.subAfter(parameter.getSuperServiceClass(), StrUtil.DOT, true));
+        map.put("superServiceImplName", StrUtil.subAfter(parameter.getSuperServiceImplClass(), StrUtil.DOT, true));
+        map.put("superControllerName", StrUtil.subAfter(parameter.getSuperControllerClass(), StrUtil.DOT, true));
 
         map.put("entityName", objectMap.get("entity"));
         map.put("entityVariableName", StrUtil.lowerFirst(String.valueOf(objectMap.get("entity"))));
 
-        String basePackage;
-        if(ReUtil.isMatch(OUTPUT_PATH_PREFIX_REGEX, configParameter.getOutputPath())) {
-            basePackage = StrUtil.subAfter(configParameter.getOutputPath(), "java/", false);
-        } else {
-            basePackage = "";
-        }
-        map.put("basePackage", basePackage);
+        map.put("basePackage", StrUtil.subAfter(parameter.getOutputPackage(), "java/", false));
         map.put("moduleName", autoGenerator.getPackageInfo().getModuleName());
 
         map.put("table", objectMap.get("table"));

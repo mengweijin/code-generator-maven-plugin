@@ -3,7 +3,6 @@ package com.github.mengweijin.generator.dto;
 import com.github.mengweijin.generator.enums.TemplateType;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author mengweijin
@@ -19,10 +18,11 @@ public class ConfigParameter {
     private TemplateType templateType;
 
     /**
-     * default: target/code-generator/
-     * sample: src/main/java/com/mengweijin/aaaaaaaaaaa
+     * default生成在src/test/java下。
+     * sample: com.github.mengweijin.aaaaaaaaaaa
+     * sample: com/github/mengweijin/aaaaaaaaaaa
      */
-    private String outputPath;
+    private String outputPackage;
 
     private String[] tables;
 

@@ -15,7 +15,6 @@ import lombok.EqualsAndHashCode;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.model.Resource;
 import org.apache.maven.project.MavenProject;
-
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -43,7 +42,8 @@ public class DefaultConfigParameter extends ConfigParameter {
 
     private static final String APPLICATION_CONFIG_FILE_REGEX = "^((application)|(bootstrap))((-\\S*)?)\\.((yaml)|(yml)|(properties))$";
 
-    public static final String DEFAULT_OUTPUT_PATH = "target/code-generator/";
+    public static final String SRC_TEST_JAVA = "src/test/java/";
+    public static final String SRC_MAIN_JAVA = "src/main/java/";
 
     private MavenSession mavenSession;
 
@@ -58,7 +58,14 @@ public class DefaultConfigParameter extends ConfigParameter {
     public DefaultConfigParameter initDefaultValue() {
         this.setAuthor(Optional.ofNullable(this.getAuthor()).orElse(SystemUtil.getUserInfo().getName()));
         this.setTemplateType(Optional.ofNullable(this.getTemplateType()).orElse(TemplateType.beetl));
-        this.setOutputPath(Optional.ofNullable(this.getOutputPath()).orElse(DEFAULT_OUTPUT_PATH));
+
+        String outputPath;
+        if(StrUtil.isBlank(this.getOutputPackage())) {
+            outputPath = SRC_TEST_JAVA + "com.github.mengweijin.generator";
+        } else {
+            outputPath = SRC_MAIN_JAVA + this.getOutputPackage();
+        }
+        this.setOutputPackage(StrUtil.replace(outputPath, StrUtil.DOT, StrUtil.SLASH));
 
         if (this.getSuperEntityClass() != null && this.getSuperEntityColumns() == null) {
             this.setSuperEntityColumns(this.generateDefaultSuperEntityColumns());
@@ -133,7 +140,7 @@ public class DefaultConfigParameter extends ConfigParameter {
         return "ConfigParameter(author=" + this.getAuthor() +
                 ", templateLocation=" + this.getTemplateLocation() +
                 ", templateType=" + this.getTemplateType() +
-                ", outputPath=" + this.getOutputPath() +
+                ", outputPath=" + this.getOutputPackage() +
                 ", tables=" + Arrays.deepToString(this.getTables()) +
                 ", tablePrefix=" + Arrays.deepToString(this.getTablePrefix()) +
                 ", superEntityClass=" + this.getSuperEntityClass() +
