@@ -16,12 +16,16 @@ public class MybatisPlusGeneratorMojo extends AbstractGeneratorMojo {
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
-            DefaultConfigParameter defaultConfigParameter = this.getGeneratorConfig();
-            defaultConfigParameter.initDefaultValue();
-            defaultConfigParameter.setTemplateLocation(Template.MYBATIS_PLUS.getPath());
-            System.out.println("DefaultConfigParameter: " + defaultConfigParameter);
+            DefaultConfigParameter parameter = this.getGeneratorConfig();
+            parameter.initDefaultValue();
+            parameter.setTemplateLocation(Template.MYBATIS_PLUS.getPath());
+            parameter.setSuperDaoClass("com.baomidou.mybatisplus.core.mapper.BaseMapper");
+            parameter.setSuperServiceClass("com.baomidou.mybatisplus.extension.service.IService");
+            parameter.setSuperServiceImplClass("com.baomidou.mybatisplus.extension.service.impl.ServiceImpl");
 
-            new CodeGenerator(defaultConfigParameter).run();
+            System.out.println("DefaultConfigParameter: " + parameter);
+
+            new CodeGenerator(parameter).run();
         } catch (Exception e) {
             getLog().error(e);
             throw new RuntimeException(e);

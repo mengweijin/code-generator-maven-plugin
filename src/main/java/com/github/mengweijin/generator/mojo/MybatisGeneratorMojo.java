@@ -19,6 +19,7 @@ public class MybatisGeneratorMojo extends AbstractGeneratorMojo {
             DefaultConfigParameter defaultConfigParameter = this.getGeneratorConfig();
             defaultConfigParameter.initDefaultValue();
             defaultConfigParameter.setTemplateLocation(Template.MYBATIS.getPath());
+
             System.out.println("DefaultConfigParameter: " + defaultConfigParameter);
 
             new CodeGenerator(defaultConfigParameter).run();

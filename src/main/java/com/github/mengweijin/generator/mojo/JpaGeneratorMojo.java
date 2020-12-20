@@ -17,12 +17,14 @@ public class JpaGeneratorMojo extends AbstractGeneratorMojo {
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
-            DefaultConfigParameter defaultConfigParameter = this.getGeneratorConfig();
-            defaultConfigParameter.initDefaultValue();
-            defaultConfigParameter.setTemplateLocation(Template.JPA.getPath());
-            System.out.println("DefaultConfigParameter: " + defaultConfigParameter);
+            DefaultConfigParameter parameter = this.getGeneratorConfig();
+            parameter.initDefaultValue();
+            parameter.setTemplateLocation(Template.JPA.getPath());
+            parameter.setSuperDaoClass("org.springframework.data.jpa.repository.JpaRepository");
 
-            new CodeGenerator(defaultConfigParameter).run();
+            System.out.println("DefaultConfigParameter: " + parameter);
+
+            new CodeGenerator(parameter).run();
         } catch (Exception e) {
             getLog().error(e);
             throw new RuntimeException(e);
