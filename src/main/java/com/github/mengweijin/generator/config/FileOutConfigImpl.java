@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.FileOutConfig;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-
 import java.io.File;
 
 /**
@@ -20,7 +19,7 @@ public class FileOutConfigImpl extends FileOutConfig {
     /**
      *
      * @param autoGenerator
-     * @param templateContent E.g.:templates/jpa/controller.java.btl 文件中的字符串内容。
+     * @param templateContent E.g.:controller.java.btl 文件中的字符串内容。
      */
     public FileOutConfigImpl(AutoGenerator autoGenerator, String templateContent, String templateName) {
         super(templateContent);

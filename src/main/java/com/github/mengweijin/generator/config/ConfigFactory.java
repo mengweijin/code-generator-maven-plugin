@@ -1,5 +1,7 @@
 package com.github.mengweijin.generator.config;
 
+import cn.hutool.core.util.ReUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
@@ -41,7 +43,13 @@ public class ConfigFactory {
     public static PackageConfig getPackageConfig(ConfigParameter configParameter) {
         PackageConfig packageConfig = new PackageConfig();
         packageConfig.setParent(null);
-        packageConfig.setModuleName(null);
+        String moduleName;
+        if(ReUtil.isMatch(InjectionConfigImpl.OUTPUT_PATH_PREFIX_REGEX, configParameter.getOutputPath())) {
+            moduleName = StrUtil.subAfter(configParameter.getOutputPath(), StrUtil.SLASH, false);
+        } else {
+            moduleName = null;
+        }
+        packageConfig.setModuleName(moduleName);
         packageConfig.setEntity(null);
         packageConfig.setService(null);
         packageConfig.setServiceImpl(null);

@@ -13,7 +13,6 @@ public class CustomerGeneratorMojo extends AbstractGeneratorMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-//        ConfigProperty configProperty = getConfigProperty();
-//        new CodeGenerator(configProperty).run();
+
     }
 }

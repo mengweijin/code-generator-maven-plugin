@@ -15,10 +15,16 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 public class MybatisPlusGeneratorMojo extends AbstractGeneratorMojo {
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        DefaultConfigParameter defaultConfigParameter = this.getGeneratorConfig();
-        defaultConfigParameter.initDefaultValue();
-        defaultConfigParameter.setTemplateLocation(Template.MYBATIS_PLUS.getPath());
+        try {
+            DefaultConfigParameter defaultConfigParameter = this.getGeneratorConfig();
+            defaultConfigParameter.initDefaultValue();
+            defaultConfigParameter.setTemplateLocation(Template.MYBATIS_PLUS.getPath());
+            System.out.println("DefaultConfigParameter: " + defaultConfigParameter);
 
-        new CodeGenerator(defaultConfigParameter).run();
+            new CodeGenerator(defaultConfigParameter).run();
+        } catch (Exception e) {
+            getLog().error(e);
+            throw new RuntimeException(e);
+        }
     }
 }

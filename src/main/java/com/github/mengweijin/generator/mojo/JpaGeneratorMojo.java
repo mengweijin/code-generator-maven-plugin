@@ -27,6 +27,5 @@ public class JpaGeneratorMojo extends AbstractGeneratorMojo {
             getLog().error(e);
             throw new RuntimeException(e);
         }
-
     }
 }

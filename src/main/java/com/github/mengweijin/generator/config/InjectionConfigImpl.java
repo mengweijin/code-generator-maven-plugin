@@ -1,5 +1,6 @@
 package com.github.mengweijin.generator.config;
 
+import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
@@ -21,6 +22,8 @@ import java.util.Set;
  * @author mengweijin
  */
 public class InjectionConfigImpl extends InjectionConfig {
+
+    public static final String OUTPUT_PATH_PREFIX_REGEX = "^src/((main)|(test))/java/";
 
     private final ConfigParameter configParameter;
 
@@ -56,7 +59,13 @@ public class InjectionConfigImpl extends InjectionConfig {
         map.put("entityName", objectMap.get("entity"));
         map.put("entityVariableName", StrUtil.lowerFirst(String.valueOf(objectMap.get("entity"))));
 
-        map.put("basePackage", configParameter.getOutputPath());
+        String basePackage;
+        if(ReUtil.isMatch(OUTPUT_PATH_PREFIX_REGEX, configParameter.getOutputPath())) {
+            basePackage = StrUtil.subAfter(configParameter.getOutputPath(), "java/", false);
+        } else {
+            basePackage = "";
+        }
+        map.put("basePackage", basePackage);
         map.put("moduleName", autoGenerator.getPackageInfo().getModuleName());
 
         map.put("table", objectMap.get("table"));

@@ -12,8 +12,6 @@ import com.github.mengweijin.generator.enums.TemplateType;
 import com.github.mengweijin.generator.reader.BootFileReaderFactory;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.model.Resource;
 import org.apache.maven.project.MavenProject;
@@ -45,6 +43,8 @@ public class DefaultConfigParameter extends ConfigParameter {
 
     private static final String APPLICATION_CONFIG_FILE_REGEX = "^((application)|(bootstrap))((-\\S*)?)\\.((yaml)|(yml)|(properties))$";
 
+    public static final String DEFAULT_OUTPUT_PATH = "target/code-generator/";
+
     private MavenSession mavenSession;
 
     private MavenProject mavenProject;
@@ -58,7 +58,7 @@ public class DefaultConfigParameter extends ConfigParameter {
     public DefaultConfigParameter initDefaultValue() {
         this.setAuthor(Optional.ofNullable(this.getAuthor()).orElse(SystemUtil.getUserInfo().getName()));
         this.setTemplateType(Optional.ofNullable(this.getTemplateType()).orElse(TemplateType.beetl));
-        this.setOutputPath(Optional.ofNullable(this.getOutputPath()).orElse("target/code-generator/"));
+        this.setOutputPath(Optional.ofNullable(this.getOutputPath()).orElse(DEFAULT_OUTPUT_PATH));
 
         if (this.getSuperEntityClass() != null && this.getSuperEntityColumns() == null) {
             this.setSuperEntityColumns(this.generateDefaultSuperEntityColumns());
