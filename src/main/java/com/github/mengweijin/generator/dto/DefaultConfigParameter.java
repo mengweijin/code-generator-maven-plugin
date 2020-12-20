@@ -65,7 +65,7 @@ public class DefaultConfigParameter extends ConfigParameter {
         } else {
             outputPath = SRC_MAIN_JAVA + this.getOutputPackage();
         }
-        this.setOutputPackage(StrUtil.replace(outputPath, StrUtil.DOT, StrUtil.SLASH));
+        this.setOutputPackage(StrUtil.replace(outputPath, StrUtil.SLASH, StrUtil.DOT));
 
         if (this.getSuperEntityClass() != null && this.getSuperEntityColumns() == null) {
             this.setSuperEntityColumns(this.generateDefaultSuperEntityColumns());

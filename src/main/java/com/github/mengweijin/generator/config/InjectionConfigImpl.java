@@ -56,7 +56,8 @@ public class InjectionConfigImpl extends InjectionConfig {
         map.put("entityName", objectMap.get("entity"));
         map.put("entityVariableName", StrUtil.lowerFirst(String.valueOf(objectMap.get("entity"))));
 
-        map.put("basePackage", StrUtil.subAfter(parameter.getOutputPackage(), "java/", false));
+        // src.test.java.com.github.mengweijin.generator
+        map.put("basePackage", StrUtil.subAfter(parameter.getOutputPackage(), "java.", false));
         map.put("moduleName", autoGenerator.getPackageInfo().getModuleName());
 
         map.put("table", objectMap.get("table"));

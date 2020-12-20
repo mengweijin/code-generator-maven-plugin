@@ -1,10 +1,11 @@
 package com.github.mengweijin.generator.config;
 
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.FileOutConfig;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+
 import java.io.File;
 
 /**
@@ -37,7 +38,9 @@ public class FileOutConfigImpl extends FileOutConfig {
         StringBuilder outputPath = new StringBuilder();
         String outputDir = autoGenerator.getGlobalConfig().getOutputDir();
         outputPath.append(outputDir);
-        if(!outputDir.endsWith("/") && !outputDir.endsWith("\\")) {
+        if(!outputDir.endsWith(StrUtil.SLASH)
+                && !outputDir.endsWith(StrUtil.BACKSLASH)
+                && !outputDir.endsWith(StrUtil.DOT)) {
             outputPath.append(File.separator);
         }
         StringBuilder componentName = new StringBuilder();
@@ -51,11 +54,8 @@ public class FileOutConfigImpl extends FileOutConfig {
             }
         }
 
-        outputPath.append(tableInfo.getEntityName())
-                .append(componentName)
-                .append(StringPool.DOT)
-                .append(packageHierarchy[packageHierarchy.length - 2]);
-
-        return outputPath.toString();
+        outputPath.append(tableInfo.getEntityName()).append(componentName);
+        String path = StrUtil.replace(outputPath.toString(), StrUtil.DOT, StrUtil.SLASH);
+        return path + StrUtil.DOT + packageHierarchy[packageHierarchy.length - 2];
     }
 }
