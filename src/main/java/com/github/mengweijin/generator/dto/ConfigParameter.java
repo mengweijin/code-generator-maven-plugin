@@ -19,8 +19,8 @@ public class ConfigParameter {
 
     /**
      * default生成在src/test/java下。
-     * sample: com.github.mengweijin.aaaaaaaaaaa
-     * sample: com/github/mengweijin/aaaaaaaaaaa
+     * sample: com.github.mengweijin.generator
+     * sample: com/github/mengweijin/generator
      */
     private String outputPackage;
 
