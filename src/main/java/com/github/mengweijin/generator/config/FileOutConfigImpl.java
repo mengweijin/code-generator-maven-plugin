@@ -15,16 +15,24 @@ public class FileOutConfigImpl extends FileOutConfig {
 
     private final AutoGenerator autoGenerator;
 
+    private String templateName;
+
     /**
      *
      * @param autoGenerator
-     * @param templatePath E.g.:templates/jpa/controller.java.btl
+     * @param templateContent E.g.:templates/jpa/controller.java.btl 文件中的字符串内容。
      */
-    public FileOutConfigImpl(AutoGenerator autoGenerator, String templatePath) {
-        super(templatePath);
+    public FileOutConfigImpl(AutoGenerator autoGenerator, String templateContent, String templateName) {
+        super(templateContent);
         this.autoGenerator = autoGenerator;
+        this.templateName = templateName;
     }
 
+    /**
+     *
+     * @param tableInfo
+     * @return target/code-generator/controller/SysUserController.java
+     */
     @Override
     public String outputFile(TableInfo tableInfo) {
         StringBuilder outputPath = new StringBuilder();
@@ -34,7 +42,7 @@ public class FileOutConfigImpl extends FileOutConfig {
             outputPath.append(File.separator);
         }
         StringBuilder componentName = new StringBuilder();
-        String[] packageHierarchy = this.getTemplatePath().substring(this.getTemplatePath().lastIndexOf("/") + 1).split("\\.");
+        String[] packageHierarchy = this.templateName.split("\\.");
         if ("entity".equalsIgnoreCase(packageHierarchy[0])) {
             outputPath.append(packageHierarchy[0]).append(File.separator);
         } else {

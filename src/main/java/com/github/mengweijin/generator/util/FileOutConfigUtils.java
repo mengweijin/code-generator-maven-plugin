@@ -2,18 +2,14 @@ package com.github.mengweijin.generator.util;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.FileOutConfig;
 import com.github.mengweijin.generator.config.FileOutConfigImpl;
-import com.github.mengweijin.generator.dto.ConfigParameter;
 import com.github.mengweijin.generator.dto.DefaultConfigParameter;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -55,7 +51,8 @@ public class FileOutConfigUtils {
         fileList.forEach(file -> {
             // 自定义配置会被优先输出
             String templatePath = parameter.getBaseDir().getAbsolutePath() + File.separator + parameter.getTemplateLocation() + file.getName();
-            FileOutConfig fileOutConfig = new FileOutConfigImpl(autoGenerator, templatePath);
+            String templateName = file.getName();
+            FileOutConfig fileOutConfig = new FileOutConfigImpl(autoGenerator, templatePath, templateName);
             fileOutConfigList.add(fileOutConfig);
         });
 
@@ -65,24 +62,17 @@ public class FileOutConfigUtils {
     private static List<FileOutConfig> resolveByJarFile(AutoGenerator autoGenerator, DefaultConfigParameter parameter, JarFile jarFile) {
         List<FileOutConfig> fileOutConfigList = new ArrayList<>();
 
-        InputStream inputStream = null;
-        try {
-            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-            Enumeration<JarEntry> enumeration = jarFile.entries();
-            String jarEntryName;
-            while (enumeration.hasMoreElements()) {
-                jarEntryName = enumeration.nextElement().getName();
-                if (jarEntryName.startsWith(parameter.getTemplateLocation()) && !jarEntryName.endsWith("/")) {
-                    inputStream = classLoader.getResource(jarEntryName).openConnection().getInputStream();
-
-                    FileOutConfig fileOutConfig = new FileOutConfigImpl(autoGenerator, jarEntryName);
-                    fileOutConfigList.add(fileOutConfig);
-                }
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        Enumeration<JarEntry> enumeration = jarFile.entries();
+        String jarEntryName;
+        while (enumeration.hasMoreElements()) {
+            jarEntryName = enumeration.nextElement().getName();
+            if (jarEntryName.startsWith(parameter.getTemplateLocation()) && !jarEntryName.endsWith("/")) {
+                String templateContent = FileUtil.readString(classLoader.getResource(jarEntryName), "UTF-8");
+                String templateName = StrUtil.subAfter(jarEntryName, StrUtil.SLASH, true);
+                FileOutConfig fileOutConfig = new FileOutConfigImpl(autoGenerator, templateContent, templateName);
+                fileOutConfigList.add(fileOutConfig);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            IoUtil.close(inputStream);
         }
 
         return fileOutConfigList;

@@ -7,11 +7,11 @@ import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.TemplateConfig;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.AbstractTemplateEngine;
-import com.baomidou.mybatisplus.generator.engine.BeetlTemplateEngine;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
 import com.github.mengweijin.generator.dto.ConfigParameter;
 import com.github.mengweijin.generator.dto.DbInfo;
+import com.github.mengweijin.generator.engine.BeetlStringTemplateEngine;
 import com.github.mengweijin.generator.enums.TemplateType;
 
 /**
@@ -100,7 +100,7 @@ public class ConfigFactory {
             templateEngine = new FreemarkerTemplateEngine();
         } else {
             // default beetl
-            templateEngine = new BeetlTemplateEngine();
+            templateEngine = new BeetlStringTemplateEngine();
         }
 
         return templateEngine;

@@ -1,6 +1,5 @@
 package com.github.mengweijin.generator.mojo;
 
-import com.alibaba.fastjson.JSON;
 import com.github.mengweijin.generator.dto.DefaultConfigParameter;
 import com.github.mengweijin.generator.enums.Template;
 import com.github.mengweijin.generator.main.CodeGenerator;
@@ -21,7 +20,7 @@ public class JpaGeneratorMojo extends AbstractGeneratorMojo {
             DefaultConfigParameter defaultConfigParameter = this.getGeneratorConfig();
             defaultConfigParameter.initDefaultValue();
             defaultConfigParameter.setTemplateLocation(Template.JPA.getPath());
-            System.out.println("DefaultConfigParameter: " + JSON.toJSONString(defaultConfigParameter));
+            System.out.println("DefaultConfigParameter: " + defaultConfigParameter);
 
             new CodeGenerator(defaultConfigParameter).run();
         } catch (Exception e) {

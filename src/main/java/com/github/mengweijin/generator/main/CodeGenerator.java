@@ -1,6 +1,5 @@
 package com.github.mengweijin.generator.main;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.FileOutConfig;
@@ -8,7 +7,6 @@ import com.github.mengweijin.generator.config.ConfigFactory;
 import com.github.mengweijin.generator.config.InjectionConfigImpl;
 import com.github.mengweijin.generator.dto.DefaultConfigParameter;
 import com.github.mengweijin.generator.util.FileOutConfigUtils;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -53,7 +51,6 @@ public class CodeGenerator {
         // 模板引擎
         autoGenerator.setTemplateEngine(ConfigFactory.getTemplateEngine(parameter));
 
-        System.out.println("AutoGenerator: " + JSON.toJSONString(autoGenerator));
         autoGenerator.execute();
     }
 
