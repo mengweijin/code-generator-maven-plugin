@@ -2,12 +2,11 @@ package com.github.mengweijin.generator.util;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
 import com.baomidou.mybatisplus.generator.config.FileOutConfig;
-import com.github.mengweijin.generator.config.CustomerFileOutConfig;
 import com.github.mengweijin.generator.CodeGenerator;
 import com.github.mengweijin.generator.Parameters;
+import com.github.mengweijin.generator.config.CustomerFileOutConfig;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -52,14 +51,14 @@ public class FileOutConfigUtils {
         fileList.forEach(file -> {
             // 自定义配置会被优先输出
             String templatePath = codeGenerator.getBaseDir().getAbsolutePath() + File.separator + parameters.getTemplateLocation() + file.getName();
-            String templateName = file.getName();
-            FileOutConfig fileOutConfig = new CustomerFileOutConfig(codeGenerator, templatePath, templateName);
+            FileOutConfig fileOutConfig = new CustomerFileOutConfig(codeGenerator, templatePath);
             fileOutConfigList.add(fileOutConfig);
         });
 
         return fileOutConfigList;
     }
 
+    // TODO 在MOJO入口处，对jar包里面的模板文件先做拷贝到文件系统，然后统一使用文件系统绝对路径。就可以删除这个方法了
     private static List<FileOutConfig> resolveByJarFile(CodeGenerator codeGenerator, JarFile jarFile) {
         Parameters parameters = codeGenerator.getParameters();
         List<FileOutConfig> fileOutConfigList = new ArrayList<>();
@@ -70,9 +69,8 @@ public class FileOutConfigUtils {
         while (enumeration.hasMoreElements()) {
             jarEntryName = enumeration.nextElement().getName();
             if (jarEntryName.startsWith(parameters.getTemplateLocation()) && !jarEntryName.endsWith("/")) {
-                String templateContent = FileUtil.readString(classLoader.getResource(jarEntryName), "UTF-8");
-                String templateName = StrUtil.subAfter(jarEntryName, StrUtil.SLASH, true);
-                FileOutConfig fileOutConfig = new CustomerFileOutConfig(codeGenerator, templateContent, templateName);
+                String templatePath = FileUtil.readString(classLoader.getResource(jarEntryName), "UTF-8");
+                FileOutConfig fileOutConfig = new CustomerFileOutConfig(codeGenerator, templatePath);
                 fileOutConfigList.add(fileOutConfig);
             }
         }

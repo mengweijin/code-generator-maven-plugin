@@ -3,7 +3,7 @@ package com.github.mengweijin.generator.util;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.system.SystemUtil;
+import com.github.mengweijin.generator.CodeGenerator;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
@@ -30,7 +30,7 @@ public class YamlUtils {
             }
             return line;
         }).collect(Collectors.toList());
-        File tempFile = FileUtil.file(SystemUtil.get(SystemUtil.TMPDIR) + "code-generator/" + file.getName());
+        File tempFile = FileUtil.file(CodeGenerator.TMP_DIR + file.getName());
         FileUtil.writeLines(lineCollect, tempFile, StandardCharsets.UTF_8);
 
         Yaml yaml = new Yaml();

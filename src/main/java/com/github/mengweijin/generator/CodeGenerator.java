@@ -1,5 +1,7 @@
 package com.github.mengweijin.generator;
 
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.system.SystemUtil;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.FileOutConfig;
@@ -22,6 +24,8 @@ import java.util.List;
 @Data
 public class CodeGenerator {
 
+    public static final String TMP_DIR = SystemUtil.get(SystemUtil.TMPDIR) + "code-generator/";
+
     private AutoGenerator autoGenerator;
 
     private Parameters parameters;
@@ -42,21 +46,19 @@ public class CodeGenerator {
         autoGenerator.setPackageInfo(new DefaultPackageConfig(this));
         // Mybatis-plus自己的模板配置
         autoGenerator.setTemplate(new DefaultTemplateConfig(this));
-
         // 自定义配置, 会被优先输出
         InjectionConfig injectionConfig = new DefaultInjectionConfig(this);
         List<FileOutConfig> fileOutConfigList = FileOutConfigUtils.loadTemplatesToGetFileOutConfig(this);
-
-        // TODO check file exits.
         injectionConfig.setFileOutConfigList(fileOutConfigList);
         autoGenerator.setCfg(injectionConfig);
-
         // 策略配置
         autoGenerator.setStrategy(new DefaultStrategyConfig(this));
         // 模板引擎
         autoGenerator.setTemplateEngine(TemplateEngineFactory.getTemplateEngine(this.parameters.getTemplateType()));
 
         autoGenerator.execute();
-    }
 
+        // clean TMP folder
+        FileUtil.del(FileUtil.file(TMP_DIR));
+    }
 }

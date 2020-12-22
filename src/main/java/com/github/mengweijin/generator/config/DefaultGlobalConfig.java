@@ -37,5 +37,7 @@ public class DefaultGlobalConfig extends GlobalConfig {
         } else {
             this.setOutputDir(parameters.getOutputDir());
         }
+
+        this.setOpen(false);
     }
 }

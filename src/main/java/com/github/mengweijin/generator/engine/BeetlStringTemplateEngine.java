@@ -2,12 +2,10 @@ package com.github.mengweijin.generator.engine;
 
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.engine.AbstractTemplateEngine;
-import com.baomidou.mybatisplus.generator.engine.BeetlTemplateEngine;
 import org.beetl.core.Configuration;
 import org.beetl.core.GroupTemplate;
 import org.beetl.core.Template;
 import org.beetl.core.resource.StringTemplateResourceLoader;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
@@ -15,7 +13,7 @@ import java.util.Map;
 /**
  * @author mengweijin
  */
-public class BeetlStringTemplateEngine extends BeetlTemplateEngine {
+public class BeetlStringTemplateEngine extends CustomerAbstractTemplateEngine {
 
     private GroupTemplate groupTemplate;
 

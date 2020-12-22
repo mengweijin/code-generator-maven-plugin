@@ -14,23 +14,20 @@ public class CustomerFileOutConfig extends FileOutConfig {
 
     private final CodeGenerator codeGenerator;
 
-    private String templateName;
-
     /**
      *
      * @param codeGenerator
-     * @param templateContent E.g.:controller.java.btl 文件中的字符串内容。
+     * @param templatePath 绝对全路径
      */
-    public CustomerFileOutConfig(CodeGenerator codeGenerator, String templateContent, String templateName) {
-        super(templateContent);
+    public CustomerFileOutConfig(CodeGenerator codeGenerator, String templatePath) {
+        super(templatePath);
         this.codeGenerator = codeGenerator;
-        this.templateName = templateName;
     }
 
     /**
      *
      * @param tableInfo
-     * @return target/code-generator/controller/SysUserController.java
+     * @return 全路径名
      */
     @Override
     public String outputFile(TableInfo tableInfo) {
@@ -43,7 +40,8 @@ public class CustomerFileOutConfig extends FileOutConfig {
             outputPath.append(File.separator);
         }
         StringBuilder componentName = new StringBuilder();
-        String[] packageHierarchy = this.templateName.split("\\.");
+        String templateName = StrUtil.subAfter(this.getTemplatePath(), StrUtil.SLASH, true);
+        String[] packageHierarchy = templateName.split("\\.");
         if ("entity".equalsIgnoreCase(packageHierarchy[0])) {
             outputPath.append(packageHierarchy[0]).append(File.separator);
         } else {
