@@ -1,11 +1,7 @@
 package com.github.mengweijin.generator.mojo;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.lang.JarClassLoader;
-import cn.hutool.core.util.ClassLoaderUtil;
-import cn.hutool.core.util.ReflectUtil;
 import com.github.mengweijin.generator.dto.ConfigParameter;
 import com.github.mengweijin.generator.dto.DefaultConfigParameter;
 import lombok.Getter;
@@ -16,18 +12,11 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Optional;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
-import java.util.stream.Collectors;
 
 /**
  * @author mengweijin
@@ -74,39 +63,6 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo {
         return defaultConfigParameter;
     }
 
-    protected void loadParentProjectClass() {
-        try {
-            List<String> classpathElements = project.getCompileClasspathElements();
-            File file;
-            JarFile jarFile;
-            String jarEntryName;
-            for (String element : classpathElements) {
-                file = FileUtil.file(element);
-                if(element.endsWith("classes")) {
-                    List<File> classFileList = FileUtil.loopFiles(file)
-                            .stream()
-                            .filter(item -> item.getName().endsWith(".class"))
-                            .collect(Collectors.toList());
-                    for (File item : classFileList) {
-                        Class.forName(FileNameUtil.getName(item));
-                    }
-                } else if(element.endsWith(".jar")){
-                    jarFile = new JarFile(file);
-                    Enumeration<JarEntry> entries = jarFile.entries();
-                    while (entries.hasMoreElements()) {
-                        jarEntryName = entries.nextElement().getName();
-                        Class.forName(FileNameUtil.getName(jarEntryName));
-                    }
-                } else {
-                    // do nothing
-                }
-            }
-        } catch (Exception e) {
-            getLog().error("Load Parent Project Class to ClassLoader Error.");
-            throw new RuntimeException(e);
-        }
-    }
-
     protected void loadParentProjectClassToSystemClassLoader() {
         URLClassLoader urlLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
 
@@ -129,8 +85,6 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo {
     protected void loadParentProjectClassToJarClassLoader() {
         try {
             List<String> classpathElements = project.getCompileClasspathElements();
-            classpathElements.add(project.getBuild().getOutputDirectory());
-            classpathElements.add(project.getBuild().getTestOutputDirectory());
 
             URL[] urls = new URL[classpathElements.size()];
             for (int i = 0; i < classpathElements.size(); ++i) {
