@@ -1,30 +1,29 @@
 package com.github.mengweijin.generator.config;
 
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.FileOutConfig;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-
+import com.github.mengweijin.generator.CodeGenerator;
 import java.io.File;
 
 /**
  * @author mengweijin
  */
-public class FileOutConfigImpl extends FileOutConfig {
+public class CustomerFileOutConfig extends FileOutConfig {
 
-    private final AutoGenerator autoGenerator;
+    private final CodeGenerator codeGenerator;
 
     private String templateName;
 
     /**
      *
-     * @param autoGenerator
+     * @param codeGenerator
      * @param templateContent E.g.:controller.java.btl 文件中的字符串内容。
      */
-    public FileOutConfigImpl(AutoGenerator autoGenerator, String templateContent, String templateName) {
+    public CustomerFileOutConfig(CodeGenerator codeGenerator, String templateContent, String templateName) {
         super(templateContent);
-        this.autoGenerator = autoGenerator;
+        this.codeGenerator = codeGenerator;
         this.templateName = templateName;
     }
 
@@ -36,7 +35,7 @@ public class FileOutConfigImpl extends FileOutConfig {
     @Override
     public String outputFile(TableInfo tableInfo) {
         StringBuilder outputPath = new StringBuilder();
-        String outputDir = autoGenerator.getGlobalConfig().getOutputDir();
+        String outputDir = codeGenerator.getAutoGenerator().getGlobalConfig().getOutputDir();
         outputPath.append(outputDir);
         if(!outputDir.endsWith(StrUtil.SLASH)
                 && !outputDir.endsWith(StrUtil.BACKSLASH)

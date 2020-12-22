@@ -1,9 +1,8 @@
 package com.github.mengweijin.generator.mojo;
 
-import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.JarClassLoader;
-import com.github.mengweijin.generator.dto.ConfigParameter;
-import com.github.mengweijin.generator.dto.DefaultConfigParameter;
+import com.github.mengweijin.generator.CodeGenerator;
+import com.github.mengweijin.generator.Parameters;
 import lombok.Getter;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.model.Resource;
@@ -25,7 +24,7 @@ import java.util.Optional;
 public abstract class AbstractGeneratorMojo extends AbstractMojo {
 
     @Parameter
-    private ConfigParameter configParameter;
+    private Parameters parameters;
 
     @Parameter(defaultValue = "${project}")
     private MavenProject project;
@@ -51,19 +50,18 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo {
     @Parameter(defaultValue = "${session}", readonly = true)
     private MavenSession session;
 
-    protected DefaultConfigParameter getGeneratorConfig() {
-        this.loadParentProjectClassToSystemClassLoader();
-        this.configParameter = Optional.ofNullable(this.configParameter).orElse(new ConfigParameter());
-        DefaultConfigParameter defaultConfigParameter = BeanUtil.copyProperties(configParameter, DefaultConfigParameter.class);
-        defaultConfigParameter.setMavenSession(this.getSession());
-        defaultConfigParameter.setMavenProject(this.getProject());
-        defaultConfigParameter.setResourceList(this.getResources());
-        defaultConfigParameter.setBaseDir(this.baseDir);
-        defaultConfigParameter.setSourceDir(this.sourceDir);
-        return defaultConfigParameter;
+    protected CodeGenerator getCodeGenerator() {
+        this.loadParentProjectClassToJarClassLoader();
+        this.parameters = Optional.ofNullable(this.parameters).orElse(new Parameters());
+        CodeGenerator codeGenerator = new CodeGenerator();
+        codeGenerator.setParameters(this.parameters);
+        codeGenerator.setResourceList(this.getResources());
+        codeGenerator.setBaseDir(this.baseDir);
+        codeGenerator.setSourceDir(this.sourceDir);
+        return codeGenerator;
     }
 
-    protected void loadParentProjectClassToSystemClassLoader() {
+    protected void loadParentProjectClassToApplicationClassLoader() {
         URLClassLoader urlLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
 
         try {
@@ -92,7 +90,6 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo {
             }
             JarClassLoader jarClassLoader = new JarClassLoader(urls);
             Thread.currentThread().setContextClassLoader(jarClassLoader);
-
         } catch (Exception e) {
             getLog().error("Load Parent Project Class to ClassLoader Error.");
             throw new RuntimeException(e);
