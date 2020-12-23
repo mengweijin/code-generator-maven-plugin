@@ -27,7 +27,7 @@ public class FileOutConfigUtils {
         if (CollectionUtil.isEmpty(templateFileList)) {
             throw new RuntimeException("No template files found in location " + parameters.getTemplateLocation());
         } else {
-            String message = "Found " + templateFileList.size() + "template files in location " + parameters.getTemplateLocation();
+            String message = "Found " + templateFileList.size() + " template files in location " + parameters.getTemplateLocation();
             System.out.println(message);
         }
 
