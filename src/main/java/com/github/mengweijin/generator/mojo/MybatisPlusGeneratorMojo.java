@@ -21,7 +21,9 @@ public class MybatisPlusGeneratorMojo extends AbstractGeneratorMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
             CodeGenerator codeGenerator = this.getCodeGenerator();
-            codeGenerator.getParameters().setTemplateLocation(Template.MYBATIS_PLUS.getPath());
+
+            String templateLocation = CodeGenerator.TMP_DIR + Template.MYBATIS_PLUS.getPath();
+            codeGenerator.getParameters().setTemplateLocation(templateLocation);
             codeGenerator.getParameters().setSuperDaoClass(BaseMapper);
             codeGenerator.getParameters().setSuperServiceClass(IService);
             codeGenerator.getParameters().setSuperServiceImplClass(ServiceImpl);
@@ -31,4 +33,5 @@ public class MybatisPlusGeneratorMojo extends AbstractGeneratorMojo {
             throw new RuntimeException(e);
         }
     }
+
 }

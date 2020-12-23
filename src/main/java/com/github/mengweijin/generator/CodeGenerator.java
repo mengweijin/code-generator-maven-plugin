@@ -4,17 +4,17 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.system.SystemUtil;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
-import com.baomidou.mybatisplus.generator.config.FileOutConfig;
-import com.github.mengweijin.generator.config.DefaultInjectionConfig;
-import com.github.mengweijin.generator.util.FileOutConfigUtils;
 import com.github.mengweijin.generator.config.DefaultDataSourceConfig;
 import com.github.mengweijin.generator.config.DefaultGlobalConfig;
+import com.github.mengweijin.generator.config.DefaultInjectionConfig;
 import com.github.mengweijin.generator.config.DefaultPackageConfig;
 import com.github.mengweijin.generator.config.DefaultStrategyConfig;
 import com.github.mengweijin.generator.config.DefaultTemplateConfig;
 import com.github.mengweijin.generator.factory.TemplateEngineFactory;
+import com.github.mengweijin.generator.util.FileOutConfigUtils;
 import lombok.Data;
 import org.apache.maven.model.Resource;
+
 import java.io.File;
 import java.util.List;
 
@@ -48,8 +48,7 @@ public class CodeGenerator {
         autoGenerator.setTemplate(new DefaultTemplateConfig(this));
         // 自定义配置, 会被优先输出
         InjectionConfig injectionConfig = new DefaultInjectionConfig(this);
-        List<FileOutConfig> fileOutConfigList = FileOutConfigUtils.loadTemplatesToGetFileOutConfig(this);
-        injectionConfig.setFileOutConfigList(fileOutConfigList);
+        injectionConfig.setFileOutConfigList(FileOutConfigUtils.loadTemplatesToGetFileOutConfig(this));
         autoGenerator.setCfg(injectionConfig);
         // 策略配置
         autoGenerator.setStrategy(new DefaultStrategyConfig(this));

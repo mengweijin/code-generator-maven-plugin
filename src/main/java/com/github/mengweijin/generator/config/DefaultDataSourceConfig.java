@@ -10,7 +10,6 @@ import com.github.mengweijin.generator.CodeGenerator;
 import com.github.mengweijin.generator.DbInfo;
 import com.github.mengweijin.generator.reader.BootFileReaderFactory;
 import org.apache.maven.model.Resource;
-
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -64,7 +63,6 @@ public class DefaultDataSourceConfig extends DataSourceConfig {
     private DbInfo generateDefaultDbInfo() {
         List<Resource> resourceList = codeGenerator.getResourceList();
         Resource resource = resourceList.stream().filter(res -> res.getDirectory().endsWith("\\resources")).findFirst().get();
-        //File bootstrapFile = this.getBootFile(resource, BOOTSTRAP_FILE);
 
         File applicationFile = this.getBootFile(resource, APPLICATION_FILE);
         if (applicationFile == null) {
