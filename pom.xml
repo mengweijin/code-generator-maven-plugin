@@ -59,6 +59,18 @@
             <version>${beetl.version}</version>
         </dependency>
         <dependency>
+            <!--如果不引入这个，beetl会报错，找不到这个类：javax.servlet.http.HttpServletRequest
+            beetl: GroupTemplate.java ******* initTag() ******* 251行
+                   this.registerTag(name, ObjectUtil.getClassByName(clsName, this.classLoader));
+
+            发生的现象是：我自己定义了一个类加载器，用这个类加载器来执行beetl模板引擎，发生了错误。
+            但是，在普通项目中，不自定义类加载器，运行是正常的。具体原因不明。
+            -->
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <version>9.0.39</version>
+        </dependency>
+        <dependency>
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity-engine-core</artifactId>
             <version>${velocity.version}</version>

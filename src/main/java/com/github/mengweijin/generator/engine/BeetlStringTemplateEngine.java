@@ -1,8 +1,8 @@
 package com.github.mengweijin.generator.engine;
 
+import cn.hutool.core.io.FileUtil;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.engine.AbstractTemplateEngine;
-import com.baomidou.mybatisplus.generator.engine.BeetlTemplateEngine;
 import org.beetl.core.Configuration;
 import org.beetl.core.GroupTemplate;
 import org.beetl.core.Template;
@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * @author mengweijin
  */
-public class BeetlStringTemplateEngine extends BeetlTemplateEngine {
+public class BeetlStringTemplateEngine extends AbstractTemplateEngine {
 
     private GroupTemplate groupTemplate;
 
@@ -24,29 +24,27 @@ public class BeetlStringTemplateEngine extends BeetlTemplateEngine {
         super.init(configBuilder);
         try {
             Configuration cfg = Configuration.defaultConfiguration();
-            StringTemplateResourceLoader resourceLoader = new StringTemplateResourceLoader();
-            groupTemplate = new GroupTemplate(resourceLoader, cfg);
+            groupTemplate = new GroupTemplate(new StringTemplateResourceLoader(), cfg);
         } catch (IOException e) {
-            logger.error(e.getMessage(), e);
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return this;
     }
 
-    /**
-     *
-     * @param objectMap
-     * @param templateString template String
-     * @param outputFile
-     * @throws Exception
-     */
     @Override
-    public void writer(Map<String, Object> objectMap, String templateString, String outputFile) throws Exception {
-        Template template = groupTemplate.getTemplate(templateString);
+    public void writer(Map<String, Object> objectMap, String templatePath, String outputFile) throws Exception {
+        // read template content from template path
+        String templateContent = FileUtil.readUtf8String(templatePath);
+        Template template = groupTemplate.getTemplate(templateContent);
         try (FileOutputStream fileOutputStream = new FileOutputStream(outputFile)) {
             template.binding(objectMap);
             template.renderTo(fileOutputStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        logger.debug("文件:" + outputFile);
+        System.out.println("模板:" + templatePath + ";  文件:" + outputFile);
     }
 
     @Override

@@ -1,50 +1,52 @@
 package com.github.mengweijin.generator.config;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.FileOutConfig;
+import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-
+import com.github.mengweijin.generator.CodeGenerator;
 import java.io.File;
 
 /**
  * @author mengweijin
  */
-public class FileOutConfigImpl extends FileOutConfig {
+public class CustomerFileOutConfig extends FileOutConfig {
 
-    private final AutoGenerator autoGenerator;
-
-    private String templateName;
+    private final CodeGenerator codeGenerator;
 
     /**
      *
-     * @param autoGenerator
-     * @param templateContent E.g.:controller.java.btl 文件中的字符串内容。
+     * @param codeGenerator
+     * @param templatePath 绝对全路径
      */
-    public FileOutConfigImpl(AutoGenerator autoGenerator, String templateContent, String templateName) {
-        super(templateContent);
-        this.autoGenerator = autoGenerator;
-        this.templateName = templateName;
+    public CustomerFileOutConfig(CodeGenerator codeGenerator, String templatePath) {
+        super(templatePath);
+        this.codeGenerator = codeGenerator;
     }
 
     /**
      *
      * @param tableInfo
-     * @return target/code-generator/controller/SysUserController.java
+     * @return 全路径名
      */
     @Override
     public String outputFile(TableInfo tableInfo) {
-        StringBuilder outputPath = new StringBuilder();
-        String outputDir = autoGenerator.getGlobalConfig().getOutputDir();
-        outputPath.append(outputDir);
-        if(!outputDir.endsWith(StrUtil.SLASH)
-                && !outputDir.endsWith(StrUtil.BACKSLASH)
-                && !outputDir.endsWith(StrUtil.DOT)) {
+        String outputDir = codeGenerator.getAutoGenerator().getGlobalConfig().getOutputDir();
+        StringBuilder outputPath = new StringBuilder(outputDir);
+
+        if(!outputDir.endsWith(StrUtil.SLASH) && !outputDir.endsWith(StrUtil.BACKSLASH)) {
             outputPath.append(File.separator);
         }
+        PackageConfig packageConfig = codeGenerator.getAutoGenerator().getPackageInfo();
+        if(!StrUtil.isBlank(packageConfig.getParent())) {
+            outputPath.append(packageConfig.getParent()).append(File.separator);
+        }
+
         StringBuilder componentName = new StringBuilder();
-        String[] packageHierarchy = this.templateName.split("\\.");
+        File templateFile = FileUtil.file(this.getTemplatePath());
+        String[] packageHierarchy = templateFile.getName().split("\\.");
         if ("entity".equalsIgnoreCase(packageHierarchy[0])) {
             outputPath.append(packageHierarchy[0]).append(File.separator);
         } else {

@@ -1,28 +1,23 @@
-package com.github.mengweijin.generator.dto;
+package com.github.mengweijin.generator;
 
 import com.github.mengweijin.generator.enums.TemplateType;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 /**
  * @author mengweijin
  */
 @Data
-@Accessors(chain = true)
-public class ConfigParameter {
+public class Parameters {
+
+    private String outputPackage;
 
     private String author;
 
     private String templateLocation;
 
-    private TemplateType templateType;
+    private TemplateType templateType = TemplateType.beetl;
 
-    /**
-     * default生成在src/test/java下。
-     * sample: com.github.mengweijin.generator
-     * sample: com/github/mengweijin/generator
-     */
-    private String outputPackage;
+    private DbInfo dbInfo;
 
     private String[] tables;
 
@@ -34,6 +29,4 @@ public class ConfigParameter {
     private String superServiceImplClass;
     private String superControllerClass;
     private String[] superEntityColumns;
-
-    private DbInfo dbInfo;
 }

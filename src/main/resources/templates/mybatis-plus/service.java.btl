@@ -1,6 +1,6 @@
-package ${basePackage}.service;
+package ${package.Service};
 
-import ${basePackage}.entity.${entityName};
+import ${package.Entity}.${entity};
 import ${superServiceClassPackage};
 
 /**
@@ -11,6 +11,10 @@ import ${superServiceClassPackage};
  * @author ${author}
  * @since ${date}
  */
-public interface ${entityName}Service <% if(isNotEmpty(superServiceName)){ %>extends ${superServiceName}<${entityName}><% } %> {
+<% if(kotlin){ %>
+interface ${table.serviceName} : ${superServiceClass}<${entity}>
+<% }else{ %>
+public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
 
 }
+<% } %>

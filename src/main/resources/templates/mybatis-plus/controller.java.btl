@@ -1,104 +1,39 @@
-package ${basePackage}.controller;
+package ${package.Controller};
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestMapping;
+
+<% if(restControllerStyle){ %>
 import org.springframework.web.bind.annotation.RestController;
-import javax.validation.Valid;
-import org.hibernate.validator.constraints.Range;
-import ${basePackage}.service.${entityName}Service;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+<% }else{ %>
+import org.springframework.stereotype.Controller;
+<% } %>
 <% if(isNotEmpty(superControllerClassPackage)){ %>
 import ${superControllerClassPackage};
 <% } %>
-import ${basePackage}.entity.${entityName};
 
 /**
  * <p>
- * ${entityName} Controller
+ * ${table.comment!} 前端控制器
  * </p>
  *
  * @author ${author}
- * @date ${date}
+ * @since ${date}
  */
-@Slf4j
-@Validated
+<% if(restControllerStyle){ %>
 @RestController
-@RequestMapping("<% if(isNotEmpty(moduleName)){ %>/${moduleName}<% } %>/${entityVariableName}")
-public class ${entityName}Controller <% if(isNotEmpty(superControllerName)){ %>extends ${superControllerName}<% } %> {
-
-    /**
-     * <p>
-     * ${entityName}Service
-     * </p>
-     */
-    @Autowired
-    private ${entityName}Service ${entityVariableName}Service;
-
-    /**
-     * <p>
-     * Get ${entityName} by id
-     * </p>
-     * @param id id
-     * @return ${entityName}
-     */
-    @GetMapping("/{id}")
-    public ${entityName} getById(@Valid @Range @PathVariable("id") Long id) {
-        return ${entityVariableName}Service.getById(id);
-    }
-
-    /**
-     * <p>
-     * Get ${entityName} page list by ${entityName}
-     * </p>
-     * @param page page
-     * @param ${entityVariableName} ${entityVariableName}
-     * @return IPage<${entityName}>
-     */
-    @GetMapping
-    public IPage<${entityName}> getPage(IPage<${entityName}> page, @Valid ${entityName} ${entityVariableName}) {
-        return ${entityVariableName}Service.page(page, new QueryWrapper<>(${entityVariableName}));
-    }
-
-    /**
-     * <p>
-     * Add ${entityName}
-     * </p>
-     * @param ${entityVariableName} ${entityVariableName}
-     */
-    @PostMapping
-    public void add(@Valid @RequestBody ${entityName} ${entityVariableName}) {
-        ${entityVariableName}Service.save(${entityVariableName});
-    }
-
-    /**
-     * <p>
-     * Update ${entityName}
-     * </p>
-     * @param ${entityVariableName} ${entityVariableName}
-     */
-    @PutMapping
-    public void update(@Valid @RequestBody ${entityName} ${entityVariableName}) {
-        ${entityVariableName}Service.updateById(${entityVariableName});
-    }
-
-    /**
-     * <p>
-     * Delete ${entityName} by id
-     * </p>
-     * @param id id
-     */
-    @DeleteMapping("/{id}")
-    public void delete(@Valid @Range @PathVariable("id") Long id) {
-        ${entityVariableName}Service.removeById(id);
-    }
+<% }else{ %>
+@Controller
+<% } %>
+@RequestMapping("<% if(isNotEmpty(package.ModuleName)){ %>/${package.ModuleName}<% } %>/<% if(isNotEmpty(controllerMappingHyphenStyle)){ %>${controllerMappingHyphen}<% }else{ %>${table.entityPath}<% } %>")
+<% if(kotlin){ %>
+class ${table.controllerName}<% if(isNotEmpty(superControllerClass)){ %> : ${superControllerClass}()<% } %>
+<% }else{ %>
+    <% if(isNotEmpty(superControllerClass)){ %>
+public class ${table.controllerName} extends ${superControllerClass} {
+    <% }else{ %>
+public class ${table.controllerName} {
+    <% } %>
 
 }
+<% } %>

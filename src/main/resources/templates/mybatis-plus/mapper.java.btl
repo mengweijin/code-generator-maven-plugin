@@ -1,20 +1,20 @@
-package ${basePackage}.mapper;
+package ${package.Mapper};
 
-import ${basePackage}.entity.${entityName};
-<% if(isNotEmpty(superDaoClassPackage)){ %>
-import ${superDaoClassPackage};
-<% } %>
-import org.apache.ibatis.annotations.Mapper;
+import ${package.Entity}.${entity};
+import ${superMapperClassPackage};
 
 /**
  * <p>
- * ${table.comment!} Mapper
+ * ${table.comment!} Mapper 接口
  * </p>
  *
  * @author ${author}
- * @date ${date}
+ * @since ${date}
  */
-@Mapper
-public interface ${entityName}Mapper <% if(isNotEmpty(superDaoName)){ %>extends ${superDaoName}<${entityName}><% } %> {
+<% if(kotlin){ %>
+interface ${table.mapperName} : ${superMapperClass}<${entity}>
+<% }else{ %>
+public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
 
 }
+<% } %>
