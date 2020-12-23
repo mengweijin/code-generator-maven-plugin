@@ -3,6 +3,7 @@ package com.github.mengweijin.generator.config;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileNameUtil;
+import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
@@ -10,11 +11,13 @@ import com.github.mengweijin.generator.CodeGenerator;
 import com.github.mengweijin.generator.DbInfo;
 import com.github.mengweijin.generator.reader.BootFileReaderFactory;
 import org.apache.maven.model.Resource;
+
 import java.io.File;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * @author mengweijin
@@ -105,8 +108,22 @@ public class DefaultDataSourceConfig extends DataSourceConfig {
         Connection conn;
         try {
             Class.forName(this.getDriverName(), true, Thread.currentThread().getContextClassLoader());
-            conn = DriverManager.getConnection(this.getUrl(), this.getUsername(), this.getPassword());
-        } catch (ClassNotFoundException | SQLException e) {
+
+            Properties info = new Properties();
+            if (this.getUsername() != null) {
+                info.put("user", this.getUsername());
+            }
+            if (this.getPassword() != null) {
+                info.put("password", this.getPassword());
+            }
+
+            Method method = ReflectUtil.getMethod(
+                    DriverManager.class,
+                    "getConnection",
+                    String.class, Properties.class, Class.class);
+            method.setAccessible(true);
+            conn = ReflectUtil.invokeStatic(method, this.getUrl(), info, null);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return conn;

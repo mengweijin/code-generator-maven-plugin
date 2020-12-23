@@ -1,7 +1,6 @@
 package com.github.mengweijin.generator.config;
 
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.system.SystemUtil;
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;
 import com.github.mengweijin.generator.CodeGenerator;
@@ -31,13 +30,9 @@ public class DefaultGlobalConfig extends GlobalConfig {
 
         this.setAuthor(Optional.ofNullable(parameters.getAuthor()).orElse(SystemUtil.getUserInfo().getName()));
 
-        if(StrUtil.isBlank(parameters.getOutputDir())) {
-            File output = FileUtil.file(baseDir, "target/code-generator/");
-            this.setOutputDir(output.getAbsolutePath());
-        } else {
-            this.setOutputDir(parameters.getOutputDir());
-        }
-
+        File output = FileUtil.file(baseDir, "target/code-generator/");
+        this.setOutputDir(output.getAbsolutePath());
+        this.setFileOverride(true);
         this.setOpen(false);
     }
 }

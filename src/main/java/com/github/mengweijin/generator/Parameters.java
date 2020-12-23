@@ -9,10 +9,7 @@ import lombok.Data;
 @Data
 public class Parameters {
 
-    /**
-     * Absolute path
-     */
-    private String outputDir;
+    private String outputPackage;
 
     private String author;
 

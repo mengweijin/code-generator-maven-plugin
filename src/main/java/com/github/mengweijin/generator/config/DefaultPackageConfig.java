@@ -19,7 +19,6 @@ public class DefaultPackageConfig extends PackageConfig {
      * Initialize the default parameter.
      */
     public void init() {
-        //String moduleName = StrUtil.subAfter(parameter.getOutputDir(), StrUtil.SLASH, true);
         this.setParent("com.github.mengweijin");
         this.setModuleName(null);
         this.setEntity(null);
