@@ -36,6 +36,7 @@ public class DefaultStrategyConfig extends StrategyConfig {
         this.setInclude(parameters.getTables());
         this.setTablePrefix(parameters.getTablePrefix());
 
+
         this.setSuperEntityClass(parameters.getSuperEntityClass());
 
         if (this.getSuperEntityClass() != null && this.getSuperEntityColumns() == null) {

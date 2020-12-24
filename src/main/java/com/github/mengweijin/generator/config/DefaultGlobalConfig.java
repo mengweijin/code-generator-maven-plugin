@@ -34,5 +34,7 @@ public class DefaultGlobalConfig extends GlobalConfig {
         this.setOutputDir(output.getAbsolutePath());
         this.setFileOverride(true);
         this.setOpen(false);
+        this.setBaseResultMap(true);
+        this.setBaseColumnList(true);
     }
 }

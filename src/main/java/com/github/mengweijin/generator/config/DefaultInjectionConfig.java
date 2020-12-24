@@ -22,6 +22,8 @@ public class DefaultInjectionConfig extends InjectionConfig {
 
     @Override
     public Map<String, Object> prepareObjectMap(Map<String, Object> objectMap) {
+        objectMap.remove("package");
+        objectMap.put("autoGenerator", codeGenerator.getAutoGenerator());
         return objectMap;
     }
 }

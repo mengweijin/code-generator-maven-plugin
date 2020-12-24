@@ -1,6 +1,6 @@
-package ${package.Mapper};
+package ${autoGenerator.packageInfo.parent}.mapper;
 
-import ${package.Entity}.${entity};
+import ${autoGenerator.packageInfo.parent}.entity;
 import ${superMapperClassPackage};
 
 /**
@@ -12,9 +12,9 @@ import ${superMapperClassPackage};
  * @since ${date}
  */
 <% if(kotlin){ %>
-interface ${table.mapperName} : ${superMapperClass}<${entity}>
+interface ${entity}Mapper : ${superMapperClass}<${entity}>
 <% }else{ %>
-public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
+public interface ${entity}Mapper extends ${superMapperClass}<${entity}> {
 
 }
 <% } %>
