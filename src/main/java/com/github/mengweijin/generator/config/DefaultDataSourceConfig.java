@@ -72,14 +72,16 @@ public class DefaultDataSourceConfig extends DataSourceConfig {
             throw new RuntimeException("Can't find any file " + JSON.toJSONString(APPLICATION_FILE));
         }
         String activeProfilesEnv = BootFileReaderFactory.getActiveProfilesEnv(applicationFile);
-        DbInfo dbInfo;
-        if (StrUtil.isBlank(activeProfilesEnv)) {
-            dbInfo = BootFileReaderFactory.getDbInfo(applicationFile);
-        } else {
+        DbInfo dbInfo = null;
+        if(StrUtil.isNotBlank(activeProfilesEnv)) {
             String activeBootFilePath = resource.getDirectory() + File.separator +
                     "application-" + activeProfilesEnv + StrUtil.DOT + FileNameUtil.getSuffix(applicationFile);
             File activeBootFile = FileUtil.file(activeBootFilePath);
             dbInfo = BootFileReaderFactory.getDbInfo(activeBootFile);
+        }
+
+        if(dbInfo == null) {
+            dbInfo = BootFileReaderFactory.getDbInfo(applicationFile);
         }
 
         return dbInfo;

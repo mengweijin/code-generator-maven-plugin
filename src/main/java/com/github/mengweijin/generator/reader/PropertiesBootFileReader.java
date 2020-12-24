@@ -23,10 +23,15 @@ public class PropertiesBootFileReader implements BootFileReader {
 
     @Override
     public DbInfo getDbInfo(File file) {
-        DbInfo dbInfo = new DbInfo();
         try {
             Props props = new Props(file.toURI().toURL(), StandardCharsets.UTF_8);
-            dbInfo.setUrl(props.getStr(SPRING_DATASOURCE_URL));
+            String url = props.getStr(SPRING_DATASOURCE_URL);
+            if(StrUtil.isBlank(url)) {
+                return null;
+            }
+
+            DbInfo dbInfo = new DbInfo();
+            dbInfo.setUrl(url);
             String driverName = props.getStr(SPRING_DATASOURCE_DRIVERCLASSNAME);
             if (StrUtil.isBlank(driverName)) {
                 driverName = props.getStr(SPRING_DATASOURCE_DRIVER_CLASS_NAME);
@@ -34,10 +39,11 @@ public class PropertiesBootFileReader implements BootFileReader {
             dbInfo.setDriverName(driverName);
             dbInfo.setUsername(props.getStr(SPRING_DATASOURCE_USERNAME));
             dbInfo.setPassword(props.getStr(SPRING_DATASOURCE_PASSWORD));
+
+            return dbInfo;
         } catch (MalformedURLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        return dbInfo;
     }
 }

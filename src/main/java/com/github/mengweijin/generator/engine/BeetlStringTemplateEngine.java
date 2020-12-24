@@ -7,7 +7,6 @@ import org.beetl.core.Configuration;
 import org.beetl.core.GroupTemplate;
 import org.beetl.core.Template;
 import org.beetl.core.resource.StringTemplateResourceLoader;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
@@ -23,7 +22,7 @@ public class BeetlStringTemplateEngine extends AbstractTemplateEngine {
     public AbstractTemplateEngine init(ConfigBuilder configBuilder) {
         super.init(configBuilder);
         try {
-            Configuration cfg = Configuration.defaultConfiguration();
+            Configuration cfg = new Configuration(ClassLoader.getSystemClassLoader());
             groupTemplate = new GroupTemplate(new StringTemplateResourceLoader(), cfg);
         } catch (IOException e) {
             e.printStackTrace();

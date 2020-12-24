@@ -20,8 +20,13 @@ public class YamlBootFileReader implements BootFileReader {
 
     @Override
     public DbInfo getDbInfo(File file) {
-        DbInfo dbInfo = new DbInfo();
         LinkedHashMap map = YamlUtils.loadAs(file, LinkedHashMap.class);
+        Object datasource = JSONPath.eval(map, "$.spring.datasource");
+        if(datasource == null) {
+            return null;
+        }
+
+        DbInfo dbInfo = new DbInfo();
         Object url = JSONPath.eval(map, "$." + SPRING_DATASOURCE_URL);
         Object driverName = JSONPath.eval(map, "$." + SPRING_DATASOURCE_DRIVERCLASSNAME);
         if (driverName == null) {
