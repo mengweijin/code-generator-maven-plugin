@@ -16,7 +16,8 @@ public class MybatisGeneratorMojo extends AbstractGeneratorMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
             CodeGenerator codeGenerator = this.getCodeGenerator();
-            codeGenerator.getParameters().setTemplateLocation(Template.MYBATIS.getPath());
+            String templateLocation = CodeGenerator.TMP_DIR + Template.MYBATIS.getPath();
+            codeGenerator.getParameters().setTemplateLocation(templateLocation);
             codeGenerator.run();
         } catch (Exception e) {
             getLog().error(e);

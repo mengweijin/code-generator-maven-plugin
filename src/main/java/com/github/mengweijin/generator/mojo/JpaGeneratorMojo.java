@@ -19,7 +19,8 @@ public class JpaGeneratorMojo extends AbstractGeneratorMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
             CodeGenerator codeGenerator = this.getCodeGenerator();
-            codeGenerator.getParameters().setTemplateLocation(Template.JPA.getPath());
+            String templateLocation = CodeGenerator.TMP_DIR + Template.JPA.getPath();
+            codeGenerator.getParameters().setTemplateLocation(templateLocation);
             codeGenerator.getParameters().setSuperDaoClass(JpaRepository);
             codeGenerator.run();
         } catch (Exception e) {
