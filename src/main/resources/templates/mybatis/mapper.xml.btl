@@ -13,7 +13,7 @@
 <% for(field in table.fields){ %>
    <% /** 生成主键排在第一位 **/ %>
    <% if(field.keyFlag){ %>
-        <id column="${field.name}" property="${field.propertyName}" />
+   <id column="${field.name}" property="${field.propertyName}" />
    <% } %>
 <% } %>
 <% for(field in table.commonFields){ %>
@@ -23,7 +23,7 @@
 <% for(field in table.fields){ %>
    <% /** 生成普通字段 **/ %>
    <% if(!field.keyFlag){ %>
-        <result column="${field.name}" property="${field.propertyName}" />
+   <result column="${field.name}" property="${field.propertyName}" />
    <% } %>
 <% } %>
     </resultMap>
@@ -49,7 +49,7 @@
     </sql>
 
 <% } %>
-    <select id="getById" parameterType="${idPropertyType}" resultMap="BaseResultMap">
+    <select id="getById" parameterType="java.io.Serializable" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from ${table.name}
@@ -95,14 +95,14 @@
         </where>
     </update>
 
-    <delete id="removeById" parameterType="${idPropertyType}">
+    <delete id="removeById" parameterType="java.io.Serializable">
         delete from ${table.name}
         <where>
             ${idField.name} = #{${idField.propertyName}}
         </where>
     </delete>
 
-    <delete id="deleteBatchByIds" parameterType="${idPropertyType}">
+    <delete id="deleteBatchByIds" parameterType="java.io.Serializable">
         delete from ${table.name} where ${idField.name} in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}

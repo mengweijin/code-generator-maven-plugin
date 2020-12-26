@@ -5,6 +5,7 @@ import ${autoGenerator.packageInfo.parent}.entity.${entity};
 import ${superServiceClassPackage};
 <% } %>
 import java.util.List;
+import java.io.Serializable;
 
 /**
  * <p>
@@ -18,11 +19,11 @@ public interface ${entity}Service {
 
     /**
      * <p>
-     * Find ${entity} by ${idField.propertyName}
+     * Find ${entity} by id
      * </p>
      * @param id id
      */
-    ${entity} getById(${idPropertyType!} id);
+    ${entity} getById(Serializable id);
 
     /**
      * <p>
@@ -54,5 +55,5 @@ public interface ${entity}Service {
      * </p>
      * @param id id
      */
-    void removeById(${idPropertyType!} id);
+    void removeById(Serializable id);
 }

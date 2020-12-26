@@ -13,7 +13,7 @@
 <% for(field in table.fields){ %>
    <% /** 生成主键排在第一位 **/ %>
    <% if(field.keyFlag){ %>
-        <id column="${field.name}" property="${field.propertyName}" />
+   <id column="${field.name}" property="${field.propertyName}" />
    <% } %>
 <% } %>
 <% for(field in table.commonFields){ %>
@@ -23,7 +23,7 @@
 <% for(field in table.fields){ %>
    <% /** 生成普通字段 **/ %>
    <% if(!field.keyFlag){ %>
-        <result column="${field.name}" property="${field.propertyName}" />
+   <result column="${field.name}" property="${field.propertyName}" />
    <% } %>
 <% } %>
     </resultMap>

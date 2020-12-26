@@ -54,6 +54,7 @@ public class ${entity} implements Serializable {
     /**
      * ${field.comment!}
      */
+        <% } %>
     <% } %>
     private ${field.propertyType} ${field.propertyName};
 <% } %>
