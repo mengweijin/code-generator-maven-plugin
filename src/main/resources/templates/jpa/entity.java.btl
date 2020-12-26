@@ -1,20 +1,23 @@
-package ${basePackage}.entity;
+package ${autoGenerator.packageInfo.parent}.entity;
 
 <% if(isNotEmpty(superEntityClassPackage)){ %>
 import ${superEntityClassPackage};
 <% }else{ %>
 import java.io.Serializable;
 <% } %>
+<% if(swagger2){ %>
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+<% } %>
+<% if(entityLombokModel){ %>
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+<% } %>
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-<% for(pkg in fieldImportPackages){ %>
-import ${pkg};
-<% } %>
 
 /**
  * <p>
@@ -22,30 +25,42 @@ import ${pkg};
  * </p>
  *
  * @author ${author}
- * @date ${date}
+ * @since ${date}
  */
+<% if(entityLombokModel){ %>
 @Data
-@Accessors(chain = true)
-<% if(isNotEmpty(superEntityName)){ %>
+    <% if(isNotEmpty(superEntityClass)){ %>
 @EqualsAndHashCode(callSuper = true)
-<% }else{ %>
+    <% }else{ %>
 @EqualsAndHashCode(callSuper = false)
+    <% } %>
+@Accessors(chain = true)
+<% } %>
+<% if(swagger2){ %>
+@ApiModel(value="${entity}对象", description="${table.comment!''}")
 <% } %>
 @Entity
 @Table(name = "${table.name}")
-<% if(isNotEmpty(superEntityName)){ %>
-public class ${entityName} extends ${superEntityName} {
+<% if(isNotEmpty(superEntityClass)){ %>
+public class ${entity} extends ${superEntityClass} {
 <% }else{ %>
-public class ${entityName} implements Serializable {
+public class ${entity} implements Serializable {
 <% } %>
+
+<% if(entitySerialVersionUID){ %>
     private static final long serialVersionUID = 1L;
+<% } %>
 <% /** -----------BEGIN 字段循环遍历----------- **/ %>
 <% for(field in table.fields){ %>
 
     <% if(isNotEmpty(field.comment)){ %>
+        <% if(swagger2){ %>
+    @ApiModelProperty(value = "${field.comment}")
+        <% }else{ %>
     /**
-     * ${field.comment}
+     * ${field.comment!}
      */
+        <% } %>
     <% } %>
     <% if(field.keyFlag){ %>
     @Id
@@ -56,4 +71,62 @@ public class ${entityName} implements Serializable {
 <% } %>
 <% /** -----------END 字段循环遍历----------- **/ %>
 
+<% if(!entityLombokModel){ %>
+    <% for(field in table.fields){ %>
+        <%
+        var getprefix ='';
+        if(field.propertyType=='boolean'){
+            getprefix='is';
+        }else{
+            getprefix='get';
+        }
+        %>
+    public ${field.propertyType} ${getprefix}${field.capitalName}() {
+        return ${field.propertyName};
+    }
+
+        <% if(entityBuilderModel){ %>
+    public ${entity} set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
+        <% }else{ %>
+    public void set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
+        <% } %>
+        this.${field.propertyName} = ${field.propertyName};
+        <% if(entityBuilderModel){ %>
+        return this;
+        <% } %>
+    }
+
+    <% } %>
+<% } %>
+<% if(entityColumnConstant){ %>
+   <% for(field in table.fields){ %>
+    public static final String ${strutil.toUpperCase(field.name)} = "${field.name}";
+
+   <% } %>
+<% } %>
+<% if(activeRecord){ %>
+    @Override
+    protected Serializable pkVal() {
+    <% if(isNotEmpty(keyPropertyName)){ %>
+        return this.${keyPropertyName};
+    <% }else{ %>
+        return null;
+    <% } %>
+    }
+
+<% } %>
+<% if(!entityLombokModel){ %>
+    @Override
+    public String toString() {
+        return "${entity}{" +
+    <% for(field in table.fields){ %>
+       <% if(fieldLP.index==0){ %>
+        "${field.propertyName}=" + ${field.propertyName} +
+       <% }else{ %>
+        ", ${field.propertyName}=" + ${field.propertyName} +
+       <% } %>
+    <% } %>
+        "}";
+    }
+<% } %>
 }

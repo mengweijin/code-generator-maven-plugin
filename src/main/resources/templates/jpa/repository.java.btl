@@ -1,20 +1,21 @@
-package ${basePackage}.repository;
+package ${autoGenerator.packageInfo.parent}.repository;
 
-<% if(isNotEmpty(superDaoClassPackage)){ %>
-import ${superDaoClassPackage};
+import ${autoGenerator.packageInfo.parent}.entity;
+<% if(isNotEmpty(superMapperClassPackage)){ %>
+import ${superMapperClassPackage};
 <% } %>
 import org.springframework.stereotype.Repository;
-import ${basePackage}.entity.${entityName};
+import java.io.Serializable;
 
 /**
  * <p>
- * ${entityName} Repository
+ * ${entity} Repository Interface
  * </p>
  *
  * @author ${author}
- * @date ${date}
+ * @since ${date}
  */
 @Repository
-public interface ${entityName}Repository <% if(isNotEmpty(superDaoName)){ %>extends ${superDaoName}<${entityName}, ${idPropertyType!}><% } %> {
+public interface ${entity}Repository extends ${superMapperClass}<${entity}, Serializable> {
 
 }

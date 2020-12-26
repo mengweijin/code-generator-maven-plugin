@@ -1,28 +1,32 @@
-package ${basePackage}.service.impl;
+package ${autoGenerator.packageInfo.parent}.service.impl;
 
-<% if(isNotEmpty(superServiceImplClassPackage)){ %>
-import ${superServiceImplClassPackage};
+<% if(entityLombokModel){ %>
+import lombok.extern.slf4j.Slf4j;
 <% } %>
+import ${autoGenerator.packageInfo.parent}.entity.${entity};
+import ${autoGenerator.packageInfo.parent}.repository.${entity}Repository;
+import ${autoGenerator.packageInfo.parent}.service.${entity}Service;
+import ${superServiceImplClassPackage};
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ${basePackage}.entity.${entityName};
-import ${basePackage}.repository.${entityName}Repository;
-import ${basePackage}.service.${entityName}Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
- * ${entityName} Service implement
+ * ${table.comment!} implement
  * </p>
  *
  * @author ${author}
- * @date ${date}
+ * @since ${date}
  */
+<% if(entityLombokModel){ %>
+@Slf4j
+<% } %>
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class ${entityName}ServiceImpl <% if(isNotEmpty(superServiceImplName)){ %>extends ${superServiceImplName}<${entityName}, ${idPropertyType!}, ${entityName}Repository><% } %> implements ${entityName}Service {
+public class ${entity}ServiceImpl implements ${entity}Service {
 
     @Autowired
-    private ${entityName}Repository ${entityVariableName}Repository;
+    private ${entity}Repository ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Repository;
 
 }

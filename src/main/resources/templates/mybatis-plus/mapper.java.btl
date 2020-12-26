@@ -1,7 +1,9 @@
 package ${autoGenerator.packageInfo.parent}.mapper;
 
 import ${autoGenerator.packageInfo.parent}.entity;
+<% if(isNotEmpty(superMapperClassPackage)){ %>
 import ${superMapperClassPackage};
+<% } %>
 import org.apache.ibatis.annotations.Mapper;
 
 /**

@@ -1,7 +1,7 @@
 package ${autoGenerator.packageInfo.parent}.service;
 
 import ${autoGenerator.packageInfo.parent}.entity.${entity};
-<% if(isNotEmpty(superEntityClassPackage)){ %>
+<% if(isNotEmpty(superServiceClassPackage)){ %>
 import ${superServiceClassPackage};
 <% } %>
 import java.util.List;

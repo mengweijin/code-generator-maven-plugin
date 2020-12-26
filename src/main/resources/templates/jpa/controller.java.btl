@@ -1,111 +1,130 @@
-package ${basePackage}.controller;
+package ${autoGenerator.packageInfo.parent}.controller;
 
+<% if(entityLombokModel){ %>
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+<% } %>
+import javax.validation.Valid;
 import org.springframework.validation.annotation.Validated;
+import org.hibernate.validator.constraints.Range;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+<% if(restControllerStyle){ %>
 import org.springframework.web.bind.annotation.RestController;
-import javax.validation.Valid;
-import org.hibernate.validator.constraints.Range;
-import ${basePackage}.service.${entityName}Service;
+<% }else{ %>
+import org.springframework.stereotype.Controller;
+<% } %>
 <% if(isNotEmpty(superControllerClassPackage)){ %>
 import ${superControllerClassPackage};
 <% } %>
-import ${basePackage}.entity.${entityName};
+import ${autoGenerator.packageInfo.parent}.entity.${entity};
+import ${autoGenerator.packageInfo.parent}.service.${entity}Service;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import java.util.Optional;
-import com.github.mengweijin.mwjwork.jpa.page.Pager;
+
 
 /**
  * <p>
- * ${entityName} Controller
+ * ${table.comment!} Controller
  * </p>
  *
  * @author ${author}
- * @date ${date}
+ * @since ${date}
  */
+<% if(entityLombokModel){ %>
 @Slf4j
+<% } %>
 @Validated
+<% if(restControllerStyle){ %>
 @RestController
-@RequestMapping("<% if(isNotEmpty(moduleName)){ %>/${moduleName}<% } %>/${entityVariableName}")
-public class ${entityName}Controller <% if(isNotEmpty(superControllerName)){ %>extends ${superControllerName}<% } %> {
+<% }else{ %>
+@Controller
+<% } %>
+@RequestMapping("<% if(isNotEmpty(package.ModuleName)){ %>/${package.ModuleName}<% } %>/<% if(isNotEmpty(controllerMappingHyphenStyle)){ %>${controllerMappingHyphen}<% }else{ %>${table.entityPath}<% } %>")
+<% if(kotlin){ %>
+class ${entity}Controller<% if(isNotEmpty(superControllerClass)){ %> : ${superControllerClass}()<% } %>
+<% }else{ %>
+    <% if(isNotEmpty(superControllerClass)){ %>
+public class ${entity}Controller extends ${superControllerClass} {
+    <% }else{ %>
+public class ${entity}Controller {
+    <% } %>
 
     /**
      * <p>
-     * ${entityName}Service
+     * ${entity}Service
      * </p>
      */
     @Autowired
-    private ${entityName}Service ${entityVariableName}Service;
+    private ${entity}Service ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service;
 
     /**
      * <p>
-     * Get ${entityName} by id
+     * Get ${entity} by id
      * </p>
      * @param id id
-     * @return ${entityName}
+     * @return ${entity}
      */
     @GetMapping("/{id}")
-    public Optional<${entityName}> getById(@Valid @Range @PathVariable("id") Long id) {
-        return ${entityVariableName}Service.findById(id);
+    public Optional<${entity}> getById(@Valid @Range @PathVariable("id") Long id) {
+        return ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.findById(id);
     }
 
     /**
      * <p>
-     * Get ${entityName} page list by ${entityName}
+     * Get ${entity} page list by ${entity}
      * </p>
-     * @param pager pager
-     * @param ${entityVariableName} ${entityVariableName}
-     * @return IPage<${entityName}>
+     * @param page page
+     * @param ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}
+     * @return IPage<${entity}>
      */
     @GetMapping
-    public Page<${entityName}> getPage(Pager<?> pager, @Valid ${entityName} ${entityVariableName}) {
+    public Page<${entity}> getPage(Page<?> page, @Valid ${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}) {
         Sort sort = Sort.by(Sort.Direction.DESC, "createTime");
         Pageable pageable = PageRequest.of(pager.getCurrent(), pager.getSize(), sort);
-        return ${entityVariableName}Service.findAll(Example.of(${entityVariableName}), pageable);
+        return ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.findAll(Example.of(${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}), pageable);
     }
 
     /**
      * <p>
-     * Add ${entityName}
+     * Add ${entity}
      * </p>
-     * @param ${entityVariableName} ${entityVariableName}
+     * @param ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}
      */
     @PostMapping
-    public void add(@Valid @RequestBody ${entityName} ${entityVariableName}) {
-        ${entityVariableName}Service.save(${entityVariableName});
+    public void add(@Valid @RequestBody ${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}) {
+        ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.save(${@cn.hutool.core.util.StrUtil.lowerFirst(entity)});
     }
 
     /**
      * <p>
-     * Update ${entityName}
+     * Update ${entity}
      * </p>
-     * @param ${entityVariableName} ${entityVariableName}
+     * @param ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}
      */
     @PutMapping
-    public void update(@Valid @RequestBody ${entityName} ${entityVariableName}) {
-        ${entityVariableName}Service.save(${entityVariableName});
+    public void update(@Valid @RequestBody ${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}) {
+        ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.save(${@cn.hutool.core.util.StrUtil.lowerFirst(entity)});
     }
 
     /**
      * <p>
-     * Delete ${entityName} by id
+     * Delete ${entity} by id
      * </p>
      * @param id id
      */
     @DeleteMapping("/{id}")
     public void delete(@Valid @Range @PathVariable("id") Long id) {
-        ${entityVariableName}Service.deleteById(id);
+        ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.deleteById(id);
     }
 
 }
