@@ -9,16 +9,26 @@ import lombok.Data;
 @Data
 public class Parameters {
 
+    /**
+     * default: com.github.mengweijin
+     */
     private String outputPackage;
 
     private String author;
 
+    /**
+     * The absolute path to the folder.
+     */
     private String templateLocation;
 
     private TemplateType templateType = TemplateType.beetl;
 
     private DbInfo dbInfo;
 
+    /**
+     * For example: SYS_USER, SYS_ROLE
+     * Note: Separated by commas.
+     */
     private String[] tables;
 
     private String[] tablePrefix;

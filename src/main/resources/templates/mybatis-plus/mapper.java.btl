@@ -2,6 +2,7 @@ package ${autoGenerator.packageInfo.parent}.mapper;
 
 import ${autoGenerator.packageInfo.parent}.entity;
 import ${superMapperClassPackage};
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import ${superMapperClassPackage};
  * @author ${author}
  * @since ${date}
  */
+@Mapper
 <% if(kotlin){ %>
 interface ${entity}Mapper : ${superMapperClass}<${entity}>
 <% }else{ %>

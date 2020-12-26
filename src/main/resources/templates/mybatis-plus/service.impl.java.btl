@@ -1,10 +1,15 @@
-package ${package.ServiceImpl};
+package ${autoGenerator.packageInfo.parent}.service.impl;
 
-import ${package.Entity}.${entity};
-import ${package.Mapper}.${table.mapperName};
-import ${package.Service}.${table.serviceName};
+<% if(entityLombokModel){ %>
+import lombok.extern.slf4j.Slf4j;
+<% } %>
+import ${autoGenerator.packageInfo.parent}.entity.${entity};
+import ${autoGenerator.packageInfo.parent}.mapper.${entity}Mapper;
+import ${autoGenerator.packageInfo.parent}.service.${entity}Service;
 import ${superServiceImplClassPackage};
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -14,14 +19,24 @@ import org.springframework.stereotype.Service;
  * @author ${author}
  * @since ${date}
  */
+<% if(entityLombokModel){ %>
+@Slf4j
+<% } %>
 @Service
+@Transactional(rollbackFor = Exception.class)
 <% if(kotlin){ %>
-open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
+open class ${entity}ServiceImpl : ${superServiceImplClass}<${entity}Mapper, ${entity}>(), ${entity}Service {
 
 }
 <% }else{ %>
-public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+public class ${entity}ServiceImpl extends ${superServiceImplClass}<${entity}Mapper, ${entity}> implements ${entity}Service {
 
-    private ${entity}Mapper ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}
+    /**
+     * <p>
+     * ${entity}Mapper
+     * </p>
+     */
+    @Autowired
+    private ${entity}Mapper ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Mapper;
 }
 <% } %>

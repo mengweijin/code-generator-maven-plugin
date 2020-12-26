@@ -31,6 +31,9 @@ public class DefaultGlobalConfig extends GlobalConfig {
         this.setAuthor(Optional.ofNullable(parameters.getAuthor()).orElse(SystemUtil.getUserInfo().getName()));
 
         File output = FileUtil.file(baseDir, "target/code-generator/");
+        // Clean up the files that were generated last time.
+        System.out.println("Clean up the folder " + output.getAbsolutePath());
+        FileUtil.del(output);
         this.setOutputDir(output.getAbsolutePath());
         this.setFileOverride(true);
         this.setOpen(false);

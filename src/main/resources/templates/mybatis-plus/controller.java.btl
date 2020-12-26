@@ -1,8 +1,19 @@
 package ${autoGenerator.packageInfo.parent}.controller;
 
-
+<% if(entityLombokModel){ %>
+import lombok.extern.slf4j.Slf4j;
+<% } %>
+import javax.validation.Valid;
+import org.springframework.validation.annotation.Validated;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 <% if(restControllerStyle){ %>
 import org.springframework.web.bind.annotation.RestController;
 <% }else{ %>
@@ -11,6 +22,9 @@ import org.springframework.stereotype.Controller;
 <% if(isNotEmpty(superControllerClassPackage)){ %>
 import ${superControllerClassPackage};
 <% } %>
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import ${autoGenerator.packageInfo.parent}.entity.${entity};
+import ${autoGenerator.packageInfo.parent}.service.${entity}Service;
 
 /**
  * <p>
@@ -20,6 +34,9 @@ import ${superControllerClassPackage};
  * @author ${author}
  * @since ${date}
  */
+<% if(entityLombokModel){ %>
+@Slf4j
+<% } %>
 <% if(restControllerStyle){ %>
 @RestController
 <% }else{ %>
@@ -27,13 +44,79 @@ import ${superControllerClassPackage};
 <% } %>
 @RequestMapping("<% if(isNotEmpty(package.ModuleName)){ %>/${package.ModuleName}<% } %>/<% if(isNotEmpty(controllerMappingHyphenStyle)){ %>${controllerMappingHyphen}<% }else{ %>${table.entityPath}<% } %>")
 <% if(kotlin){ %>
-class ${table.controllerName}<% if(isNotEmpty(superControllerClass)){ %> : ${superControllerClass}()<% } %>
+class ${entity}Controller<% if(isNotEmpty(superControllerClass)){ %> : ${superControllerClass}()<% } %>
 <% }else{ %>
     <% if(isNotEmpty(superControllerClass)){ %>
-public class ${table.controllerName} extends ${superControllerClass} {
+public class ${entity}Controller extends ${superControllerClass} {
     <% }else{ %>
-public class ${table.controllerName} {
+public class ${entity}Controller {
     <% } %>
+
+    /**
+     * <p>
+     * ${entity}Service
+     * </p>
+     */
+    @Autowired
+    private ${entity}Service ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service;
+
+    /**
+     * <p>
+     * Get ${entity} by id
+     * </p>
+     * @param id id
+     * @return ${entity}
+     */
+    @GetMapping("/{id}")
+    public ${entity} getById(@Valid @Range @PathVariable("id") Long id) {
+        return ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.getById(id);
+    }
+
+    /**
+     * <p>
+     * Get ${entity} page list by ${entity}
+     * </p>
+     * @param page page
+     * @param ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}
+     * @return IPage<${entity}>
+     */
+    @GetMapping
+    public IPage<${entity}> getPage(IPage<${entity}> page, @Valid ${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}) {
+        return ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.page(page, new QueryWrapper<>(${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}));
+    }
+
+    /**
+     * <p>
+     * Add ${entity}
+     * </p>
+     * @param ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}
+     */
+    @PostMapping
+    public void add(@Valid @RequestBody ${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}) {
+        ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.save(${@cn.hutool.core.util.StrUtil.lowerFirst(entity)});
+    }
+
+    /**
+     * <p>
+     * Update ${entity}
+     * </p>
+     * @param ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}
+     */
+    @PutMapping
+    public void update(@Valid @RequestBody ${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}) {
+        ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.updateById(${@cn.hutool.core.util.StrUtil.lowerFirst(entity)});
+    }
+
+    /**
+     * <p>
+     * Delete ${entity} by id
+     * </p>
+     * @param id id
+     */
+    @DeleteMapping("/{id}")
+    public void delete(@Valid @Range @PathVariable("id") Long id) {
+        ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.removeById(id);
+    }
 
 }
 <% } %>
