@@ -1,89 +1,101 @@
-package ${basePackage}.controller;
+package ${autoGenerator.packageInfo.parent}.controller;
 
+<% if(entityLombokModel){ %>
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+<% } %>
+import javax.validation.Valid;
 import org.springframework.validation.annotation.Validated;
+import org.hibernate.validator.constraints.Range;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+<% if(restControllerStyle){ %>
 import org.springframework.web.bind.annotation.RestController;
-import javax.validation.Valid;
-import org.hibernate.validator.constraints.Range;
-import ${basePackage}.service.${entityName}Service;
+<% }else{ %>
+import org.springframework.stereotype.Controller;
+<% } %>
 <% if(isNotEmpty(superControllerClassPackage)){ %>
 import ${superControllerClassPackage};
 <% } %>
-import ${basePackage}.entity.${entityName};
+import ${autoGenerator.packageInfo.parent}.entity.${entity};
+import ${autoGenerator.packageInfo.parent}.service.${entity}Service;
 
 /**
  * <p>
- * ${entityName} Controller
+ * ${table.comment!} Controller
  * </p>
  *
  * @author ${author}
- * @date ${date}
+ * @since ${date}
  */
+<% if(entityLombokModel){ %>
 @Slf4j
+<% } %>
 @Validated
+<% if(restControllerStyle){ %>
 @RestController
-@RequestMapping("<% if(isNotEmpty(moduleName)){ %>/${moduleName}<% } %>/${entityVariableName}")
-public class ${entityName}Controller <% if(isNotEmpty(superControllerName)){ %>extends ${superControllerName}<% } %> {
+<% }else{ %>
+@Controller
+<% } %>
+@RequestMapping("<% if(isNotEmpty(moduleName)){ %>/${moduleName}<% } %>/${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}")
+public class ${entity}Controller <% if(isNotEmpty(superControllerName)){ %>extends ${superControllerName}<% } %> {
 
     /**
      * <p>
-     * ${entityName}Service
+     * ${entity}Service
      * </p>
      */
     @Autowired
-    private ${entityName}Service ${entityVariableName}Service;
+    private ${entity}Service ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service;
 
     /**
      * <p>
-     * Get ${entityName} by id
+     * Get ${entity} by id
      * </p>
      * @param id id
-     * @return ${entityName}
+     * @return ${entity}
      */
     @GetMapping("/{id}")
-    public ${entityName} getById(@Valid @Range @PathVariable("id") Long id) {
-        return ${entityVariableName}Service.getById(id);
+    public ${entity} getById(@Valid @Range @PathVariable("id") Long id) {
+        return ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.getById(id);
     }
 
     /**
      * <p>
-     * Add ${entityName}
+     * Add ${entity}
      * </p>
-     * @param ${entityVariableName} ${entityVariableName}
+     * @param ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}
      */
     @PostMapping
-    public void add(@Valid @RequestBody ${entityName} ${entityVariableName}) {
-        ${entityVariableName}Service.save(${entityVariableName});
+    public void add(@Valid @RequestBody ${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}) {
+        ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.save(${@cn.hutool.core.util.StrUtil.lowerFirst(entity)});
     }
 
     /**
      * <p>
-     * Update ${entityName}
+     * Update ${entity}
      * </p>
-     * @param ${entityVariableName} ${entityVariableName}
+     * @param ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}
      */
     @PutMapping
-    public void update(@Valid @RequestBody ${entityName} ${entityVariableName}) {
-        ${entityVariableName}Service.updateById(${entityVariableName});
+    public void update(@Valid @RequestBody ${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}) {
+        ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.updateById(${@cn.hutool.core.util.StrUtil.lowerFirst(entity)});
     }
 
     /**
      * <p>
-     * Delete ${entityName} by id
+     * Delete ${entity} by id
      * </p>
      * @param id id
      */
     @DeleteMapping("/{id}")
     public void delete(@Valid @Range @PathVariable("id") Long id) {
-        ${entityVariableName}Service.removeById(id);
+        ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.removeById(id);
     }
 
 }

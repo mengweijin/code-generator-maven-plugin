@@ -1,53 +1,56 @@
-package ${basePackage}.service;
+package ${autoGenerator.packageInfo.parent}.service;
 
-import ${basePackage}.entity.${entityName};
+import ${autoGenerator.packageInfo.parent}.entity.${entity};
+<% if(isNotEmpty(superEntityClassPackage)){ %>
+import ${superServiceClassPackage};
+<% } %>
 import java.util.List;
 
 /**
  * <p>
- * ${entityName} Service
+ * ${entity} Service
  * </p>
  *
  * @author ${author}
- * @date ${date}
+ * @since ${date}
  */
-public interface ${entityName}Service {
+public interface ${entity}Service {
 
     /**
      * <p>
-     * Find ${entityName} by ${idField.propertyName}
+     * Find ${entity} by ${idField.propertyName}
      * </p>
      * @param id id
      */
-    ${entityName} getById(${idPropertyType!} id);
+    ${entity} getById(${idPropertyType!} id);
 
     /**
      * <p>
-     * Select List<${entityName}>
+     * Select List<${entity}>
      * </p>
-     * @param ${entityVariableName} ${entityVariableName}
+     * @param ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}
      */
-    List<${entityName}> list(${entityName} ${entityVariableName});
+    List<${entity}> list(${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)});
 
     /**
      * <p>
-     * Add ${entityName}
+     * Add ${entity}
      * </p>
-     * @param ${entityVariableName} ${entityVariableName}
+     * @param ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}
      */
-    void save(${entityName} ${entityVariableName});
+    void save(${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)});
 
     /**
      * <p>
-     * Update ${entityName}
+     * Update ${entity}
      * </p>
-     * @param ${entityVariableName} ${entityVariableName}
+     * @param ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}
      */
-    void updateById(${entityName} ${entityVariableName});
+    void updateById(${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)});
 
     /**
      * <p>
-     * Delete ${entityName} by id
+     * Delete ${entity} by id
      * </p>
      * @param id id
      */

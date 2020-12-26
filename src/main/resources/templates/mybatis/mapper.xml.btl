@@ -1,34 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="${basePackage}.mapper.${entityName}Mapper">
+<mapper namespace="${autoGenerator.packageInfo.parent}.mapper.${entity}Mapper">
 
+<% if(enableCache){ %>
+    <!-- 开启二级缓存 -->
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+
+<% } %>
+<% if(baseResultMap){ %>
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="${basePackage}.entity.${entityName}">
-    <% for(field in allFieldList){ %>
-    <% /** 生成主键排在第一位 **/ %>
-       <% if(field.keyFlag){ %>
-       <id column="${field.name}" property="${field.propertyName}" />
-       <% } %>
-    <% } %>
-    <% for(field in allFieldList){ %>
-       <% /** 生成普通字段 **/ %>
-       <% if(!field.keyFlag){ %>
-       <result column="${field.name}" property="${field.propertyName}" />
-       <% } %>
-    <% } %>
+    <resultMap id="BaseResultMap" type="${autoGenerator.packageInfo.parent}.entity.${entity}">
+<% for(field in table.fields){ %>
+   <% /** 生成主键排在第一位 **/ %>
+   <% if(field.keyFlag){ %>
+        <id column="${field.name}" property="${field.propertyName}" />
+   <% } %>
+<% } %>
+<% for(field in table.commonFields){ %>
+    <% /** 生成公共字段 **/ %>
+    <result column="${field.name}" property="${field.propertyName}" />
+<% } %>
+<% for(field in table.fields){ %>
+   <% /** 生成普通字段 **/ %>
+   <% if(!field.keyFlag){ %>
+        <result column="${field.name}" property="${field.propertyName}" />
+   <% } %>
+<% } %>
     </resultMap>
-
+<% } %>
+<% if(baseColumnList){ %>
     <!-- 通用查询结果列 -->
-    <sql id="SelectVO">
-        select
-        <% for(field in allFieldList){ %>
-            ${field.name}<% if(!fieldLP.last){ %>,<%}%>
-        <% } %>
-        from ${table.name}
+    <sql id="Base_Column_List">
+<% for(field in table.commonFields){ %>
+        ${field.name},
+<% } %>
+        ${table.fieldNames}
     </sql>
 
     <!-- 查询条件 -->
-    <sql id="SQLWhereSearch">
+    <sql id="Where_Condition">
         <where>
             <% for(field in allFieldList){ %>
             <if test="${field.propertyName} != null<% if(field.columnType=="STRING"){ %> and ${field.propertyName} != ''<%}%>">
@@ -38,19 +48,24 @@
         </where>
     </sql>
 
+<% } %>
     <select id="getById" parameterType="${idPropertyType}" resultMap="BaseResultMap">
-        <include refid="SelectVO"/>
+        select
+        <include refid="Base_Column_List"/>
+        from ${table.name}
         <where>
             ${idField.name} = #{${idField.propertyName}}
         </where>
     </select>
 
-    <select id="selectList" parameterType="${basePackage}.entity.${entityName}" resultMap="BaseResultMap">
-        <include refid="SelectVO"/>
-        <include refid="SQLWhereSearch"/>
+    <select id="selectList" parameterType="${autoGenerator.packageInfo.parent}.entity.${entity}" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ${table.name}
+        <include refid="Where_Condition"/>
     </select>
 
-    <insert id="save" parameterType="${basePackage}.entity.${entityName}">
+    <insert id="save" parameterType="${autoGenerator.packageInfo.parent}.entity.${entity}">
         insert into ${table.name} (
             <% for(field in allFieldList){ %>
             <if test="${field.propertyName} != null<% if(field.columnType=="STRING"){ %> and ${field.propertyName} != ''<%}%>">
@@ -66,7 +81,7 @@
 		)
     </insert>
 
-    <update id="updateById" parameterType="${basePackage}.entity.${entityName}">
+    <update id="updateById" parameterType="${autoGenerator.packageInfo.parent}.entity.${entity}">
         update ${table.name}
         <set>
             <% for(field in allFieldList){ %>

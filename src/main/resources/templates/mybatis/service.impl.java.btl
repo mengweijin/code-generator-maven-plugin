@@ -1,80 +1,92 @@
-package ${basePackage}.service.impl;
+package ${autoGenerator.packageInfo.parent}.service.impl;
 
+<% if(entityLombokModel){ %>
+import lombok.extern.slf4j.Slf4j;
+<% } %>
+import ${autoGenerator.packageInfo.parent}.entity.${entity};
+import ${autoGenerator.packageInfo.parent}.mapper.${entity}Mapper;
+import ${autoGenerator.packageInfo.parent}.service.${entity}Service;
+import ${superServiceImplClassPackage};
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ${basePackage}.entity.${entityName};
-import ${basePackage}.mapper.${entityName}Mapper;
-import ${basePackage}.service.${entityName}Service;
-import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 /**
  * <p>
- * ${entityName} Service implement
+ * ${entity} Service implement
  * </p>
  *
  * @author ${author}
- * @date ${date}
+ * @since ${date}
  */
+<% if(entityLombokModel){ %>
+@Slf4j
+<% } %>
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class ${entityName}ServiceImpl implements ${entityName}Service {
-
-    @Autowired
-    private ${entityName}Mapper ${entityVariableName}Mapper;
+public class ${entity}ServiceImpl implements ${entity}Service {
 
     /**
      * <p>
-     * Select ${entityName} by ${idField.propertyName}
+     * ${entity}Mapper
+     * </p>
+     */
+    @Autowired
+    private ${entity}Mapper ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Mapper;
+
+    /**
+     * <p>
+     * Select ${entity} by ${idField.propertyName}
      * </p>
      * @param id id
      */
     @Override
-    public ${entityName} getById(${idPropertyType!} id) {
-        return ${entityVariableName}Mapper.getById(id);
+    public ${entity} getById(${idPropertyType!} id) {
+        return ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Mapper.getById(id);
     }
 
     /**
      * <p>
-     * Select List<${entityName}>
+     * Select List<${entity}>
      * </p>
-     * @param ${entityVariableName} ${entityVariableName}
+     * @param ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}
      */
     @Override
-    public List<${entityName}> list(${entityName} ${entityVariableName}) {
-        return ${entityVariableName}Mapper.selectList(${entityVariableName});
+    public List<${entity}> list(${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}) {
+        return ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Mapper.selectList(${@cn.hutool.core.util.StrUtil.lowerFirst(entity)});
     }
 
     /**
      * <p>
-     * Add ${entityName}
+     * Add ${entity}
      * </p>
-     * @param ${entityVariableName} ${entityVariableName}
+     * @param ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}
      */
     @Override
-    public void save(${entityName} ${entityVariableName}) {
-        ${entityVariableName}Mapper.save(${entityVariableName});
+    public void save(${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}) {
+        ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Mapper.save(${@cn.hutool.core.util.StrUtil.lowerFirst(entity)});
     }
 
     /**
      * <p>
-     * Update ${entityName}
+     * Update ${entity}
      * </p>
-     * @param ${entityVariableName} ${entityVariableName}
+     * @param ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}
      */
     @Override
-    public void updateById(${entityName} ${entityVariableName}) {
-        ${entityVariableName}Mapper.updateById(${entityVariableName});
+    public void updateById(${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}) {
+        ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Mapper.updateById(${@cn.hutool.core.util.StrUtil.lowerFirst(entity)});
     }
 
     /**
      * <p>
-     * Delete ${entityName} by ${idField.propertyName}
+     * Delete ${entity} by ${idField.propertyName}
      * </p>
      * @param id id
      */
     @Override
     public void removeById(${idPropertyType!} id) {
-        ${entityVariableName}Mapper.removeById(id);
+        ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Mapper.removeById(id);
     }
 }

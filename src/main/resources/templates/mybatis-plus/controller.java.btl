@@ -22,13 +22,13 @@ import org.springframework.stereotype.Controller;
 <% if(isNotEmpty(superControllerClassPackage)){ %>
 import ${superControllerClassPackage};
 <% } %>
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import ${autoGenerator.packageInfo.parent}.entity.${entity};
 import ${autoGenerator.packageInfo.parent}.service.${entity}Service;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 
 /**
  * <p>
- * ${table.comment!} 前端控制器
+ * ${table.comment!} Controller
  * </p>
  *
  * @author ${author}
@@ -37,6 +37,7 @@ import ${autoGenerator.packageInfo.parent}.service.${entity}Service;
 <% if(entityLombokModel){ %>
 @Slf4j
 <% } %>
+@Validated
 <% if(restControllerStyle){ %>
 @RestController
 <% }else{ %>

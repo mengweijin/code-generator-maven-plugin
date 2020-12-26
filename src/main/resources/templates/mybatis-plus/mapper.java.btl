@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
- * ${table.comment!} Mapper 接口
+ * ${table.comment!} Mapper Interface
  * </p>
  *
  * @author ${author}

@@ -1,8 +1,12 @@
-package ${basePackage}.mapper;
+package ${autoGenerator.packageInfo.parent}.mapper;
 
-import java.util.List;
-import ${basePackage}.entity.${entityName};
+import ${autoGenerator.packageInfo.parent}.entity;
+<% if(isNotEmpty(superMapperClassPackage)){ %>
+import ${superMapperClassPackage};
+<% } %>
 import org.apache.ibatis.annotations.Mapper;
+import java.util.List;
+import java.io.Serializable;
 
 /**
  * <p>
@@ -10,58 +14,58 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author ${author}
- * @date ${date}
+ * @since ${date}
  */
 @Mapper
-public interface ${entityName}Mapper {
+public interface ${entity}Mapper {
 
     /**
-     * select ${entityName} by ${idField.propertyName}
+     * select ${entity} by id
      *
      * @param id id
-     * @return ${entityName}
+     * @return ${entity}
      */
-    ${entityName} getById(${idPropertyType} id);
+    ${entity} getById(Serializable id);
 
     /**
-     * select ${entityName} List
+     * select ${entity} List
      *
-     * @param ${entityVariableName} ${entityVariableName}
-     * @return ${entityName}
+     * @param ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}
+     * @return ${entity}
      */
-    List<${entityName}> selectList(${entityName} ${entityVariableName});
+    List<${entity}> selectList(${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)});
 
     /**
-     * insert ${entityName}
+     * insert ${entity}
      *
-     * @param ${entityVariableName} ${entityVariableName}
+     * @param ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}
      * @return int
      */
-    int save(${entityName} ${entityVariableName});
+    int save(${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)});
 
     /**
-     * update ${entityName}
+     * update ${entity}
      *
-     * @param ${entityVariableName} ${entityVariableName}
+     * @param ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}
      * @return int
      */
-    int updateById(${entityName} ${entityVariableName});
+    int updateById(${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)});
 
     /**
-     * delete ${entityName} by ${idField.propertyName}
+     * delete ${entity} by id
      *
      * @param id id
      * @return int
      */
-    int removeById(${idPropertyType} id);
+    int removeById(Serializable id);
 
     /**
-     * delete batch by ${idField.propertyName}s
+     * delete batch by ids
      *
      * @param ids ids
      * @return int
      */
-    int deleteBatchByIds(${idPropertyType}[] ids);
+    int deleteBatchByIds(Serializable[] ids);
 
 }
 
