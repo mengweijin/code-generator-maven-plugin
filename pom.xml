@@ -7,7 +7,9 @@
     <packaging>maven-plugin</packaging>
     <version>1.0.1</version>
 
-    <name>code-generator-maven-plugin Maven Mojo</name>
+    <name>code-generator-maven-plugin</name>
+    <description>code-generator-maven-plugin</description>
+    <url>https://github.com/mengweijin/code-generator-maven-plugin</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
