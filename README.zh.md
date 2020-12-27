@@ -42,9 +42,10 @@ code-generator-maven-plugin 是一个在MVC项目中基于数据库表生成Cont
 ~~~~ 
 在Intellij IDEA的Maven模块中找到下面图中的code-generator插件，然后双击对应的插件命令即可。
 
-注意：默认代码生成在当前工程的target/code-generator/ 目录下。默认包路径为：com.github.mengweijin
+![image gitee](https://gitee.com/mengweijin/code-generator-maven-plugin/raw/master/docs/image/code-generator-maven-plugin.png)
+![image github](docs/image/code-generator-maven-plugin.png)
 
-![image](https://gitee.com/mengweijin/code-generator-maven-plugin/raw/master/docs/image/code-generator-maven-plugin.png)
+注意：默认代码生成在当前工程的target/code-generator/ 目录下。默认包路径为：com.github.mengweijin
 
 ### 2. 一般使用
 ~~~~xml
