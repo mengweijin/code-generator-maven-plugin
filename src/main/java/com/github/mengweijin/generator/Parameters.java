@@ -31,6 +31,10 @@ public class Parameters {
      */
     private String[] tables;
 
+    /**
+     * For example: SYS_, FTL_
+     * Note: Separated by commas.
+     */
     private String[] tablePrefix;
 
     private String superEntityClass;
@@ -39,4 +43,9 @@ public class Parameters {
     private String superServiceImplClass;
     private String superControllerClass;
     private String[] superEntityColumns;
+
+    /**
+     * 【实体】是否为lombok模型（默认 true）
+     */
+    private boolean lombokModel = true;
 }

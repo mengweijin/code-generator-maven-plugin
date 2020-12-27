@@ -116,7 +116,7 @@
             </plugin>
 
             <!-- Source -->
-            <!--<plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <version>3.2.1</version>
@@ -129,7 +129,7 @@
                     </execution>
                 </executions>
             </plugin>
-            &lt;!&ndash; Javadoc &ndash;&gt;
+            <!-- Javadoc -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -138,7 +138,7 @@
                     <charset>UTF-8</charset>
                     <docencoding>UTF-8</docencoding>
                     <additionalOptions>
-                        &lt;!&ndash;由于JDK8的java doc生成机制比之前的要严谨许多,导致项目用maven打包的时候出错 解决办法: 添加-Xdoclint:none配置&ndash;&gt;
+                        <!--由于JDK8的java doc生成机制比之前的要严谨许多,导致项目用maven打包的时候出错 解决办法: 添加-Xdoclint:none配置-->
                         <additionalOption>-Xdoclint:none</additionalOption>
                     </additionalOptions>
                 </configuration>
@@ -151,7 +151,7 @@
                     </execution>
                 </executions>
             </plugin>
-            &lt;!&ndash; GPG &ndash;&gt;
+            <!-- GPG -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
@@ -175,7 +175,7 @@
                     <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
-            </plugin>-->
+            </plugin>
         </plugins>
     </build>
 

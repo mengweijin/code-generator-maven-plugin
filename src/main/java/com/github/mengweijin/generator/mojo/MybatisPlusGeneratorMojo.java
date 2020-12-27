@@ -1,7 +1,9 @@
 package com.github.mengweijin.generator.mojo;
 
 import com.github.mengweijin.generator.CodeGenerator;
+import com.github.mengweijin.generator.Parameters;
 import com.github.mengweijin.generator.enums.Template;
+import com.github.mengweijin.generator.enums.TemplateType;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -21,12 +23,16 @@ public class MybatisPlusGeneratorMojo extends AbstractGeneratorMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
             CodeGenerator codeGenerator = this.getCodeGenerator();
+            Parameters parameters = codeGenerator.getParameters();
 
             String templateLocation = CodeGenerator.TMP_DIR + Template.MYBATIS_PLUS.getPath();
-            codeGenerator.getParameters().setTemplateLocation(templateLocation);
-            codeGenerator.getParameters().setSuperDaoClass(BaseMapper);
-            codeGenerator.getParameters().setSuperServiceClass(IService);
-            codeGenerator.getParameters().setSuperServiceImplClass(ServiceImpl);
+            parameters.setTemplateLocation(templateLocation);
+            parameters.setSuperDaoClass(BaseMapper);
+            parameters.setSuperServiceClass(IService);
+            parameters.setSuperServiceImplClass(ServiceImpl);
+
+            parameters.setTemplateType(TemplateType.beetl);
+
             codeGenerator.run();
         } catch (Exception e) {
             getLog().error(e);

@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 <% } %>
 import javax.validation.Valid;
 import org.springframework.validation.annotation.Validated;
-import org.hibernate.validator.constraints.Range;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -69,7 +68,7 @@ public class ${entity}Controller {
      * @return ${entity}
      */
     @GetMapping("/{id}")
-    public ${entity} getById(@Valid @Range @PathVariable("id") Long id) {
+    public ${entity} getById(@Valid @PathVariable("id") Long id) {
         return ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.getById(id);
     }
 
@@ -115,7 +114,7 @@ public class ${entity}Controller {
      * @param id id
      */
     @DeleteMapping("/{id}")
-    public void delete(@Valid @Range @PathVariable("id") Long id) {
+    public void delete(@Valid @PathVariable("id") Long id) {
         ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.removeById(id);
     }
 

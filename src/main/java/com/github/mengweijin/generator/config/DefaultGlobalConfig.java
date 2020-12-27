@@ -35,6 +35,7 @@ public class DefaultGlobalConfig extends GlobalConfig {
         System.out.println("Clean up the folder " + output.getAbsolutePath());
         FileUtil.del(output);
         this.setOutputDir(output.getAbsolutePath());
+        this.setSwagger2(false);
         this.setFileOverride(true);
         this.setOpen(false);
         this.setBaseResultMap(true);

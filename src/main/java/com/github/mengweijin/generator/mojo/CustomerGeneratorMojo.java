@@ -8,7 +8,7 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 /**
  * @author mengweijin
  */
-@Mojo(name = "customer", requiresDependencyResolution = ResolutionScope.COMPILE)
+//@Mojo(name = "customer", requiresDependencyResolution = ResolutionScope.COMPILE)
 public class CustomerGeneratorMojo extends AbstractGeneratorMojo {
 
     @Override

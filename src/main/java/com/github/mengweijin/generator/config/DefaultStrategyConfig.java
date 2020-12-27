@@ -29,7 +29,7 @@ public class DefaultStrategyConfig extends StrategyConfig {
 
         this.setNaming(NamingStrategy.underline_to_camel);
         this.setColumnNaming(NamingStrategy.underline_to_camel);
-        this.setEntityLombokModel(true);
+        this.setEntityLombokModel(parameters.isLombokModel());
         this.setRestControllerStyle(true);
         this.setControllerMappingHyphenStyle(true);
         this.setEntityTableFieldAnnotationEnable(true);
