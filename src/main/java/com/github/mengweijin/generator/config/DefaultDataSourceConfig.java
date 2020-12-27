@@ -103,7 +103,8 @@ public class DefaultDataSourceConfig extends DataSourceConfig {
 
     /**
      * Override the parent class method
-     * @return
+     *
+     * @return Connection
      */
     @Override
     public Connection getConn() {

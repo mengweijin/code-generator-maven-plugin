@@ -20,7 +20,7 @@ public interface BootFileReader {
      * get active profiles env
      *
      * @param file file
-     * @return
+     * @return active profiles env
      */
     String getActiveProfilesEnv(File file);
 
@@ -28,7 +28,7 @@ public interface BootFileReader {
      * get db info
      *
      * @param file file
-     * @return
+     * @return DbInfo
      */
     DbInfo getDbInfo(File file);
 }
