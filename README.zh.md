@@ -20,9 +20,9 @@ Language: [English](README.md)
 	</a>
 </p>
 
-## 介绍
+## 简介
 code-generator-maven-plugin 是一个在MVC项目中基于数据库表生成Controller, Service, entity, Dao(mybatis: Mapper; JPA: Repository)层CRUD代码的maven插件。
-基于mybatis-plus-generator实现。
+基于baomidou mybatis-plus-generator实现。
 
 支持的框架：Mybatis, Mybatis-Plus, JPA。
 
@@ -42,8 +42,7 @@ code-generator-maven-plugin 是一个在MVC项目中基于数据库表生成Cont
 ~~~~ 
 在Intellij IDEA的Maven模块中找到下面图中的code-generator插件，然后双击对应的插件命令即可。
 
-![image gitee](https://gitee.com/mengweijin/code-generator-maven-plugin/raw/master/docs/image/code-generator-maven-plugin.png)
-![image github](docs/image/code-generator-maven-plugin.png)
+![image](docs/image/code-generator-maven-plugin.png)
 
 注意：默认代码生成在当前工程的target/code-generator/ 目录下。默认包路径为：com.github.mengweijin
 
@@ -83,8 +82,8 @@ code-generator-maven-plugin 是一个在MVC项目中基于数据库表生成Cont
             <author>mengweijin</author>
             <!--(当前版本暂不需要配置)自定义生成代码的模板文件，一般不需要配置。如配置，需要配置绝对路径的目录-->
             <!--<templateLocation>C:\\templates\</templateLocation>-->
-            <!--自定义生成代码的模板引擎的类型，一般不需要配置。如配置，支持 beetl, velocity, freemarker-->
-            <!--(当前版本暂不需要配置)<templateType>C:\\templates\</templateType>-->
+            <!--(当前版本暂不需要配置)自定义生成代码的模板引擎的类型，一般不需要配置。如配置，支持 'beetl', 'velocity', 'freemarker'-->
+            <!--<templateType>C:\\templates\</templateType>-->
             <!--数据库连接信息。如果是标准的SpringBoot工程，可以省略，会自动读取application.yml/yaml/properties文件。-->
             <dbInfo>
                 <username>root</username>
@@ -96,7 +95,7 @@ code-generator-maven-plugin 是一个在MVC项目中基于数据库表生成Cont
                 部分数据库对表名称大小写敏感，此时需要配置的表名称跟数据库中的完全一致。
                 多个表名称使用英文逗号分隔-->
             <tables>sys_user, rlt_user_role</tables>
-            <!--要生成代码对应的数据库表名称的前缀，配置后，生成的entity类就不会带有表前缀了。如：User, UserRole。
+            <!--要生成代码对应的数据库表名称的前缀。配置后，生成的entity类就不会带有表前缀了。如：User, UserRole。
                 如果不配置，生成的entity类就会带有表前缀。如：SysUser, RltUserRole。
                 多个表名称前缀使用英文逗号分隔-->
             <tablePrefix>sys_, rlt_</tablePrefix>
@@ -126,3 +125,7 @@ code-generator-maven-plugin 是一个在MVC项目中基于数据库表生成Cont
     </configuration>
 </plugin>
 ~~~~
+## 期望
+欢迎您提出更好的意见，帮助完善这个小插件.
+## 贡献
+欢迎您贡献代码，让更多的人多点时间陪陪关心的人。
