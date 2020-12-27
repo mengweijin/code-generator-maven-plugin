@@ -39,9 +39,9 @@ public class DefaultStrategyConfig extends StrategyConfig {
 
         this.setSuperEntityClass(parameters.getSuperEntityClass());
 
-        if (this.getSuperEntityClass() != null && this.getSuperEntityColumns() == null) {
+        if (parameters.getSuperEntityClass() != null && parameters.getSuperEntityColumns() == null) {
             this.setSuperEntityColumns(this.generateDefaultSuperEntityColumns());
-        } else {
+        } else if(parameters.getSuperEntityColumns() != null) {
             this.setSuperEntityColumns(parameters.getSuperEntityColumns());
         }
 
