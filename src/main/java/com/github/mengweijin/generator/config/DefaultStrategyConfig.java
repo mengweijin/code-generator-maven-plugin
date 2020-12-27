@@ -33,9 +33,8 @@ public class DefaultStrategyConfig extends StrategyConfig {
         this.setRestControllerStyle(true);
         this.setControllerMappingHyphenStyle(true);
         this.setEntityTableFieldAnnotationEnable(true);
-        this.setInclude(trimTableName(parameters.getTables()));
-        this.setTablePrefix(parameters.getTablePrefix());
-
+        this.setInclude(trimItemName(parameters.getTables()));
+        this.setTablePrefix(trimItemName(parameters.getTablePrefix()));
 
         this.setSuperEntityClass(parameters.getSuperEntityClass());
 
@@ -70,10 +69,10 @@ public class DefaultStrategyConfig extends StrategyConfig {
         }
     }
 
-    private String[] trimTableName(String[] tables) {
-        if(tables == null) {
+    private String[] trimItemName(String[] items) {
+        if(items == null) {
             return null;
         }
-        return Arrays.stream(tables).map(String::trim).toArray(String[]::new);
+        return Arrays.stream(items).map(String::trim).toArray(String[]::new);
     }
 }
