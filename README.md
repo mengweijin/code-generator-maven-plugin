@@ -47,9 +47,6 @@ Locate the code-generator-maven-plugin in the Intellij IDEA Maven module shown b
 #### Notes
 * The default code generation is under the target/code-generator/ directory of the current project.
 * The default package path is com.github.mengweijin.
-* Configure database table names to be exactly the same as table names in the database. 
-  For example, when an H2 database creates a table with a script, the script name is written in lowercase, 
-  but the generated table name may be in upper case, so you need to configure the upper case table name here.
 
 ### 2. General Use
 ~~~~xml
@@ -136,6 +133,21 @@ Locate the code-generator-maven-plugin in the Intellij IDEA Maven module shown b
     </configuration>
 </plugin>
 ~~~~
+## FAQ
+1. Throw an exception like this: java.lang.ClassNotFoundException: org.h2.Driver，Unable to find driver class.
+  * When configuring driver classes, you cannot configure Maven's Scope node to have a value of runtime.
+    ~~~~
+    <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <!--Comment out this line. Same goes for any other database driver. <scope>runtime</scope> -->
+    </dependency>
+    ~~~~
+2. The database table exists, but no code file is generated, and the program does not report an error.
+  * Configure database table names to be exactly the same as table names in the database.
+  For example, when an H2 database creates a table with a script, the script name is written in lowercase,
+  but the generated table name may be in upper case, so you need to configure the upper case table name here.
+
 ## Futures
 You are welcome to suggest better ways to improve this widget.
 ## Contributions
