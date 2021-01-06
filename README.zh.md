@@ -44,7 +44,10 @@ code-generator-maven-plugin 是一个在MVC项目中基于数据库表生成Cont
 
 ![image](docs/image/code-generator-maven-plugin.png)
 
-注意：默认代码生成在当前工程的target/code-generator/ 目录下。默认包路径为：com.github.mengweijin
+#### 注意
+* 默认代码生成在当前工程的target/code-generator/ 目录下。
+* 默认包路径为：com.github.mengweijin
+* 配置数据库表名称（tables）一定要跟数据库中的表名称大小写完全一致。例如H2数据库用脚本创建表时的脚本中写的名称是小写，但真实生成的表名称可能是大写的，因此这里需要配置为大写的表名称。
 
 ### 2. 一般使用
 ~~~~xml

@@ -44,7 +44,12 @@ Locate the code-generator-maven-plugin in the Intellij IDEA Maven module shown b
 
 ![image](docs/image/code-generator-maven-plugin.png)
 
-Note: The default code generation is under the target/code-generator/ directory of the current project. The default package path is com.github.mengweijin.
+#### Notes
+* The default code generation is under the target/code-generator/ directory of the current project.
+* The default package path is com.github.mengweijin.
+* Configure database table names to be exactly the same as table names in the database. 
+  For example, when an H2 database creates a table with a script, the script name is written in lowercase, 
+  but the generated table name may be in upper case, so you need to configure the upper case table name here.
 
 ### 2. General Use
 ~~~~xml
