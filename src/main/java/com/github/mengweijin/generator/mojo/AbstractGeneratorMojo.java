@@ -5,7 +5,7 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.lang.JarClassLoader;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
-import com.github.mengweijin.generator.CodeGenerator;
+import com.github.mengweijin.generator.ProjectInfo;
 import com.github.mengweijin.generator.Parameters;
 import lombok.Getter;
 import org.apache.maven.execution.MavenSession;
@@ -59,16 +59,16 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo {
     @Parameter(defaultValue = "${session}", readonly = true)
     private MavenSession session;
 
-    protected CodeGenerator getCodeGenerator() {
+    protected ProjectInfo getProjectInfo() {
         this.loadParentProjectClassToJarClassLoader();
         this.copyTemplateFolderToJavaTmp("templates/");
         this.parameters = Optional.ofNullable(this.parameters).orElse(new Parameters());
-        CodeGenerator codeGenerator = new CodeGenerator();
-        codeGenerator.setParameters(this.parameters);
-        codeGenerator.setResourceList(this.getResources());
-        codeGenerator.setBaseDir(this.baseDir);
-        codeGenerator.setSourceDir(this.sourceDir);
-        return codeGenerator;
+        ProjectInfo projectInfo = new ProjectInfo();
+        projectInfo.setParameters(this.parameters);
+        projectInfo.setResourceList(this.getResources());
+        projectInfo.setBaseDir(this.baseDir);
+        projectInfo.setSourceDir(this.sourceDir);
+        return projectInfo;
     }
 
     protected void loadParentProjectClassToApplicationClassLoader() {
@@ -125,7 +125,7 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo {
                     jarEntryName = enumeration.nextElement().getName();
                     if (jarEntryName.startsWith(classPathResource) && !jarEntryName.endsWith(StrUtil.SLASH)) {
                         inputStream = classLoader.getResource(jarEntryName).openConnection().getInputStream();
-                        tmpFile = FileUtil.file(CodeGenerator.TMP_DIR + jarEntryName);
+                        tmpFile = FileUtil.file(ProjectInfo.TMP_DIR + jarEntryName);
                         FileUtil.writeFromStream(inputStream, tmpFile);
                     }
                 }

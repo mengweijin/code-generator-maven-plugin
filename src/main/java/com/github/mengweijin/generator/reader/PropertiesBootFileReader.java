@@ -32,11 +32,6 @@ public class PropertiesBootFileReader implements BootFileReader {
 
             DbInfo dbInfo = new DbInfo();
             dbInfo.setUrl(url);
-            String driverName = props.getStr(SPRING_DATASOURCE_DRIVERCLASSNAME);
-            if (StrUtil.isBlank(driverName)) {
-                driverName = props.getStr(SPRING_DATASOURCE_DRIVER_CLASS_NAME);
-            }
-            dbInfo.setDriverName(driverName);
             dbInfo.setUsername(props.getStr(SPRING_DATASOURCE_USERNAME));
             dbInfo.setPassword(props.getStr(SPRING_DATASOURCE_PASSWORD));
 

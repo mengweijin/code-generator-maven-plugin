@@ -10,8 +10,6 @@ public class DbInfo {
 
     private String url;
 
-    private String driverName;
-
     private String username;
 
     private String password;

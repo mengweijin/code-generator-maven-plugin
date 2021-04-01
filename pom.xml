@@ -5,7 +5,7 @@
     <groupId>com.github.mengweijin</groupId>
     <artifactId>code-generator-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
 
     <name>code-generator-maven-plugin</name>
     <description>code-generator-maven-plugin</description>
@@ -16,7 +16,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <mybatis-plus-generator.version>3.4.1</mybatis-plus-generator.version>
+        <mybatis-plus-generator.version>3.5.0.1-SNAPSHOT</mybatis-plus-generator.version>
         <beetl.version>3.3.2.RELEASE</beetl.version>
         <velocity.version>2.2</velocity.version>
         <freemarker.version>2.3.30</freemarker.version>
@@ -97,6 +97,19 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>oss-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>

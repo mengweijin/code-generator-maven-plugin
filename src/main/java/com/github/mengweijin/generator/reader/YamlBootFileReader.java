@@ -37,7 +37,6 @@ public class YamlBootFileReader implements BootFileReader {
         Object password = JSONPath.eval(map, "$." + SPRING_DATASOURCE_PASSWORD);
 
         dbInfo.setUrl(url == null ? null : String.valueOf(url));
-        dbInfo.setDriverName(driverName == null ? null : String.valueOf(driverName));
         dbInfo.setUsername(username == null ? null : String.valueOf(username));
         dbInfo.setPassword(password == null ? null : String.valueOf(password));
         return dbInfo;

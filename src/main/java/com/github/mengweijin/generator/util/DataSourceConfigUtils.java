@@ -1,17 +1,16 @@
-package com.github.mengweijin.generator.config;
+package com.github.mengweijin.generator.util;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.db.dialect.DriverUtil;
 import com.alibaba.fastjson.JSON;
-import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-import com.github.mengweijin.generator.CodeGenerator;
 import com.github.mengweijin.generator.DbInfo;
+import com.github.mengweijin.generator.ProjectInfo;
 import com.github.mengweijin.generator.reader.BootFileReaderFactory;
 import org.apache.maven.model.Resource;
-
 import java.io.File;
 import java.lang.reflect.Method;
 import java.sql.Connection;
@@ -19,10 +18,7 @@ import java.sql.DriverManager;
 import java.util.List;
 import java.util.Properties;
 
-/**
- * @author mengweijin
- */
-public class DefaultDataSourceConfig extends DataSourceConfig {
+public class DataSourceConfigUtils {
 
     private static final String[] BOOTSTRAP_FILE = {
             "bootstrap.yml",
@@ -41,33 +37,23 @@ public class DefaultDataSourceConfig extends DataSourceConfig {
     public static final String SRC_TEST_JAVA = "src/test/java/";
     public static final String SRC_MAIN_JAVA = "src/main/java/";
 
-
-    private CodeGenerator codeGenerator;
-
-    public DefaultDataSourceConfig(CodeGenerator codeGenerator) {
-        this.codeGenerator = codeGenerator;
-        this.init();
-    }
-
     /**
      * Initialize the default parameter.
      */
-    public void init() {
-        DbInfo dbInfo = codeGenerator.getParameters().getDbInfo();
+    public static DbInfo getDbInfo(ProjectInfo projectInfo) {
+        DbInfo dbInfo = projectInfo.getParameters().getDbInfo();
         if (dbInfo == null || StrUtil.isBlank(dbInfo.getUrl())) {
-            dbInfo = this.generateDefaultDbInfo();
+            dbInfo = generateDefaultDbInfo(projectInfo);
         }
-        this.setUrl(dbInfo.getUrl());
-        this.setDriverName(dbInfo.getDriverName());
-        this.setUsername(dbInfo.getUsername());
-        this.setPassword(dbInfo.getPassword());
+
+        return dbInfo;
     }
 
-    private DbInfo generateDefaultDbInfo() {
-        List<Resource> resourceList = codeGenerator.getResourceList();
+    private static DbInfo generateDefaultDbInfo(ProjectInfo projectInfo) {
+        List<Resource> resourceList = projectInfo.getResourceList();
         Resource resource = resourceList.stream().filter(res -> res.getDirectory().endsWith("\\resources")).findFirst().get();
 
-        File applicationFile = this.getBootFile(resource, APPLICATION_FILE);
+        File applicationFile = getBootFile(resource, APPLICATION_FILE);
         if (applicationFile == null) {
             throw new RuntimeException("Can't find any file " + JSON.toJSONString(APPLICATION_FILE));
         }
@@ -87,7 +73,7 @@ public class DefaultDataSourceConfig extends DataSourceConfig {
         return dbInfo;
     }
 
-    private File getBootFile(Resource resource, String[] filterNames) {
+    private static File getBootFile(Resource resource, String[] filterNames) {
         File resourcesDir = FileUtil.file(resource.getDirectory());
         List<File> fileList = FileUtil.loopFiles(resourcesDir, 1, file -> {
             for (String fileName : filterNames) {
@@ -101,23 +87,18 @@ public class DefaultDataSourceConfig extends DataSourceConfig {
         return CollectionUtil.isEmpty(fileList) ? null : fileList.get(0);
     }
 
-    /**
-     * Override the parent class method
-     *
-     * @return Connection
-     */
-    @Override
-    public Connection getConn() {
+
+    public static Connection getConnection(String url, String username, String password) {
         Connection conn;
         try {
-            Class.forName(this.getDriverName(), true, Thread.currentThread().getContextClassLoader());
+            Class.forName(DriverUtil.identifyDriver(url), true, Thread.currentThread().getContextClassLoader());
 
             Properties info = new Properties();
-            if (this.getUsername() != null) {
-                info.put("user", this.getUsername());
+            if (username != null) {
+                info.put("user", username);
             }
-            if (this.getPassword() != null) {
-                info.put("password", this.getPassword());
+            if (password != null) {
+                info.put("password", password);
             }
 
             Method method = ReflectUtil.getMethod(
@@ -125,7 +106,7 @@ public class DefaultDataSourceConfig extends DataSourceConfig {
                     "getConnection",
                     String.class, Properties.class, Class.class);
             method.setAccessible(true);
-            conn = ReflectUtil.invokeStatic(method, this.getUrl(), info, null);
+            conn = ReflectUtil.invokeStatic(method, url, info, null);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

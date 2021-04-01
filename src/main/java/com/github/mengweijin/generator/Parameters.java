@@ -1,5 +1,6 @@
 package com.github.mengweijin.generator;
 
+import cn.hutool.system.SystemUtil;
 import com.github.mengweijin.generator.enums.TemplateType;
 import lombok.Data;
 
@@ -12,9 +13,9 @@ public class Parameters {
     /**
      * default: com.github.mengweijin
      */
-    private String outputPackage;
+    private String outputPackage = "com.github.mengweijin";
 
-    private String author;
+    private String author = SystemUtil.getUserInfo().getName();
 
     /**
      * The absolute path to the folder.
@@ -42,7 +43,6 @@ public class Parameters {
     private String superServiceClass;
     private String superServiceImplClass;
     private String superControllerClass;
-    private String[] superEntityColumns;
 
     /**
      * 【实体】是否为lombok模型（默认 true）

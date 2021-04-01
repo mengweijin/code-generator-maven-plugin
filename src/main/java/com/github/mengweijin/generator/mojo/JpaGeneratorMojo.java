@@ -1,6 +1,7 @@
 package com.github.mengweijin.generator.mojo;
 
 import com.github.mengweijin.generator.CodeGenerator;
+import com.github.mengweijin.generator.ProjectInfo;
 import com.github.mengweijin.generator.Parameters;
 import com.github.mengweijin.generator.enums.Template;
 import com.github.mengweijin.generator.enums.TemplateType;
@@ -20,16 +21,13 @@ public class JpaGeneratorMojo extends AbstractGeneratorMojo {
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
-            CodeGenerator codeGenerator = this.getCodeGenerator();
-            Parameters parameters = codeGenerator.getParameters();
-
-            String templateLocation = CodeGenerator.TMP_DIR + Template.JPA.getPath();
-            parameters.setTemplateLocation(templateLocation);
+            ProjectInfo projectInfo = this.getProjectInfo();
+            Parameters parameters = projectInfo.getParameters();
+            parameters.setTemplateLocation(ProjectInfo.TMP_DIR + Template.JPA.getPath());
             parameters.setSuperDaoClass(JpaRepository);
-
             parameters.setTemplateType(TemplateType.beetl);
 
-            codeGenerator.run();
+            new CodeGenerator(projectInfo).run();
         } catch (Exception e) {
             getLog().error(e);
             throw new RuntimeException(e);
