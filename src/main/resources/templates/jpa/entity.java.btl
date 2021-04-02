@@ -1,13 +1,9 @@
-package ${autoGenerator.packageInfo.parent}.entity;
+package ${parameters.outputPackage}.entity;
 
 <% if(isNotEmpty(superEntityClassPackage)){ %>
 import ${superEntityClassPackage};
 <% }else{ %>
 import java.io.Serializable;
-<% } %>
-<% if(swagger2){ %>
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 <% } %>
 <% if(entityLombokModel){ %>
 import lombok.Data;
@@ -35,9 +31,6 @@ import javax.persistence.Table;
 @EqualsAndHashCode(callSuper = false)
     <% } %>
 @Accessors(chain = true)
-<% } %>
-<% if(swagger2){ %>
-@ApiModel(value="${entity}对象", description="${table.comment!''}")
 <% } %>
 @Entity
 @Table(name = "${table.name}")
@@ -103,17 +96,6 @@ public class ${entity} implements Serializable {
     public static final String ${strutil.toUpperCase(field.name)} = "${field.name}";
 
    <% } %>
-<% } %>
-<% if(activeRecord){ %>
-    @Override
-    protected Serializable pkVal() {
-    <% if(isNotEmpty(keyPropertyName)){ %>
-        return this.${keyPropertyName};
-    <% }else{ %>
-        return null;
-    <% } %>
-    }
-
 <% } %>
 <% if(!entityLombokModel){ %>
     @Override

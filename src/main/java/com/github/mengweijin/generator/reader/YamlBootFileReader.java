@@ -1,7 +1,7 @@
 package com.github.mengweijin.generator.reader;
 
 import com.alibaba.fastjson.JSONPath;
-import com.github.mengweijin.generator.DbInfo;
+import com.github.mengweijin.generator.entity.DbInfo;
 import com.github.mengweijin.generator.util.YamlUtils;
 
 import java.io.File;

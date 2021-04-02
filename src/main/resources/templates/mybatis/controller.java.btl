@@ -1,4 +1,4 @@
-package ${autoGenerator.packageInfo.parent}.controller;
+package ${parameters.outputPackage}.controller;
 
 <% if(entityLombokModel){ %>
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +21,8 @@ import org.springframework.stereotype.Controller;
 <% if(isNotEmpty(superControllerClassPackage)){ %>
 import ${superControllerClassPackage};
 <% } %>
-import ${autoGenerator.packageInfo.parent}.entity.${entity};
-import ${autoGenerator.packageInfo.parent}.service.${entity}Service;
+import ${parameters.outputPackage}.entity.${entity};
+import ${parameters.outputPackage}.service.${entity}Service;
 import java.io.Serializable;
 
 /**
@@ -61,7 +61,7 @@ public class ${entity}Controller <% if(isNotEmpty(superControllerName)){ %>exten
      * @return ${entity}
      */
     @GetMapping("/{id}")
-    public ${entity} getById(@Valid @PathVariable("id") Serializable id) {
+    public ${entity} getById(@PathVariable("id") Serializable id) {
         return ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.getById(id);
     }
 
@@ -94,7 +94,7 @@ public class ${entity}Controller <% if(isNotEmpty(superControllerName)){ %>exten
      * @param id id
      */
     @DeleteMapping("/{id}")
-    public void delete(@Valid @PathVariable("id") Serializable id) {
+    public void delete(@PathVariable("id") Serializable id) {
         ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.removeById(id);
     }
 

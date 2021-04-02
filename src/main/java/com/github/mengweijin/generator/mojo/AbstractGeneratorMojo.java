@@ -5,12 +5,15 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.lang.JarClassLoader;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
-import com.github.mengweijin.generator.ProjectInfo;
-import com.github.mengweijin.generator.Parameters;
+import com.github.mengweijin.generator.CodeGenerator;
+import com.github.mengweijin.generator.entity.Parameters;
+import com.github.mengweijin.generator.entity.ProjectInfo;
 import lombok.Getter;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
@@ -59,49 +62,48 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo {
     @Parameter(defaultValue = "${session}", readonly = true)
     private MavenSession session;
 
-    protected ProjectInfo getProjectInfo() {
-        this.loadParentProjectClassToJarClassLoader();
-        this.copyTemplateFolderToJavaTmp("templates/");
-        this.parameters = Optional.ofNullable(this.parameters).orElse(new Parameters());
-        ProjectInfo projectInfo = new ProjectInfo();
-        projectInfo.setParameters(this.parameters);
-        projectInfo.setResourceList(this.getResources());
-        projectInfo.setBaseDir(this.baseDir);
-        projectInfo.setSourceDir(this.sourceDir);
-        return projectInfo;
-    }
-
-    protected void loadParentProjectClassToApplicationClassLoader() {
-        URLClassLoader urlLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
-
+    @Override
+    public void execute() throws MojoExecutionException, MojoFailureException {
         try {
-            Method method = URLClassLoader.class.getDeclaredMethod("addURL", new Class[] { URL.class });
-            method.setAccessible(true);
+            // clean TMP folder
+            FileUtil.del(FileUtil.file(ProjectInfo.TMP_DIR));
 
-            List<String> classpathElements = project.getCompileClasspathElements();
-            URL[] urls = new URL[classpathElements.size()];
-            for (int i = 0; i < classpathElements.size(); ++i) {
-                urls[i] = new File(classpathElements.get(i)).toURI().toURL();
-                method.invoke(urlLoader, urls[i]);
-            }
+            this.loadParentProjectClassToJarClassLoader();
+            this.copyTemplateFolderToJavaTmp("templates/");
+            this.parameters = Optional.ofNullable(this.parameters).orElse(new Parameters());
+            this.setDefaultFixedParameters(this.parameters);
+
+            ProjectInfo projectInfo = new ProjectInfo();
+            projectInfo.setParameters(this.parameters);
+            projectInfo.setResourceList(this.getResources());
+            projectInfo.setBaseDir(this.baseDir);
+            projectInfo.setSourceDir(this.sourceDir);
+
+            new CodeGenerator(projectInfo).run();
         } catch (Exception e) {
-            getLog().error("Load Parent Project Class to ClassLoader Error.");
+            getLog().error(e);
             throw new RuntimeException(e);
         }
     }
 
-    protected void loadParentProjectClassToJarClassLoader() {
-        try {
-            List<String> classpathElements = project.getCompileClasspathElements();
+    /**
+     * set default fixed parameters
+     * @param parameters parameters
+     */
+    protected abstract void setDefaultFixedParameters(Parameters parameters);
 
-            URL[] urls = new URL[classpathElements.size()];
-            for (int i = 0; i < classpathElements.size(); ++i) {
-                urls[i] = new File(classpathElements.get(i)).toURI().toURL();
+    private void loadParentProjectClassToJarClassLoader() {
+        try {
+            List<String> runtimeElements = project.getRuntimeClasspathElements();
+
+            URL[] urls = new URL[runtimeElements.size()];
+            for (int i = 0; i < runtimeElements.size(); ++i) {
+                urls[i] = new File(runtimeElements.get(i)).toURI().toURL();
             }
             JarClassLoader jarClassLoader = new JarClassLoader(urls);
             Thread.currentThread().setContextClassLoader(jarClassLoader);
         } catch (Exception e) {
-            getLog().error("Load Parent Project Class to ClassLoader Error.");
+            getLog().error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -131,11 +133,31 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo {
                 }
             }
         } catch (IOException e) {
+            getLog().error(e.getMessage());
             e.printStackTrace();
             throw new RuntimeException(e);
         } finally {
             IoUtil.close(inputStream);
             IoUtil.close(jarFile);
+        }
+    }
+
+    private void loadParentProjectClassToApplicationClassLoader() {
+        URLClassLoader urlLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
+
+        try {
+            Method method = URLClassLoader.class.getDeclaredMethod("addURL", new Class[] { URL.class });
+            method.setAccessible(true);
+
+            List<String> classpathElements = project.getCompileClasspathElements();
+            URL[] urls = new URL[classpathElements.size()];
+            for (int i = 0; i < classpathElements.size(); ++i) {
+                urls[i] = new File(classpathElements.get(i)).toURI().toURL();
+                method.invoke(urlLoader, urls[i]);
+            }
+        } catch (Exception e) {
+            getLog().error(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 }

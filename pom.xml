@@ -20,7 +20,7 @@
         <beetl.version>3.3.2.RELEASE</beetl.version>
         <velocity.version>2.2</velocity.version>
         <freemarker.version>2.3.30</freemarker.version>
-        <hutool.version>5.6.0</hutool.version>
+        <hutool.version>5.6.2</hutool.version>
         <snakeyaml.version>1.27</snakeyaml.version>
         <fastjson.vsersion>1.2.75</fastjson.vsersion>
 
@@ -30,7 +30,6 @@
         <lombok.version>1.18.16</lombok.version>
     </properties>
     <dependencies>
-
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
@@ -131,7 +130,7 @@
             </plugin>
 
             <!-- Source -->
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <version>3.2.1</version>
@@ -144,7 +143,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- Javadoc -->
+            &lt;!&ndash; Javadoc &ndash;&gt;
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -153,7 +152,7 @@
                     <charset>UTF-8</charset>
                     <docencoding>UTF-8</docencoding>
                     <additionalOptions>
-                        <!--由于JDK8的java doc生成机制比之前的要严谨许多,导致项目用maven打包的时候出错 解决办法: 添加-Xdoclint:none配置-->
+                        &lt;!&ndash;由于JDK8的java doc生成机制比之前的要严谨许多,导致项目用maven打包的时候出错 解决办法: 添加-Xdoclint:none配置&ndash;&gt;
                         <additionalOption>-Xdoclint:none</additionalOption>
                     </additionalOptions>
                 </configuration>
@@ -166,7 +165,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- GPG -->
+            &lt;!&ndash; GPG &ndash;&gt;
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
@@ -190,7 +189,7 @@
                     <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 

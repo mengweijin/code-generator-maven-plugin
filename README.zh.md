@@ -128,15 +128,15 @@ code-generator-maven-plugin 是一个在MVC项目中基于数据库表生成Cont
 </plugin>
 ~~~~
 ## 常见问题
-1. 抛出类似异常：java.lang.ClassNotFoundException: org.h2.Driver，无法找到驱动类
-    * 配置驱动类时，不能配置 maven 的 scope 节点的值为 runtime
-    ~~~~
-    <dependency>
-        <groupId>com.h2database</groupId>
-        <artifactId>h2</artifactId>
-        <!--注释掉这一行，其他数据库驱动同理。 <scope>runtime</scope> -->
-    </dependency>
-    ~~~~
+~~1. 抛出类似异常：java.lang.ClassNotFoundException: org.h2.Driver，无法找到驱动类~~
+~~    * 配置驱动类时，不能配置 maven 的 scope 节点的值为 runtime~~
+````
+<dependency>
+     <groupId>com.h2database</groupId>
+     <artifactId>h2</artifactId>
+     <!--注释掉这一行，其他数据库驱动同理。 <scope>runtime</scope> -->
+ </dependency>
+````
 2. 数据库表存在，但没有生成代码文件，程序也没有报错。
     * 配置数据库表名称（tables）一定要跟数据库中的表名称大小写完全一致。例如H2数据库用脚本创建表时的脚本中写的名称是小写，但真实生成的表名称可能是大写的，因此这里需要配置为大写的表名称。
 

@@ -1,4 +1,4 @@
-package ${autoGenerator.packageInfo.parent}.entity;
+package ${parameters.outputPackage}.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -8,10 +8,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import ${superEntityClassPackage};
 <% }else{ %>
 import java.io.Serializable;
-<% } %>
-<% if(swagger2){ %>
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 <% } %>
 <% if(entityLombokModel){ %>
 import lombok.Data;
@@ -39,13 +35,8 @@ import lombok.experimental.Accessors;
 <% if(table.convert){ %>
 @TableName("${table.name}")
 <% } %>
-<% if(swagger2){ %>
-@ApiModel(value="${entity}对象", description="${table.comment!''}")
-<% } %>
 <% if(isNotEmpty(superEntityClass)){ %>
-public class ${entity} extends ${superEntityClass}<% if(activeRecord){ %><${entity}><%}%>{
-<% }else if(activeRecord){ %>
-public class ${entity} extends Model<${entity}> {
+public class ${entity} extends ${superEntityClass} {
 <% }else{ %>
 public class ${entity} implements Serializable {
 <% } %>
@@ -62,13 +53,9 @@ public class ${entity} implements Serializable {
     %>
 
     <% if(isNotEmpty(field.comment)){ %>
-        <% if(swagger2){ %>
-    @ApiModelProperty(value = "${field.comment}")
-        <% }else{ %>
     /**
      * ${field.comment}
      */
-        <% } %>
     <% } %>
     <% if(field.keyFlag){ %>
     <%
@@ -141,17 +128,6 @@ public class ${entity} implements Serializable {
     public static final String ${strutil.toUpperCase(field.name)} = "${field.name}";
 
    <% } %>
-<% } %>
-<% if(activeRecord){ %>
-    @Override
-    protected Serializable pkVal() {
-    <% if(isNotEmpty(keyPropertyName)){ %>
-        return this.${keyPropertyName};
-    <% }else{ %>
-        return null;
-    <% } %>
-    }
-
 <% } %>
 <% if(!entityLombokModel){ %>
     @Override

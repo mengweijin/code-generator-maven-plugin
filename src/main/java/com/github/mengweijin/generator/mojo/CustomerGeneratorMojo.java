@@ -1,18 +1,17 @@
 package com.github.mengweijin.generator.mojo;
 
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
+import com.github.mengweijin.generator.entity.Parameters;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 /**
  * @author mengweijin
  */
-//@Mojo(name = "customer", requiresDependencyResolution = ResolutionScope.COMPILE)
+@Mojo(name = "customer", requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
 public class CustomerGeneratorMojo extends AbstractGeneratorMojo {
 
     @Override
-    public void execute() throws MojoExecutionException, MojoFailureException {
+    protected void setDefaultFixedParameters(Parameters parameters) {
 
     }
 }

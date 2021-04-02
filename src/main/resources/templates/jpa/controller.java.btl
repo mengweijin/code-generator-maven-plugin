@@ -1,4 +1,4 @@
-package ${autoGenerator.packageInfo.parent}.controller;
+package ${parameters.outputPackage}.controller;
 
 <% if(entityLombokModel){ %>
 import lombok.extern.slf4j.Slf4j;
@@ -21,16 +21,16 @@ import org.springframework.stereotype.Controller;
 <% if(isNotEmpty(superControllerClassPackage)){ %>
 import ${superControllerClassPackage};
 <% } %>
-import ${autoGenerator.packageInfo.parent}.entity.${entity};
-import ${autoGenerator.packageInfo.parent}.repository.${entity}Repository;
-import ${autoGenerator.packageInfo.parent}.service.${entity}Service;
+import ${parameters.outputPackage}.entity.${entity};
+import ${parameters.outputPackage}.repository.${entity}Repository;
+import ${parameters.outputPackage}.service.${entity}Service;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import java.util.Optional;
-
+import java.io.Serializable;
 
 /**
  * <p>
@@ -50,14 +50,11 @@ import java.util.Optional;
 @Controller
 <% } %>
 @RequestMapping("<% if(isNotEmpty(package.ModuleName)){ %>/${package.ModuleName}<% } %>/<% if(isNotEmpty(controllerMappingHyphenStyle)){ %>${controllerMappingHyphen}<% }else{ %>${table.entityPath}<% } %>")
-<% if(kotlin){ %>
-class ${entity}Controller<% if(isNotEmpty(superControllerClass)){ %> : ${superControllerClass}()<% } %>
-<% }else{ %>
-    <% if(isNotEmpty(superControllerClass)){ %>
+<% if(isNotEmpty(superControllerClass)){ %>
 public class ${entity}Controller extends ${superControllerClass} {
-    <% }else{ %>
+<% }else{ %>
 public class ${entity}Controller {
-    <% } %>
+<% } %>
 
     /**
      * <p>
@@ -83,7 +80,7 @@ public class ${entity}Controller {
      * @return ${entity}
      */
     @GetMapping("/{id}")
-    public Optional<${entity}> getById(@Valid @PathVariable("id") Long id) {
+    public Optional<${entity}> getById(@PathVariable("id") Serializable id) {
         return ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Repository.findById(id);
     }
 
@@ -96,7 +93,7 @@ public class ${entity}Controller {
      * @return IPage<${entity}>
      */
     @GetMapping
-    public Page<${entity}> getPage(Page<?> page, @Valid ${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}) {
+    public Page<${entity}> getPage(Page<?> page, ${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}) {
         Sort sort = Sort.by(Sort.Direction.DESC, "createTime");
         Pageable pageable = PageRequest.of(pager.getCurrent(), pager.getSize(), sort);
         return ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Repository.findAll(Example.of(${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}), pageable);
@@ -131,9 +128,8 @@ public class ${entity}Controller {
      * @param id id
      */
     @DeleteMapping("/{id}")
-    public void delete(@Valid @PathVariable("id") Long id) {
+    public void delete(@Valid @PathVariable("id") Serializable id) {
         ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Repository.deleteById(id);
     }
 
 }
-<% } %>

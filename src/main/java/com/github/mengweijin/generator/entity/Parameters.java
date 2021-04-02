@@ -1,6 +1,7 @@
-package com.github.mengweijin.generator;
+package com.github.mengweijin.generator.entity;
 
 import cn.hutool.system.SystemUtil;
+import com.github.mengweijin.generator.entity.DbInfo;
 import com.github.mengweijin.generator.enums.TemplateType;
 import lombok.Data;
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="${autoGenerator.packageInfo.parent}.mapper.${entity}Mapper">
+<mapper namespace="${parameters.outputPackage}.mapper.${entity}Mapper">
 
 <% if(enableCache){ %>
     <!-- 开启二级缓存 -->
@@ -9,7 +9,7 @@
 <% } %>
 <% if(baseResultMap){ %>
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="${autoGenerator.packageInfo.parent}.entity.${entity}">
+    <resultMap id="BaseResultMap" type="${parameters.outputPackage}.entity.${entity}">
 <% for(field in table.fields){ %>
    <% /** 生成主键排在第一位 **/ %>
    <% if(field.keyFlag){ %>
@@ -54,18 +54,18 @@
         <include refid="Base_Column_List"/>
         from ${table.name}
         <where>
-            ${idField.name} = #{${idField.propertyName}}
+            ${idField.columnName} = #{${idField.propertyName}}
         </where>
     </select>
 
-    <select id="selectList" parameterType="${autoGenerator.packageInfo.parent}.entity.${entity}" resultMap="BaseResultMap">
+    <select id="selectList" parameterType="${parameters.outputPackage}.entity.${entity}" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from ${table.name}
         <include refid="Where_Condition"/>
     </select>
 
-    <insert id="save" parameterType="${autoGenerator.packageInfo.parent}.entity.${entity}">
+    <insert id="save" parameterType="${parameters.outputPackage}.entity.${entity}">
         insert into ${table.name} (
             <% for(field in allFieldList){ %>
             <if test="${field.propertyName} != null<% if(field.columnType=="STRING"){ %> and ${field.propertyName} != ''<%}%>">
@@ -81,7 +81,7 @@
 		)
     </insert>
 
-    <update id="updateById" parameterType="${autoGenerator.packageInfo.parent}.entity.${entity}">
+    <update id="updateById" parameterType="${parameters.outputPackage}.entity.${entity}">
         update ${table.name}
         <set>
             <% for(field in allFieldList){ %>
@@ -91,21 +91,21 @@
             <% } %>
         </set>
         <where>
-            ${idField.name} = #{${idField.propertyName}}
+            ${idField.columnName} = #{${idField.propertyName}}
         </where>
     </update>
 
     <delete id="removeById" parameterType="java.io.Serializable">
         delete from ${table.name}
         <where>
-            ${idField.name} = #{${idField.propertyName}}
+            ${idField.columnName} = #{${idField.propertyName}}
         </where>
     </delete>
 
     <delete id="deleteBatchByIds" parameterType="java.io.Serializable">
-        delete from ${table.name} where ${idField.name} in
-        <foreach item="id" collection="array" open="(" separator="," close=")">
-            #{id}
+        delete from ${table.name} where ${idField.columnName} in
+        <foreach item="itemId" collection="array" open="(" separator="," close=")">
+            #{itemId}
         </foreach>
     </delete>
 

@@ -1,4 +1,4 @@
-package com.github.mengweijin.generator;
+package com.github.mengweijin.generator.entity;
 
 import cn.hutool.system.SystemUtil;
 import lombok.Data;

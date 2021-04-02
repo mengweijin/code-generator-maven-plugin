@@ -2,7 +2,8 @@ package com.github.mengweijin.generator.factory;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.ReflectUtil;
+import cn.hutool.core.util.ClassUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.FileOutConfig;
@@ -13,15 +14,18 @@ import com.baomidou.mybatisplus.generator.config.TemplateConfig;
 import com.baomidou.mybatisplus.generator.config.builder.GeneratorBuilder;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import com.github.mengweijin.generator.DbInfo;
-import com.github.mengweijin.generator.Parameters;
-import com.github.mengweijin.generator.ProjectInfo;
+import com.github.mengweijin.generator.entity.DbInfo;
+import com.github.mengweijin.generator.entity.Parameters;
+import com.github.mengweijin.generator.entity.ProjectInfo;
+import com.github.mengweijin.generator.config.CustomerDataSource;
 import com.github.mengweijin.generator.config.CustomerFileOutConfig;
-import com.github.mengweijin.generator.util.DataSourceConfigUtils;
+import com.github.mengweijin.generator.config.CustomerInjectionConfig;
+import com.github.mengweijin.generator.util.DbInfoUtils;
 import lombok.Setter;
 
 import java.io.File;
-import java.sql.Connection;
+import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -47,17 +51,14 @@ public final class ConfigFactory {
     }
 
     public DataSourceConfig getDataSourceConfig() {
-        DbInfo dbInfo = DataSourceConfigUtils.getDbInfo(projectInfo);
-        DataSourceConfig dataSourceConfig = new DataSourceConfig.Builder(
+        DbInfo dbInfo = DbInfoUtils.getDbInfo(projectInfo);
+
+        // 自定义 CustomerDataSource, 使用自定义的 ClassLoader 加载类获取连接。
+        CustomerDataSource dataSource = new CustomerDataSource(
                 dbInfo.getUrl(),
                 dbInfo.getUsername(),
-                dbInfo.getPassword())
-            .build();
-
-        Connection connection = DataSourceConfigUtils.getConnection(dbInfo.getUrl(), dbInfo.getUsername(), dbInfo.getPassword());
-        ReflectUtil.setFieldValue(dataSourceConfig, "connection", connection);
-
-        return dataSourceConfig;
+                dbInfo.getPassword());
+        return new DataSourceConfig.Builder(dataSource).build();
     }
 
     public GlobalConfig getGlobalConfig() {
@@ -88,8 +89,8 @@ public final class ConfigFactory {
 
     public StrategyConfig getStrategyConfig() {
         return new StrategyConfig.Builder()
-                .addInclude(parameters.getTables())
-                .addTablePrefix(parameters.getTablePrefix())
+                .addInclude(this.trimItemName(parameters.getTables()))
+                .addTablePrefix(this.trimItemName(parameters.getTablePrefix()))
 
                 .entityBuilder()
                 .superClass(parameters.getSuperEntityClass())
@@ -107,7 +108,7 @@ public final class ConfigFactory {
                 .logicDeletePropertyName("deleted")
                 // 数据库表映射到实体的命名策略
                 .naming(NamingStrategy.underline_to_camel)
-                //.addSuperEntityColumns()
+                .addSuperEntityColumns(this.generateDefaultSuperEntityColumns())
 
                 .controllerBuilder()
                 .superClass(parameters.getSuperControllerClass())
@@ -129,12 +130,11 @@ public final class ConfigFactory {
     }
 
     public InjectionConfig getInjectionConfig(String outputDir, String outputPackage) {
-
-        InjectionConfig injectionConfig = new InjectionConfig();
+        InjectionConfig injectionConfig = new CustomerInjectionConfig(this.parameters);
         Parameters parameters = projectInfo.getParameters();
 
         List<File> templateFileList = FileUtil.loopFiles(parameters.getTemplateLocation(),
-                file -> file.isFile() && file.getName().toLowerCase().endsWith(parameters.getTemplateType().name()));
+                file -> file.isFile() && file.getName().toLowerCase().endsWith(parameters.getTemplateType().getSuffix()));
 
         if (CollectionUtil.isEmpty(templateFileList)) {
             throw new RuntimeException("No template files found in location " + parameters.getTemplateLocation());
@@ -151,4 +151,29 @@ public final class ConfigFactory {
         return injectionConfig;
     }
 
+    /**
+     * If the user configured superEntityColumns, the configuration will prevail;
+     * if not, the default configuration of superEntityColumns will be generated according to the superEntityClass.
+     *
+     * @return String[]
+     */
+    private String[] generateDefaultSuperEntityColumns() {
+        try {
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            Class<?> cls = Class.forName(this.parameters.getSuperEntityClass(), true, classLoader);
+            Field[] declaredFields = ClassUtil.getDeclaredFields(cls);
+            return Arrays.stream(declaredFields)
+                    .map(field -> StrUtil.toUnderlineCase(field.getName())).toArray(String[]::new);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String[] trimItemName(String[] items) {
+        if(items == null) {
+            return null;
+        }
+        return Arrays.stream(items).map(String::trim).toArray(String[]::new);
+    }
 }

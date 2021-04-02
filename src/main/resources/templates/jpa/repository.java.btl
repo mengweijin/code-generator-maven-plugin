@@ -1,6 +1,6 @@
-package ${autoGenerator.packageInfo.parent}.repository;
+package ${parameters.outputPackage}.repository;
 
-import ${autoGenerator.packageInfo.parent}.entity;
+import ${parameters.outputPackage}.entity;
 <% if(isNotEmpty(superMapperClassPackage)){ %>
 import ${superMapperClassPackage};
 <% } %>

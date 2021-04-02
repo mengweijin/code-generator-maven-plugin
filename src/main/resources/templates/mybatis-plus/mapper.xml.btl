@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="${autoGenerator.packageInfo.parent}.mapper.${entity}Mapper">
+<mapper namespace="${parameters.outputPackage}.mapper.${entity}Mapper">
 
 <% if(enableCache){ %>
     <!-- 开启二级缓存 -->
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
-
 <% } %>
+
 <% if(baseResultMap){ %>
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="${autoGenerator.packageInfo.parent}.entity.${entity}">
+    <resultMap id="BaseResultMap" type="${parameters.outputPackage}.entity.${entity}">
 <% for(field in table.fields){ %>
    <% /** 生成主键排在第一位 **/ %>
    <% if(field.keyFlag){ %>

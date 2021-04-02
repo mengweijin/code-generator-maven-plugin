@@ -1,4 +1,4 @@
-package ${autoGenerator.packageInfo.parent}.controller;
+package ${parameters.outputPackage}.controller;
 
 <% if(entityLombokModel){ %>
 import lombok.extern.slf4j.Slf4j;
@@ -21,9 +21,10 @@ import org.springframework.stereotype.Controller;
 <% if(isNotEmpty(superControllerClassPackage)){ %>
 import ${superControllerClassPackage};
 <% } %>
-import ${autoGenerator.packageInfo.parent}.entity.${entity};
-import ${autoGenerator.packageInfo.parent}.service.${entity}Service;
+import ${parameters.outputPackage}.entity.${entity};
+import ${parameters.outputPackage}.service.${entity}Service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import java.io.Serializable;
 
 /**
  * <p>
@@ -43,14 +44,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 @Controller
 <% } %>
 @RequestMapping("<% if(isNotEmpty(package.ModuleName)){ %>/${package.ModuleName}<% } %>/<% if(isNotEmpty(controllerMappingHyphenStyle)){ %>${controllerMappingHyphen}<% }else{ %>${table.entityPath}<% } %>")
-<% if(kotlin){ %>
-class ${entity}Controller<% if(isNotEmpty(superControllerClass)){ %> : ${superControllerClass}()<% } %>
-<% }else{ %>
-    <% if(isNotEmpty(superControllerClass)){ %>
-public class ${entity}Controller extends ${superControllerClass} {
-    <% }else{ %>
-public class ${entity}Controller {
-    <% } %>
+public class ${entity}Controller <% if(isNotEmpty(superControllerClass)){ %>extends ${superControllerClass}<% } %> {
 
     /**
      * <p>
@@ -68,7 +62,7 @@ public class ${entity}Controller {
      * @return ${entity}
      */
     @GetMapping("/{id}")
-    public ${entity} getById(@Valid @PathVariable("id") Long id) {
+    public ${entity} getById(@PathVariable("id") Serializable id) {
         return ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.getById(id);
     }
 
@@ -81,7 +75,7 @@ public class ${entity}Controller {
      * @return IPage<${entity}>
      */
     @GetMapping
-    public IPage<${entity}> getPage(IPage<${entity}> page, @Valid ${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}) {
+    public IPage<${entity}> getPage(IPage<${entity}> page, ${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}) {
         return ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.page(page, new QueryWrapper<>(${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}));
     }
 
@@ -114,9 +108,9 @@ public class ${entity}Controller {
      * @param id id
      */
     @DeleteMapping("/{id}")
-    public void delete(@Valid @PathVariable("id") Long id) {
+    public void delete(@PathVariable("id") Serializable id) {
         ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.removeById(id);
     }
 
 }
-<% } %>
+

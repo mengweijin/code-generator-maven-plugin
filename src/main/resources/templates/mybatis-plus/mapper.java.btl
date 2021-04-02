@@ -1,6 +1,6 @@
-package ${autoGenerator.packageInfo.parent}.mapper;
+package ${parameters.outputPackage}.mapper;
 
-import ${autoGenerator.packageInfo.parent}.entity;
+import ${parameters.outputPackage}.entity;
 <% if(isNotEmpty(superMapperClassPackage)){ %>
 import ${superMapperClassPackage};
 <% } %>
@@ -15,10 +15,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @since ${date}
  */
 @Mapper
-<% if(kotlin){ %>
-interface ${entity}Mapper : ${superMapperClass}<${entity}>
-<% }else{ %>
 public interface ${entity}Mapper extends ${superMapperClass}<${entity}> {
 
 }
-<% } %>
+

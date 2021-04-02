@@ -2,7 +2,7 @@ package com.github.mengweijin.generator.reader;
 
 import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.EnumUtil;
-import com.github.mengweijin.generator.DbInfo;
+import com.github.mengweijin.generator.entity.DbInfo;
 
 import java.io.File;
 import java.util.HashMap;

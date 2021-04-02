@@ -1,6 +1,6 @@
 package com.github.mengweijin.generator.reader;
 
-import com.github.mengweijin.generator.DbInfo;
+import com.github.mengweijin.generator.entity.DbInfo;
 
 import java.io.File;
 

@@ -3,22 +3,19 @@ package com.github.mengweijin.generator.util;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileNameUtil;
-import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.db.dialect.DriverUtil;
 import com.alibaba.fastjson.JSON;
-import com.github.mengweijin.generator.DbInfo;
-import com.github.mengweijin.generator.ProjectInfo;
+import com.github.mengweijin.generator.entity.DbInfo;
+import com.github.mengweijin.generator.entity.ProjectInfo;
 import com.github.mengweijin.generator.reader.BootFileReaderFactory;
 import org.apache.maven.model.Resource;
 import java.io.File;
-import java.lang.reflect.Method;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.List;
-import java.util.Properties;
 
-public class DataSourceConfigUtils {
+/**
+ * @author mengweijin
+ */
+public class DbInfoUtils {
 
     private static final String[] BOOTSTRAP_FILE = {
             "bootstrap.yml",
@@ -85,31 +82,5 @@ public class DataSourceConfigUtils {
         });
 
         return CollectionUtil.isEmpty(fileList) ? null : fileList.get(0);
-    }
-
-
-    public static Connection getConnection(String url, String username, String password) {
-        Connection conn;
-        try {
-            Class.forName(DriverUtil.identifyDriver(url), true, Thread.currentThread().getContextClassLoader());
-
-            Properties info = new Properties();
-            if (username != null) {
-                info.put("user", username);
-            }
-            if (password != null) {
-                info.put("password", password);
-            }
-
-            Method method = ReflectUtil.getMethod(
-                    DriverManager.class,
-                    "getConnection",
-                    String.class, Properties.class, Class.class);
-            method.setAccessible(true);
-            conn = ReflectUtil.invokeStatic(method, url, info, null);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return conn;
     }
 }

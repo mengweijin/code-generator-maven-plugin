@@ -3,7 +3,7 @@ package com.github.mengweijin.generator.util;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
-import com.github.mengweijin.generator.ProjectInfo;
+import com.github.mengweijin.generator.entity.ProjectInfo;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
