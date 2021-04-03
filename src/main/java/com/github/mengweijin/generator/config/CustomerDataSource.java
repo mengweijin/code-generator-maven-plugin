@@ -1,7 +1,7 @@
 package com.github.mengweijin.generator.config;
 
 import cn.hutool.core.util.ReflectUtil;
-import cn.hutool.db.dialect.DriverUtil;
+import com.github.mengweijin.generator.util.DriverUtils;
 
 import javax.sql.DataSource;
 import java.io.PrintWriter;
@@ -39,8 +39,7 @@ public class CustomerDataSource implements DataSource {
     public Connection getConnection(String username, String password) throws SQLException {
         Connection conn;
         try {
-            String prefixUrl = this.url.split(";")[0];
-            Class.forName(DriverUtil.identifyDriver(prefixUrl), true, Thread.currentThread().getContextClassLoader());
+            Class.forName(DriverUtils.identifyDriver(url), true, Thread.currentThread().getContextClassLoader());
 
             Properties info = new Properties();
             if (username != null) {

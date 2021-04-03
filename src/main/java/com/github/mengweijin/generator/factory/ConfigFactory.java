@@ -22,6 +22,7 @@ import com.github.mengweijin.generator.config.CustomerFileOutConfig;
 import com.github.mengweijin.generator.config.CustomerInjectionConfig;
 import com.github.mengweijin.generator.util.DbInfoUtils;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -31,6 +32,7 @@ import java.util.List;
 /**
  * @author mengweijin
  */
+@Slf4j
 public final class ConfigFactory {
 
     @Setter
@@ -140,7 +142,7 @@ public final class ConfigFactory {
             throw new RuntimeException("No template files found in location " + parameters.getTemplateLocation());
         } else {
             String message = "Found " + templateFileList.size() + " template files in location " + parameters.getTemplateLocation();
-            System.out.println(message);
+            log.info(message);
         }
 
         templateFileList.forEach(file -> {

@@ -41,13 +41,9 @@ public class ${entity} implements Serializable {
 <% for(field in table.fields){ %>
 
     <% if(isNotEmpty(field.comment)){ %>
-        <% if(swagger2){ %>
-    @ApiModelProperty(value = "${field.comment}")
-        <% }else{ %>
     /**
      * ${field.comment!}
      */
-        <% } %>
     <% } %>
     private ${field.propertyType} ${field.propertyName};
 <% } %>

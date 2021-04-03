@@ -5,13 +5,15 @@ import com.baomidou.mybatisplus.generator.config.po.TableField;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.github.mengweijin.generator.entity.IdField;
 import com.github.mengweijin.generator.entity.Parameters;
-
+import lombok.extern.slf4j.Slf4j;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
  * @author mengweijin
  */
+@Slf4j
 public class CustomerInjectionConfig extends InjectionConfig {
 
     private Parameters parameters;
@@ -26,6 +28,8 @@ public class CustomerInjectionConfig extends InjectionConfig {
         objectMap.put("parameters", parameters);
         objectMap.put("idField", getIdField((TableInfo) objectMap.get("table")));
         objectMap.put("allFieldList", handleAllFieldList((TableInfo) objectMap.get("table")));
+
+        log.info("Beetl parameter map: {}", objectMap);
     }
 
     private IdField getIdField(TableInfo tableInfo) {
@@ -43,7 +47,11 @@ public class CustomerInjectionConfig extends InjectionConfig {
     private List<TableField> handleAllFieldList(TableInfo tableInfo) {
         List<TableField> fieldList = tableInfo.getFields();
         List<TableField> commonFields = tableInfo.getCommonFields();
-        fieldList.addAll(commonFields);
-        return fieldList;
+
+        // 为了不影响其他地方的引用，这里必须创建一个新的集合来存放所有字段
+        List<TableField> allList = new ArrayList<>();
+        allList.addAll(fieldList);
+        allList.addAll(commonFields);
+        return allList;
     }
 }

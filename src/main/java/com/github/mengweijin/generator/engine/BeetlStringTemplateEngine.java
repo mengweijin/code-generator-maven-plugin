@@ -3,11 +3,11 @@ package com.github.mengweijin.generator.engine;
 import cn.hutool.core.io.FileUtil;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.engine.AbstractTemplateEngine;
+import lombok.extern.slf4j.Slf4j;
 import org.beetl.core.Configuration;
 import org.beetl.core.GroupTemplate;
 import org.beetl.core.Template;
 import org.beetl.core.resource.StringTemplateResourceLoader;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,6 +16,7 @@ import java.util.Map;
 /**
  * @author mengweijin
  */
+@Slf4j
 public class BeetlStringTemplateEngine extends AbstractTemplateEngine {
 
     private GroupTemplate groupTemplate;
@@ -44,7 +45,8 @@ public class BeetlStringTemplateEngine extends AbstractTemplateEngine {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        System.out.println("模板:" + templatePath + ";  文件:" + outputFile);
+
+        log.info("模板:" + templatePath + ";  文件:" + outputFile);
     }
 
     @Override
