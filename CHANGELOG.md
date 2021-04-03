@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### [v1.0.3-SNAPSHOT] 2021-04-03
+### [v1.0.3] 2021-04-03
 - 升级 mybatis-plus-generator 版本 从 3.4.1 到 3.5.0.1-SNAPSHOT
 - fix 数据库驱动包在 Maven 中配置为 <scope>runtime</scope> 时找不到驱动包；
 - Refactor classes in config package.
