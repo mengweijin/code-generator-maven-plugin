@@ -62,33 +62,17 @@ Locate the code-generator-maven-plugin in the Intellij IDEA Maven module shown b
     <version>Latest Version</version>
     <configuration>
         <parameters>
-            <!--The package path that the code generates.               Default：com.github.mengweijin-->
             <outputPackage>com.github.mengweijin</outputPackage>
-            <!--The value of @author above the class comment.           Default：Gets the user name of the current computer.-->
             <author>mengweijin</author>
-            <!--Database connection information. 
-            If it is a standard SpringBoot engineering, can be omitted, it will automatically read application.Yml/yaml/properties file.-->
             <dbInfo>
                 <username>root</username>
                 <password>root</password>
                 <url>jdbc:mysql://192.168.83.128:3306/mwj_cms</url>
             </dbInfo>
-            <!--The database table name to generate the code for. If not configured, all the tables in the database will be generated.
-                Some databases are case-sensitive to table names, and the table names that need to be configured are exactly the same as those in the database.
-                Multiple table names are separated by English commas.-->
             <tables>sys_user, rlt_user_role</tables>
-            <!--To generate a prefix for the database table name corresponding to the code. 
-                Once configured, the generated Entity class is not prefixed with a table. Such as：User, UserRole.
-                If not configured, the generated Entity class is prefixed with a table. Such as：SysUser, RltUserRole.
-                Multiple table name prefixes are separated by English commas.-->
             <tablePrefix>sys_, rlt_</tablePrefix>
-            <!--The parent class inherited by the generated Entity class.-->
             <superEntityClass>com.github.mengweijin.BaseEntity</superEntityClass>
-            <!--Whether the generated Entity is lombok mode enabled.
-                Not configured or configured to true: Lombok enabled;
-                Configured as false: Without Lombok mode enabled, the generated Entity contains getter/setter/toString methods.
-            -->
-            <lombokModel>false</lombokModel>
+            <lombokModel>true</lombokModel>
 
         </parameters>
     </configuration>

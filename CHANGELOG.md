@@ -1,4 +1,7 @@
 ## CHANGELOG
+### [v1.0.4] 2021-04-11
+- 升级 Hutool 版本从 5.6.2 到 5.6.3；
+- Remove DriverUtils.java
 
 ### [v1.0.3] 2021-04-03
 - 升级 mybatis-plus-generator 版本 从 3.4.1 到 3.5.0.1-SNAPSHOT

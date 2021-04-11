@@ -1,8 +1,7 @@
 package com.github.mengweijin.generator.config;
 
 import cn.hutool.core.util.ReflectUtil;
-import com.github.mengweijin.generator.util.DriverUtils;
-
+import cn.hutool.db.dialect.DriverUtil;
 import javax.sql.DataSource;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
@@ -39,7 +38,9 @@ public class CustomerDataSource implements DataSource {
     public Connection getConnection(String username, String password) throws SQLException {
         Connection conn;
         try {
-            Class.forName(DriverUtils.identifyDriver(url), true, Thread.currentThread().getContextClassLoader());
+            // hutool 5.6.3 已修复：https://gitee.com/dromara/hutool/issues/I3EWBI
+            // 关于DriverUtil.identifyDriver(url); 的 Classloader 的问题，hutool 内部已经默认使用了线程上下文类加载器，因此这里无需处理
+            Class.forName(DriverUtil.identifyDriver(url), true, Thread.currentThread().getContextClassLoader());
 
             Properties info = new Properties();
             if (username != null) {

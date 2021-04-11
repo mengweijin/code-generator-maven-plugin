@@ -62,31 +62,17 @@ code-generator-maven-plugin 是一个在MVC项目中基于数据库表生成Cont
     <version>Latest Version</version>
     <configuration>
         <parameters>
-            <!--代码生成的包路径。               默认：com.github.mengweijin-->
             <outputPackage>com.github.mengweijin</outputPackage>
-            <!--类注释上面@author的值。         默认：取当前电脑的用户名-->
             <author>mengweijin</author>
-            <!--数据库连接信息。如果是标准的SpringBoot工程，可以省略，会自动读取application.yml/yaml/properties文件。-->
             <dbInfo>
                 <username>root</username>
                 <password>root</password>
                 <url>jdbc:mysql://192.168.83.128:3306/mwj_cms</url>
             </dbInfo>
-            <!--要生成代码对应的数据库表名称。如果不配置，会生成数据库中所有的表。
-                部分数据库对表名称大小写敏感，此时需要配置的表名称跟数据库中的完全一致。
-                多个表名称使用英文逗号分隔-->
             <tables>sys_user, rlt_user_role</tables>
-            <!--要生成代码对应的数据库表名称的前缀。配置后，生成的entity类就不会带有表前缀了。如：User, UserRole。
-                如果不配置，生成的entity类就会带有表前缀。如：SysUser, RltUserRole。
-                多个表名称前缀使用英文逗号分隔-->
             <tablePrefix>sys_, rlt_</tablePrefix>
-            <!--生成的entity类继承的父类-->
             <superEntityClass>com.github.mengweijin.BaseEntity</superEntityClass>
-            <!--生成的entity是否启用lombok方式。
-                不配置或者配置为true: 启用lombok方式；
-                配置为false: 不启用lombok方式，则生成的entity中包含getter/setter/toString方法。
-            -->
-            <lombokModel>false</lombokModel>
+            <lombokModel>true</lombokModel>
         </parameters>
     </configuration>
 </plugin>
