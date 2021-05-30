@@ -1,0 +1,7 @@
+@echo off
+
+call DockerImageBuild.bat
+
+echo Starting docker container
+
+docker run --name ${ARTIFACT_ID} -d -p 8080:8080 ${ARTIFACT_ID}:${VERSION}

@@ -1,0 +1,13 @@
+FROM java:8
+MAINTAINER Meng Wei Jin mengweijin.work@foxmail.com
+
+ARG ARTIFACT_ID=${ARTIFACT_ID}
+ARG VERSION=${VERSION}
+ARG JAR_FILE=${ARTIFACT_ID}-${VERSION}.jar
+
+RUN mkdir /app
+COPY target/\${JAR_FILE} /app/application.jar
+# RUN bash -c 'touch /app/application.jar'
+
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app/application.jar"]
+EXPOSE 8080

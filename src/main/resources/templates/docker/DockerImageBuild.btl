@@ -1,0 +1,13 @@
+@echo off
+
+call DockerImageDelete.bat
+
+echo Building docker image
+
+cd ${DockerFileDirectory}
+docker build -t ${ARTIFACT_ID}:${VERSION} .
+
+rem docker login --username=***@**.com registry.cn-hangzhou.aliyuncs.com
+rem docker tag ${ARTIFACT_ID}:${VERSION} registry.cn-hangzhou.aliyuncs.com/mengweijin/${ARTIFACT_ID}:${VERSION}
+rem docker push registry.cn-hangzhou.aliyuncs.com/mengweijin/${ARTIFACT_ID}:${VERSION}
+
