@@ -1,58 +1,54 @@
-package com.github.mengweijin.generator.factory;
+package com.github.mengweijin.generator;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.generator.InjectionConfig;
+import com.baomidou.mybatisplus.generator.SimpleAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-import com.baomidou.mybatisplus.generator.config.FileOutConfig;
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;
+import com.baomidou.mybatisplus.generator.config.IConfigBuilder;
+import com.baomidou.mybatisplus.generator.config.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.TemplateConfig;
-import com.baomidou.mybatisplus.generator.config.builder.GeneratorBuilder;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.baomidou.mybatisplus.generator.engine.AbstractTemplateEngine;
+import com.github.mengweijin.generator.config.CustomerDataSource;
+import com.github.mengweijin.generator.config.FileOutput;
 import com.github.mengweijin.generator.entity.DbInfo;
 import com.github.mengweijin.generator.entity.Parameters;
 import com.github.mengweijin.generator.entity.ProjectInfo;
-import com.github.mengweijin.generator.config.CustomerDataSource;
-import com.github.mengweijin.generator.config.CustomerFileOutConfig;
-import com.github.mengweijin.generator.config.CustomerInjectionConfig;
+import com.github.mengweijin.generator.factory.TemplateEngineFactory;
 import com.github.mengweijin.generator.util.DbInfoUtils;
+import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-
-import java.io.File;
 import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author mengweijin
  */
 @Slf4j
-public final class ConfigFactory {
+public class CustomerAutoGenerator extends SimpleAutoGenerator {
 
+    @Getter
     @Setter
     private ProjectInfo projectInfo;
 
-    @Setter
-    private Parameters parameters;
+    private static final CustomerAutoGenerator instance = new CustomerAutoGenerator();
 
-    private static final ConfigFactory configFactory = new ConfigFactory();
-
-    private ConfigFactory() {
+    private CustomerAutoGenerator() {
     }
 
-    public static ConfigFactory getInstance(ProjectInfo projectInfo) {
-        configFactory.setProjectInfo(projectInfo);
-        configFactory.setParameters(projectInfo.getParameters());
-        return configFactory;
+    public static CustomerAutoGenerator getInstance(ProjectInfo projectInfo) {
+        instance.setProjectInfo(projectInfo);
+        return instance;
     }
 
-    public DataSourceConfig getDataSourceConfig() {
+    @Override
+    public IConfigBuilder<DataSourceConfig> dataSourceConfigBuilder() {
         DbInfo dbInfo = DbInfoUtils.getDbInfo(projectInfo);
 
         // 自定义 CustomerDataSource, 使用自定义的 ClassLoader 加载类获取连接。
@@ -60,36 +56,37 @@ public final class ConfigFactory {
                 dbInfo.getUrl(),
                 dbInfo.getUsername(),
                 dbInfo.getPassword());
-        return new DataSourceConfig.Builder(dataSource).build();
+        return new DataSourceConfig.Builder(dataSource);
     }
 
-    public GlobalConfig getGlobalConfig() {
-        return GeneratorBuilder.globalConfigBuilder()
-                .fileOverride(true)
+    @Override
+    public IConfigBuilder<GlobalConfig> globalConfigBuilder() {
+        return new GlobalConfig.Builder().fileOverride()
+                .enableSwagger()
                 .openDir(false)
-                .kotlin(false)
-                .swagger2(false)
                 .outputDir(FileUtil.file(projectInfo.getBaseDir(), "target/code-generator/").getAbsolutePath())
-                .author(parameters.getAuthor())
-                .dateType(DateType.TIME_PACK).commentDate("yyyy-MM-dd")
-                .build();
+                .author(projectInfo.getParameters().getAuthor())
+                .dateType(DateType.TIME_PACK).commentDate("yyyy-MM-dd");
     }
 
-    public PackageConfig getPackageConfig() {
-        return new PackageConfig.Builder()
-                .parent(parameters.getOutputPackage())
-                .build();
+    @Override
+    public IConfigBuilder<PackageConfig> packageConfigBuilder() {
+        return new PackageConfig.Builder().parent(projectInfo.getParameters().getOutputPackage());
     }
 
     /**
+     * 自定义模板配置 Builder
      * 禁用默认模板，我们需要使用自定义的模板
      * @return
      */
-    public TemplateConfig getTemplateConfig() {
-        return new TemplateConfig.Builder().disable().build();
+    @Override
+    public IConfigBuilder<TemplateConfig> templateConfigBuilder() {
+        return new TemplateConfig.Builder().disable();
     }
 
-    public StrategyConfig getStrategyConfig() {
+    @Override
+    public IConfigBuilder<StrategyConfig> strategyConfigBuilder() {
+        Parameters parameters = projectInfo.getParameters();
         return new StrategyConfig.Builder()
                 .addInclude(this.trimItemName(parameters.getTables()))
                 .addTablePrefix(this.trimItemName(parameters.getTablePrefix()))
@@ -126,31 +123,19 @@ public final class ConfigFactory {
                 .mapperBuilder()
                 .superClass(parameters.getSuperDaoClass())
                 .enableBaseColumnList()
-                .enableBaseResultMap()
-
-                .build();
+                .enableBaseResultMap();
     }
 
-    public InjectionConfig getInjectionConfig(String outputDir, String outputPackage) {
-        InjectionConfig injectionConfig = new CustomerInjectionConfig(this.parameters);
-        Parameters parameters = projectInfo.getParameters();
+    @Override
+    public AbstractTemplateEngine templateEngine() {
+        return TemplateEngineFactory.getTemplateEngine(this.projectInfo.getParameters().getTemplateType());
+    }
 
-        List<File> templateFileList = FileUtil.loopFiles(parameters.getTemplateLocation(),
-                file -> file.isFile() && file.getName().toLowerCase().endsWith(parameters.getTemplateType().getSuffix()));
-
-        if (CollectionUtil.isEmpty(templateFileList)) {
-            throw new RuntimeException("No template files found in location " + parameters.getTemplateLocation());
-        } else {
-            String message = "Found " + templateFileList.size() + " template files in location " + parameters.getTemplateLocation();
-            log.info(message);
-        }
-
-        templateFileList.forEach(file -> {
-            FileOutConfig fileOutConfig = new CustomerFileOutConfig(file.getAbsolutePath(), outputDir, outputPackage);
-            injectionConfig.addFileOutConfig(fileOutConfig);
+    @Override
+    public IConfigBuilder<InjectionConfig> injectionConfigBuilder() {
+        return new InjectionConfig.Builder().beforeOutputFile((tableInfo, objectMap) -> {
+            FileOutput.outputFile(tableInfo, objectMap, this);
         });
-
-        return injectionConfig;
     }
 
     /**
@@ -162,7 +147,7 @@ public final class ConfigFactory {
     private String[] generateDefaultSuperEntityColumns() {
         try {
             ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-            Class<?> cls = Class.forName(this.parameters.getSuperEntityClass(), true, classLoader);
+            Class<?> cls = Class.forName(projectInfo.getParameters().getSuperEntityClass(), true, classLoader);
             Field[] declaredFields = ClassUtil.getDeclaredFields(cls);
             return Arrays.stream(declaredFields)
                     .map(field -> StrUtil.toUnderlineCase(field.getName())).toArray(String[]::new);
@@ -178,4 +163,5 @@ public final class ConfigFactory {
         }
         return Arrays.stream(items).map(String::trim).toArray(String[]::new);
     }
+
 }

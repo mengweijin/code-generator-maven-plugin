@@ -16,7 +16,6 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
@@ -78,8 +77,6 @@ public class DockerfileGeneratorMojo extends AbstractMojo {
             this.generateDockerImageBuild(templateEngine, objectMap);
             this.generateDockerImageBuildRun(templateEngine, objectMap);
             this.generateDockerImageDelete(templateEngine, objectMap);
-
-
         } catch (Exception e) {
             getLog().error(e);
             throw new RuntimeException(e);

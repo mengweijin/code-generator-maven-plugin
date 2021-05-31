@@ -2,7 +2,7 @@ package com.github.mengweijin.generator.mojo;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.JarClassLoader;
-import com.github.mengweijin.generator.CodeGenerator;
+import com.github.mengweijin.generator.CustomerAutoGenerator;
 import com.github.mengweijin.generator.entity.Parameters;
 import com.github.mengweijin.generator.entity.ProjectInfo;
 import com.github.mengweijin.generator.util.TemplateUtils;
@@ -72,7 +72,7 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo {
             projectInfo.setBaseDir(this.baseDir);
             projectInfo.setSourceDir(this.sourceDir);
 
-            new CodeGenerator(projectInfo).run();
+            CustomerAutoGenerator.getInstance(projectInfo).execute();
         } catch (Exception e) {
             getLog().error(e);
             throw new RuntimeException(e);

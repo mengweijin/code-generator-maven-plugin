@@ -1,4 +1,10 @@
 ## CHANGELOG
+### [v1.0.5] 2021-05-30
+- 升级 Hutool 版本从 5.6.3 到 5.6.5；
+- 升级 mybatis-plus-generator 版本从 3.5.0.1-SNAPSHOT 到 3.5.0，版本兼容性处理；
+- 添加生成 Dockerfile 文件，以及生成构建 Docker 镜像的脚本；
+- 若干优化。
+
 ### [v1.0.4] 2021-04-11
 - 升级 Hutool 版本从 5.6.2 到 5.6.3；
 - Remove DriverUtils.java
