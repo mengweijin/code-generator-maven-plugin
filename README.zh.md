@@ -21,16 +21,25 @@ Language: [English](README.md)
 </p>
 
 ## 简介
-code-generator-maven-plugin 是一个在MVC项目中基于数据库表生成Controller, Service, entity, Dao(mybatis: Mapper; JPA: Repository)层CRUD代码的maven插件。
-基于baomidou mybatis-plus-generator实现。
-
-支持的框架：Mybatis, Mybatis-Plus, JPA。
-
-理论可以扩展任意前后台跟数据库表有关系的技术：如：Vue, Element-UI 代码等。
-
-理论支持所有支持JDBC连接的数据库：例如：DB2, DM, H2, Mariadb, MySQL, Oracle, Postgre, Sqlite, SQLServer
+code-generator-maven-plugin 是一个基于baomidou mybatis-plus-generator实现的，在 Maven 项目中生成代码的 Maven 插件。主要包括：
+- code-generator:**mybatis**：基于数据库表生成 Mybatis 下的 Controller.java, Service.java, Mapper.java, mapper.xml, Entity.java 层CRUD代码;
+- code-generator:**mybatis-plus**：基于数据库表生成 Mybatis-plus 下的 Controller.java, Service.java, Mapper.java, mapper.xml, Entity.java 层CRUD代码;
+- code-generator:**jpa**：基于数据库表生成 Jpa 下的 Controller.java, Service.java, Repository.java, Entity.java 层CRUD代码;
+- code-generator:**Dockerfile**：生成当前项目的 Dockerfile 文件，以及相关脚本：DockerImageBuild.bat, DockerImageBuildRun.bat, DockerImageDelete.bat
+- 理论可以扩展任意前后台跟数据库表有关系的技术：如：Vue, Element-UI 代码等。
+- 理论支持所有支持JDBC连接的数据库：例如：DB2, DM, H2, Mariadb, MySQL, Oracle, Postgre, Sqlite, SQLServer
 
 ## 如何使用?
+在Intellij IDEA 的 Maven 模块中找到下面图中的 code-generator 插件，然后双击对应的插件命令即可。
+
+![image](docs/image/code-generator-maven-plugin.png)
+
+**注意**
+* 默认 Java 代码生成在当前工程的 target/code-generator/ 目录下。
+* 默认包路径为：com.github.mengweijin
+* 默认 Dockerfile 等文件生成在当前工程的 target 目录下。
+
+## 生成 java 代码
 ### 1. 一般使用
 在标准 SpringBoot 项目，以开发工具 Intellij IDEA 为例：在 Maven 中引入 code-generator-maven-plugin 插件
 ~~~~xml
@@ -46,13 +55,6 @@ code-generator-maven-plugin 是一个在MVC项目中基于数据库表生成Cont
    </configuration>
 </plugin>
 ~~~~ 
-在Intellij IDEA的Maven模块中找到下面图中的code-generator插件，然后双击对应的插件命令即可。
-
-![image](docs/image/code-generator-maven-plugin.png)
-
-#### 注意
-* 默认代码生成在当前工程的target/code-generator/ 目录下。
-* 默认包路径为：com.github.mengweijin
 
 ### 2. 全部配置使用
 ~~~~xml
@@ -94,6 +96,7 @@ code-generator-maven-plugin 是一个在MVC项目中基于数据库表生成Cont
 ## 常见问题
 1. 数据库表存在，但没有生成代码文件，程序也没有报错。
     * 配置数据库表名称（tables）一定要跟数据库中的表名称大小写完全一致。例如H2数据库用脚本创建表时的脚本中写的名称是小写，但真实生成的表名称可能是大写的，因此这里需要配置为大写的表名称。
+2. 已知问题：[H2 数据库提示表在数据库中不存在](https://github.com/baomidou/generator/issues/68)
 
 ## 期望
 欢迎您提出更好的意见，帮助完善这个小插件.

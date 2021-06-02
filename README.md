@@ -21,16 +21,25 @@ Language: [中文](README.zh.md)
 </p>
 
 ## Description
-The code-generator-maven-plugin is an MVC project that generates Controller, Service, Entity, Dao(Mybatis: Mapper; JPA: Repository) layer of CRUD code maven plugin.
-Implementation is based on Baomidou's mybatis-plus-generator.
-
-Supported frameworks：Mybatis, Mybatis-Plus, JPA。
-
-Theory can be extended to any background and front database table related technology: such as: vue.js.
-
-The theory supports all databases that support JDBC connection: for example: DB2, DM, H2, Mariadb, MySQL, Oracle, Postgre, Sqlite, SQLServer, etc.
+code-generator-maven-plugin is based on baomidou's mybatis-plus-generator，a Maven plugin that generates code in a Maven project。Key features：
+* code-generator:**mybatis**：Generate Controller.java, Service.java, Mapper.java, mapper.xml, Entity.java under MyBatis based on database tables;
+* code-generator:**mybatis-plus**：Generate Controller.java, Service.java, Mapper.java, mapper.xml, Entity.java under MyBatis-Plus based on database tables;
+* code-generator:**jpa**：Generate Controller.java, Service.java, Repository.java, Entity.java under JPA based on database tables;
+* code-generator:**Dockerfile**：Generate the Dockerfile file for the current project, along with the associated scripts: DockerImageBuild.bat, DockerImageBuildRun.bat, DockerImageDelete.bat
+* Theory can be extended to any background and front database table related technology: such as: vue.js.
+* The theory supports all databases that support JDBC connection: for example: DB2, DM, H2, Mariadb, MySQL, Oracle, Postgre, Sqlite, SQLServer, etc.
 
 ## how to use?
+Locate the code-generator-maven-plugin in the Intellij IDEA Maven module shown below and double-click the corresponding plug-in command.
+
+![image](docs/image/code-generator-maven-plugin.png)
+
+**Notes**
+* The default Java code generation is under the target/code-generator/ directory of the current project.
+* The default package path is com.github.mengweijin.
+* The default Dockerfile and other files are generated in the target directory of the current project.
+
+## Generating Java Code
 ### 1. General Use
 In the standard SpringBoot project, take Intellij IDEA, a development tool, as an example: the code-generator-maven-plugin was introduced into Maven
 ~~~~xml
@@ -46,13 +55,6 @@ In the standard SpringBoot project, take Intellij IDEA, a development tool, as a
     </configuration>
 </plugin>
 ~~~~
-Locate the code-generator-maven-plugin in the Intellij IDEA Maven module shown below and double-click the corresponding plug-in command.
-
-![image](docs/image/code-generator-maven-plugin.png)
-
-#### Notes
-* The default code generation is under the target/code-generator/ directory of the current project.
-* The default package path is com.github.mengweijin.
 
 ### 2. Full Configuration to Use
 ~~~~xml
@@ -97,6 +99,7 @@ Locate the code-generator-maven-plugin in the Intellij IDEA Maven module shown b
   * Configure database table names to be exactly the same as table names in the database.
   For example, when an H2 database creates a table with a script, the script name is written in lowercase,
   but the generated table name may be in upper case, so you need to configure the upper case table name here.
+2. known issue：[The H2 database prompt table does not exist in the database](https://github.com/baomidou/generator/issues/68)
 
 ## Futures
 You are welcome to suggest better ways to improve this widget.

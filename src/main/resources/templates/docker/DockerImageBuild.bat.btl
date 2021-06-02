@@ -4,7 +4,6 @@ call DockerImageDelete.bat
 
 echo Building docker image
 
-cd ${DockerFileDirectory}
 docker build -t ${ARTIFACT_ID}:${VERSION} .
 
 rem docker login --username=***@**.com registry.cn-hangzhou.aliyuncs.com

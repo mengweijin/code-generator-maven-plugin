@@ -57,6 +57,7 @@ public class FileOutput {
             for (File templateFile: templateFileList) {
                 // 初始化输出文件的名称和路径
                 File outputFile = buildOutputFile(tableInfo, templateFile.getAbsolutePath(), outputDir, outputPackage);
+                FileUtil.mkParentDirs(outputFile);
                 // 使用模板引擎，渲染并输出文件
                 templateEngine.writer(objectMap, templateFile.getAbsolutePath(), outputFile);
             }

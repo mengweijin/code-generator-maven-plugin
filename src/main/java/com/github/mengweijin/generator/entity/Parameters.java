@@ -1,7 +1,6 @@
 package com.github.mengweijin.generator.entity;
 
 import cn.hutool.system.SystemUtil;
-import com.github.mengweijin.generator.entity.DbInfo;
 import com.github.mengweijin.generator.enums.TemplateType;
 import lombok.Data;
 
@@ -16,7 +15,7 @@ public class Parameters {
      */
     private String outputPackage = "com.github.mengweijin";
 
-    private String author = SystemUtil.getUserInfo().getName();
+    private String author = SystemUtil.get("user.name", false);
 
     /**
      * The absolute path to the folder.

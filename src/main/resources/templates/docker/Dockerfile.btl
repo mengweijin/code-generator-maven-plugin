@@ -4,7 +4,7 @@ MAINTAINER Meng Wei Jin mengweijin.work@foxmail.com
 ARG JAR_FILE=${ARTIFACT_ID}-${VERSION}.jar
 
 RUN mkdir /app
-COPY target/\${JAR_FILE} /app/application.jar
+COPY \${JAR_FILE} /app/application.jar
 # RUN bash -c 'touch /app/application.jar'
 
 ENTRYPOINT ["java", "-jar", "/app/application.jar"]

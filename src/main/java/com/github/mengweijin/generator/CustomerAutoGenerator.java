@@ -77,7 +77,7 @@ public class CustomerAutoGenerator extends SimpleAutoGenerator {
     /**
      * 自定义模板配置 Builder
      * 禁用默认模板，我们需要使用自定义的模板
-     * @return
+     * @return templateConfigBuilder
      */
     @Override
     public IConfigBuilder<TemplateConfig> templateConfigBuilder() {
