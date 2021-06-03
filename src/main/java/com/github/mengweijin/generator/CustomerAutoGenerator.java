@@ -159,7 +159,7 @@ public class CustomerAutoGenerator extends SimpleAutoGenerator {
 
     private String[] trimItemName(String[] items) {
         if(items == null) {
-            return null;
+            return new String[]{};
         }
         return Arrays.stream(items).map(String::trim).toArray(String[]::new);
     }

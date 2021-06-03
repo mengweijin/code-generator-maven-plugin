@@ -87,7 +87,7 @@ code-generator-maven-plugin 是一个基于baomidou mybatis-plus-generator实现
 |author|否|mengweijin|类注释上面@author的值。 默认：取当前电脑的用户名|
 |dbInfo.username|否|root|数据库连接信息。如果是标准的SpringBoot工程，可以省略，会自动读取application.yml/yaml/properties文件。|
 |dbInfo.password|否|root|同上|
-|dbInfo.url|否|jdbc:mysql://192.168.83.128:3306/test|同上|
+|dbInfo.url|否|jdbc:mysql://192.168.83.128:3306/test|同上。注意：如果是多模块项目使用 H2 数据库生成代码时，要注意 URL 的书写方式，详情参考**常见问题**章节|
 |tables|否|sys_user, rlt_user_role|要生成代码对应的数据库表名称。如果不配置，会生成数据库中所有的表。部分数据库对表名称大小写敏感，此时需要配置的表名称跟数据库中的完全一致。多个表名称使用英文逗号分隔|
 |tablePrefix|否|sys_, rlt_|要生成代码对应的数据库表名称的前缀。配置后，生成的entity类就不会带有表前缀了。如：User, UserRole。如果不配置，生成的entity类就会带有表前缀。如：SysUser, RltUserRole。多个表名称前缀使用英文逗号分隔|
 |superEntityClass|否|com.github.mengweijin.quickboot.mybatis.BaseEntity|生成的entity类继承的父类|
@@ -95,8 +95,29 @@ code-generator-maven-plugin 是一个基于baomidou mybatis-plus-generator实现
 
 ## 常见问题
 1. 数据库表存在，但没有生成代码文件，程序也没有报错。
-    * 配置数据库表名称（tables）一定要跟数据库中的表名称大小写完全一致。例如H2数据库用脚本创建表时的脚本中写的名称是小写，但真实生成的表名称可能是大写的，因此这里需要配置为大写的表名称。
-2. 已知问题：[H2 数据库提示表在数据库中不存在](https://github.com/baomidou/generator/issues/68)
+   * 配置数据库表名称（tables）一定要跟数据库中的表名称大小写完全一致。例如H2数据库用脚本创建表时的脚本中写的名称是小写，但真实生成的表名称可能是大写的，因此这里需要配置为大写的表名称。
+2. 多模块项目使用 H2 数据库生成代码时，提示“表\[table_name]在数据库中不存在！！！” 的问题。
+   * 项目结构为多模块时，项目结构如下：
+   ````txt
+   - project-parent
+      - h2
+         - test.mv.db
+      - project-child
+         - src
+            - main
+               - java
+               - resources
+         - pom.xml(code-generator-maven-plugin 在这里配置的)
+      - pom.xml(project-parent 的)
+   ````
+   * 可以发现，/h2/test.mv.db 文件在整个项目的根路径下 
+   * 我们程序中配置的 url 为 jdbc:h2:file:./h2/test;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
+   * 当使用 code-generator-maven-plugin 时，就不能配置上面的 url 了， 因为多模块项目中的插件的根路径为 project-child 的，并不是 /h2/test.mv.db 文件所在的位置
+   * 此时我们可以使用以下两种方式来手动指定：
+      * 使用绝对路径：jdbc:h2:file:C:/Source/code/gitee/quickboot/h2/test;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
+      * 使用相对路径（多加了一层 ../ 符号）：jdbc:h2:file:./../h2/test;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
+   * 注意：只用多模块项目才需要这样指定，单个项目不受影响。
+   
 
 ## 期望
 欢迎您提出更好的意见，帮助完善这个小插件.

@@ -41,6 +41,8 @@ public class FileOutput {
 
         AbstractTemplateEngine templateEngine = customerAutoGenerator.templateEngine();
         String outputDir = customerAutoGenerator.globalConfigBuilder().build().getOutputDir();
+        // clean directory target/code-generator
+        FileUtil.del(outputDir);
         String outputPackage = customerAutoGenerator.packageConfigBuilder().build().getParent();
 
         List<File> templateFileList = FileUtil.loopFiles(parameters.getTemplateLocation(),

@@ -99,7 +99,27 @@ In the standard SpringBoot project, take Intellij IDEA, a development tool, as a
   * Configure database table names to be exactly the same as table names in the database.
   For example, when an H2 database creates a table with a script, the script name is written in lowercase,
   but the generated table name may be in upper case, so you need to configure the upper case table name here.
-2. known issue：[The H2 database prompt table does not exist in the database](https://github.com/baomidou/generator/issues/68)
+2. The problem "Table \[table_name] does not exist in database!!" when generating code for a multi-module project using the H2 database. 
+  * When the project structure is multi-module, the project structure is as follows:
+   ````txt
+   - project-parent
+      - h2
+         - test.mv.db
+      - project-child
+         - src
+            - main
+               - java
+               - resources
+         - pom.xml(The code-generator-maven-plugin is configured here)
+      - pom.xml(The project-parent's pom.xml)
+   ````
+  * As you can see, the /h2/test.mv.db file is in the root path of the entire project
+  * The URL configured in our program is jdbc:h2:file:./h2/test;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
+  * When using the code-generator-maven-plugin, the above URL cannot be configured because the root path of the plug-in in a multi-module project is project-child and is not where the /h2/test.mv.db file is located
+  * At this point we can use the following two ways to manually specify:
+    * Use absolute path: jdbc:h2:file:C:/Source/code/gitee/quickboot/h2/test;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
+    * Use relative paths (one more layer ../ symbol): jdbc:h2:file:./../h2/test;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
+  * Note: Only multi-module projects need to be specified this way; individual projects are not affected.
 
 ## Futures
 You are welcome to suggest better ways to improve this widget.

@@ -4,15 +4,12 @@ import com.github.mengweijin.generator.entity.Parameters;
 import com.github.mengweijin.generator.entity.ProjectInfo;
 import com.github.mengweijin.generator.enums.Template;
 import com.github.mengweijin.generator.enums.TemplateType;
-import org.apache.maven.plugins.annotations.Execute;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 /**
  * @author mengweijin
  */
-@Execute(phase = LifecyclePhase.COMPILE)
 @Mojo(name = "jpa", requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
 public class JpaGeneratorMojo extends AbstractGeneratorMojo {
 
