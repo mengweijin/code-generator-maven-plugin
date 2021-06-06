@@ -3,8 +3,6 @@ package com.github.mengweijin.generator.mojo;
 import lombok.Getter;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugins.annotations.Execute;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 
 /**
@@ -12,14 +10,15 @@ import org.apache.maven.plugins.annotations.Mojo;
  * @author mengweijin
  */
 @Getter
-@Mojo(name = "Dockerfile")
-@Execute(phase = LifecyclePhase.PACKAGE)
-public class DockerfileGeneratorMojo extends AbstractDockerMojo {
+@Mojo(name = "Docker-Delete")
+public class DockerDeleteMojo extends DockerfileGeneratorMojo {
+
+    public static final String DOCKER_IMAGE_DELETE = "DockerImageDelete.bat";
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
-            this.generate();
+            this.execBash(DOCKER_IMAGE_DELETE);
         } catch (Exception e) {
             getLog().error(e);
             throw new RuntimeException(e);

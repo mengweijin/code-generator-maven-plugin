@@ -1,4 +1,9 @@
 ## CHANGELOG
+### [v1.0.6] 2021-06-06
+- Add docker build image function(On localhost docker registry.).
+- Add docker deploy container function(On localhost docker registry.).
+- Add docker delete image and container function(On localhost docker registry.).
+
 ### [v1.0.5] 2021-06-03
 - 升级 Hutool 版本从 5.6.3 到 5.6.5；
 - 升级 mybatis-plus-generator 版本从 3.5.0.1-SNAPSHOT 到 3.5.0，版本兼容性处理；

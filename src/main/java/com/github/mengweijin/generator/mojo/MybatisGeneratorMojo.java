@@ -14,7 +14,7 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
  *
  * @author mengweijin
  */
-@Mojo(name = "mybatis", requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
+@Mojo(name = "MyBatis", requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
 public class MybatisGeneratorMojo extends AbstractGeneratorMojo {
 
     @Override

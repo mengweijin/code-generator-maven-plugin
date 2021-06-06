@@ -12,14 +12,16 @@ import org.apache.maven.plugins.annotations.Mojo;
  * @author mengweijin
  */
 @Getter
-@Mojo(name = "Dockerfile")
+@Mojo(name = "Docker-Deploy")
 @Execute(phase = LifecyclePhase.PACKAGE)
-public class DockerfileGeneratorMojo extends AbstractDockerMojo {
+public class DockerDeployMojo extends DockerfileGeneratorMojo {
+
+    public static final String DOCKER_IMAGE_BUILD_RUN = "DockerImageBuildRun.bat";
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
-            this.generate();
+            this.execBash(DOCKER_IMAGE_BUILD_RUN);
         } catch (Exception e) {
             getLog().error(e);
             throw new RuntimeException(e);

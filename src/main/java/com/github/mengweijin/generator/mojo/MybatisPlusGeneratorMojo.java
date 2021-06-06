@@ -10,7 +10,7 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 /**
  * @author mengweijin
  */
-@Mojo(name = "mybatis-plus", requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
+@Mojo(name = "MyBatis-Plus", requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
 public class MybatisPlusGeneratorMojo extends AbstractGeneratorMojo {
 
     private static final String BaseMapper = "com.baomidou.mybatisplus.core.mapper.BaseMapper";

@@ -10,7 +10,7 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 /**
  * @author mengweijin
  */
-@Mojo(name = "jpa", requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
+@Mojo(name = "JPA", requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
 public class JpaGeneratorMojo extends AbstractGeneratorMojo {
 
     private static final String JpaRepository = "org.springframework.data.jpa.repository.JpaRepository";
