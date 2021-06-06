@@ -22,12 +22,15 @@ Language: [中文](README.zh.md)
 
 ## Description
 code-generator-maven-plugin is based on baomidou's mybatis-plus-generator，a Maven plugin that generates code in a Maven project。Key features：
-* code-generator:**mybatis**：Generate Controller.java, Service.java, Mapper.java, mapper.xml, Entity.java under MyBatis based on database tables;
-* code-generator:**mybatis-plus**：Generate Controller.java, Service.java, Mapper.java, mapper.xml, Entity.java under MyBatis-Plus based on database tables;
-* code-generator:**jpa**：Generate Controller.java, Service.java, Repository.java, Entity.java under JPA based on database tables;
-* code-generator:**Dockerfile**：Generate the Dockerfile file for the current project, along with the associated scripts: DockerImageBuild.bat, DockerImageBuildRun.bat, DockerImageDelete.bat
-* Theory can be extended to any background and front database table related technology: such as: vue.js.
-* The theory supports all databases that support JDBC connection: for example: DB2, DM, H2, Mariadb, MySQL, Oracle, Postgre, Sqlite, SQLServer, etc.
+- code-generator:**MyBatis**：Generate Controller.java, Service.java, Mapper.java, mapper.xml, Entity.java under MyBatis based on database tables;
+- code-generator:**MyBatis-Plus**：Generate Controller.java, Service.java, Mapper.java, mapper.xml, Entity.java under MyBatis-Plus based on database tables;
+- code-generator:**JPA**：Generate Controller.java, Service.java, Repository.java, Entity.java under JPA based on database tables;
+- code-generator:**Dockerfile**：Generate the Dockerfile file for the current project, along with the associated scripts: DockerImageBuild.bat, DockerImageBuildRun.bat, DockerImageDelete.bat
+- code-generator:**Docker-Build**：Build Docker Image based on the locally installed Docker
+- code-generator:**Docker-Deploy**：Build Docker image and deploy Docker container based on locally installed Docker
+- code-generator:**Docker-Delete**：Delete deployed Docker containers and Docker images based on the locally installed Docker
+- Theory can be extended to any background and front database table related technology: such as: vue.js.
+- The theory supports all databases that support JDBC connection: for example: DB2, DM, H2, Mariadb, MySQL, Oracle, Postgre, Sqlite, SQLServer, etc.
 
 ## how to use?
 Locate the code-generator-maven-plugin in the Intellij IDEA Maven module shown below and double-click the corresponding plug-in command.

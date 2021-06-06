@@ -22,10 +22,13 @@ Language: [English](README.md)
 
 ## 简介
 code-generator-maven-plugin 是一个基于baomidou mybatis-plus-generator实现的，在 Maven 项目中生成代码的 Maven 插件。主要包括：
-- code-generator:**mybatis**：基于数据库表生成 Mybatis 下的 Controller.java, Service.java, Mapper.java, mapper.xml, Entity.java 层CRUD代码;
-- code-generator:**mybatis-plus**：基于数据库表生成 Mybatis-plus 下的 Controller.java, Service.java, Mapper.java, mapper.xml, Entity.java 层CRUD代码;
-- code-generator:**jpa**：基于数据库表生成 Jpa 下的 Controller.java, Service.java, Repository.java, Entity.java 层CRUD代码;
+- code-generator:**MyBatis**：基于数据库表生成 Mybatis 下的 Controller.java, Service.java, Mapper.java, mapper.xml, Entity.java 层CRUD代码;
+- code-generator:**MyBatis-Plus**：基于数据库表生成 Mybatis-plus 下的 Controller.java, Service.java, Mapper.java, mapper.xml, Entity.java 层CRUD代码;
+- code-generator:**JPA**：基于数据库表生成 Jpa 下的 Controller.java, Service.java, Repository.java, Entity.java 层CRUD代码;
 - code-generator:**Dockerfile**：生成当前项目的 Dockerfile 文件，以及相关脚本：DockerImageBuild.bat, DockerImageBuildRun.bat, DockerImageDelete.bat
+- code-generator:**Docker-Build**：基于本地安装的 Docker 来构建 docker image
+- code-generator:**Docker-Deploy**：基于本地安装的 Docker 来构建 docker image 并部署 docker 容器
+- code-generator:**Docker-Delete**：基于本地安装的 Docker 来删除已经部署的 docker 容器和 docker image
 - 理论可以扩展任意前后台跟数据库表有关系的技术：如：Vue, Element-UI 代码等。
 - 理论支持所有支持JDBC连接的数据库：例如：DB2, DM, H2, Mariadb, MySQL, Oracle, Postgre, Sqlite, SQLServer
 
