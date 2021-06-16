@@ -97,7 +97,7 @@ In the standard SpringBoot project, take Intellij IDEA, a development tool, as a
 |superEntityClass|No|com.github.mengweijin.quickboot.mybatis.BaseEntity|The generated Entity class inherits the parent class.|
 |lombokModel|No|true|Whether the generated Entity is Lombok enabled. Unconfigured or true: Enable Lombok mode; Set to false: If Lombok is not enabled, the generated entity contains getter/setter/toString methods.|
 
-## FAQ
+## FAQs
 1. The database table exists, but no code file is generated, and the program does not report an error.
   * Configure database table names to be exactly the same as table names in the database.
   For example, when an H2 database creates a table with a script, the script name is written in lowercase,
