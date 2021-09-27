@@ -1,4 +1,9 @@
 ## CHANGELOG
+### [v1.0.7] 2021-09-26
+- 升级 mybatis-plus-generator 版本到 3.5.1；
+- 升级 mybatis-plus 版本到 3.4.3.4；
+- 升级 beetl 版本到 3.7.0.RELEASE；
+
 ### [v1.0.6] 2021-06-06
 - Add docker build image function(On localhost docker registry.).
 - Add docker deploy container function(On localhost docker registry.).

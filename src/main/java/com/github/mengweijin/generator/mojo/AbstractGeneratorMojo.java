@@ -2,9 +2,9 @@ package com.github.mengweijin.generator.mojo;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.JarClassLoader;
-import com.github.mengweijin.generator.CustomerAutoGenerator;
 import com.github.mengweijin.generator.entity.Parameters;
 import com.github.mengweijin.generator.entity.ProjectInfo;
+import com.github.mengweijin.generator.DefaultAutoGenerator;
 import com.github.mengweijin.generator.util.TemplateUtils;
 import lombok.Getter;
 import org.apache.maven.execution.MavenSession;
@@ -72,7 +72,7 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo {
             projectInfo.setBaseDir(this.baseDir);
             projectInfo.setSourceDir(this.sourceDir);
 
-            CustomerAutoGenerator.getInstance(projectInfo).execute();
+            new DefaultAutoGenerator(projectInfo).execute();
         } catch (Exception e) {
             getLog().error(e);
             throw new RuntimeException(e);

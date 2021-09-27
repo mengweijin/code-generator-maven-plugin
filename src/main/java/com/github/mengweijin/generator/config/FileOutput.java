@@ -3,17 +3,14 @@ package com.github.mengweijin.generator.config;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.generator.config.po.TableField;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.AbstractTemplateEngine;
-import com.github.mengweijin.generator.CustomerAutoGenerator;
-import com.github.mengweijin.generator.entity.IdField;
 import com.github.mengweijin.generator.entity.Parameters;
 import com.github.mengweijin.generator.entity.ProjectInfo;
+import com.github.mengweijin.generator.factory.TemplateEngineFactory;
 import lombok.extern.slf4j.Slf4j;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,27 +20,10 @@ import java.util.Map;
 @Slf4j
 public class FileOutput {
 
-    /**
-     *
-     * @param tableInfo Table info
-     * @param objectMap Table object map
-     * @param customerAutoGenerator CustomerAutoGenerator
-     */
-    public static void outputFile(
-                                  TableInfo tableInfo,
-                                  Map<String, Object> objectMap,
-                                  CustomerAutoGenerator customerAutoGenerator) {
-
-        ProjectInfo projectInfo = customerAutoGenerator.getProjectInfo();
-
+    public static void outputFile(TableInfo tableInfo, Map<String, Object> objectMap, ProjectInfo projectInfo, String outputDir) {
         Parameters parameters = projectInfo.getParameters();
-        enhanceObjectMap(objectMap, projectInfo.getParameters());
-
-        AbstractTemplateEngine templateEngine = customerAutoGenerator.templateEngine();
-        String outputDir = customerAutoGenerator.globalConfigBuilder().build().getOutputDir();
-        // clean directory target/code-generator
-        FileUtil.del(outputDir);
-        String outputPackage = customerAutoGenerator.packageConfigBuilder().build().getParent();
+        AbstractTemplateEngine templateEngine = TemplateEngineFactory.getTemplateEngine(parameters.getTemplateType());
+        String outputPackage = parameters.getOutputPackage();
 
         List<File> templateFileList = FileUtil.loopFiles(parameters.getTemplateLocation(),
                 file -> file.isFile() && file.getName().toLowerCase().endsWith(parameters.getTemplateType().getSuffix()));
@@ -67,15 +47,6 @@ public class FileOutput {
             log.error("Template engine writer error!", e);
             throw new RuntimeException(e);
         }
-    }
-
-    private static void enhanceObjectMap(Map<String, Object> objectMap, Parameters parameters) {
-        objectMap.remove("package");
-        objectMap.put("parameters", parameters);
-        objectMap.put("idField", getIdField((TableInfo) objectMap.get("table")));
-        objectMap.put("allFieldList", handleAllFieldList((TableInfo) objectMap.get("table")));
-
-        log.info("Beetl parameter map: {}", objectMap);
     }
 
     /**
@@ -113,26 +84,4 @@ public class FileOutput {
         return new File(path + StrUtil.DOT + packageHierarchy[packageHierarchy.length - 2]);
     }
 
-    private static IdField getIdField(TableInfo tableInfo) {
-        TableField tableField = tableInfo.getFields().stream().filter(TableField::isKeyFlag).findFirst().orElse(null);
-
-        IdField idField = new IdField();
-        if(tableField != null) {
-            idField.setColumnName(tableField.getName());
-            idField.setPropertyName(tableField.getPropertyName());
-            idField.setPropertyType(tableField.getColumnType().getType());
-        }
-        return idField;
-    }
-
-    private static List<TableField> handleAllFieldList(TableInfo tableInfo) {
-        List<TableField> fieldList = tableInfo.getFields();
-        List<TableField> commonFields = tableInfo.getCommonFields();
-
-        // 为了不影响其他地方的引用，这里必须创建一个新的集合来存放所有字段
-        List<TableField> allList = new ArrayList<>();
-        allList.addAll(fieldList);
-        allList.addAll(commonFields);
-        return allList;
-    }
 }
