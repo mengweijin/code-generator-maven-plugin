@@ -1,4 +1,8 @@
 ## CHANGELOG
+### [v1.0.8] 2021-10-01
+- 【Bug fixed】当没有配置 superEntityClass 参数时出现的 NullPointerException。
+- 【Bug fixed】生成 mybatis 的 service 类时，当没有配置 superServiceClass 参数，依然会在方法上面生成 @override 注解。
+
 ### [v1.0.7] 2021-09-26
 - 升级 mybatis-plus-generator 版本到 3.5.1；
 - 升级 mybatis-plus 版本到 3.4.3.4；

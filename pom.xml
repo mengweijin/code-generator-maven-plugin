@@ -5,11 +5,11 @@
     <groupId>com.github.mengweijin</groupId>
     <artifactId>code-generator-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
 
     <name>code-generator-maven-plugin</name>
     <description>code-generator-maven-plugin</description>
-    <url>https://github.com/mengweijin/code-generator-maven-plugin</url>
+    <url>https://gitee.com/mengweijin/code-generator-maven-plugin</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -237,14 +237,14 @@
 
     <!--开源地址-->
     <scm>
-        <connection>scm:git:git@github.com:mengweijin/code-generator-maven-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:mengweijin/code-generator-maven-plugin.git</developerConnection>
-        <url>git@github.com:mengweijin/code-generator-maven-plugin.git</url>
+        <connection>scm:git:https://gitee.com/mengweijin/code-generator-maven-plugin.git</connection>
+        <developerConnection>scm:git:https://gitee.com/mengweijin/code-generator-maven-plugin.git</developerConnection>
+        <url>https://gitee.com/mengweijin/code-generator-maven-plugin/tree/master/</url>
     </scm>
 
     <!--  Issue地址  -->
     <issueManagement>
-        <system>Github Issue</system>
-        <url>https://github.com/mengweijin/code-generator-maven-plugin/issues</url>
+        <system>Gitee Issue</system>
+        <url>https://gitee.com/mengweijin/code-generator-maven-plugin/issues</url>
     </issueManagement>
 </project>

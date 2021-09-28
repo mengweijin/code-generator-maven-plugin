@@ -125,9 +125,13 @@ public class DefaultAutoGenerator {
      * @return String[]
      */
     private String[] generateDefaultSuperEntityColumns() {
+        String superEntityClass = projectInfo.getParameters().getSuperEntityClass();
+        if(StrUtil.isBlank(superEntityClass)) {
+            return new String[]{};
+        }
         try {
             ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-            Class<?> cls = Class.forName(projectInfo.getParameters().getSuperEntityClass(), true, classLoader);
+            Class<?> cls = Class.forName(superEntityClass, true, classLoader);
             Field[] declaredFields = ClassUtil.getDeclaredFields(cls);
             return Arrays.stream(declaredFields)
                     .map(field -> StrUtil.toUnderlineCase(field.getName())).toArray(String[]::new);
