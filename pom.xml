@@ -237,9 +237,9 @@
 
     <!--开源地址-->
     <scm>
-        <connection>scm:git:https://gitee.com/mengweijin/code-generator-maven-plugin.git</connection>
-        <developerConnection>scm:git:https://gitee.com/mengweijin/code-generator-maven-plugin.git</developerConnection>
-        <url>https://gitee.com/mengweijin/code-generator-maven-plugin/tree/master/</url>
+        <connection>scm:git:git@github.com:mengweijin/code-generator-maven-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:mengweijin/code-generator-maven-plugin.git</developerConnection>
+        <url>git@github.com:mengweijin/code-generator-maven-plugin.git</url>
     </scm>
 
     <!--  Issue地址  -->
