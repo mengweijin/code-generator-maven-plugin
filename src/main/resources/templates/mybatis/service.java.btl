@@ -10,13 +10,13 @@ import ${superServiceClassPackage};
 <% } %>
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.io.Serializable;
 
 /**
  * <p>
  * ${entity} Service implement
+ * Add @Transactional(rollbackFor = Exception.class) if you need.
  * </p>
  *
  * @author ${author}
@@ -26,7 +26,6 @@ import java.io.Serializable;
 @Slf4j
 <% } %>
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class ${entity}Service <% if(isNotEmpty(superServiceClass)){ %>implements ${superServiceClass}<% } %> {
 
     /**

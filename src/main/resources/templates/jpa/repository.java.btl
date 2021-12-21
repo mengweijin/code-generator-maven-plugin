@@ -1,6 +1,6 @@
 package ${parameters.outputPackage}.repository;
 
-import ${parameters.outputPackage}.entity;
+import ${parameters.outputPackage}.entity.${entity};
 <% if(isNotEmpty(superMapperClassPackage)){ %>
 import ${superMapperClassPackage};
 <% } %>

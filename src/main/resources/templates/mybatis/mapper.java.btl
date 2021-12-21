@@ -1,6 +1,6 @@
 package ${parameters.outputPackage}.mapper;
 
-import ${parameters.outputPackage}.entity;
+import ${parameters.outputPackage}.entity.${entity};
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 import java.io.Serializable;

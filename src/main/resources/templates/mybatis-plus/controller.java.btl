@@ -1,5 +1,6 @@
 package ${parameters.outputPackage}.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 <% if(entityLombokModel){ %>
 import lombok.extern.slf4j.Slf4j;
 <% } %>

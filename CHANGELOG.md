@@ -1,4 +1,11 @@
 ## CHANGELOG
+### [v1.0.10] 2021-12-19
+- 【Bug fixed】update jpa, mybatis, mybatis-plus templates.
+- 【Bug fixed】entity 中没有导入包 superEntityClassPackage 的问题。
+
+### [v1.0.9] 2021-11-21
+- Add Comments in docker build script.
+
 ### [v1.0.8] 2021-10-01
 - 【Bug fixed】当没有配置 superEntityClass 参数时出现的 NullPointerException。
 - 【Bug fixed】生成 mybatis 的 service 类时，当没有配置 superServiceClass 参数，依然会在方法上面生成 @override 注解。

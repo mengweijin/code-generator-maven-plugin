@@ -153,6 +153,7 @@ public class DefaultAutoGenerator {
         objectMap.put("parameters", parameters);
         objectMap.put("idField", getIdField((TableInfo) objectMap.get("table")));
         objectMap.put("allFieldList", handleAllFieldList((TableInfo) objectMap.get("table")));
+        objectMap.put("superEntityClassPackage", parameters.getSuperEntityClass());
 
         log.info("Beetl parameter map: {}", objectMap);
     }
