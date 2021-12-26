@@ -86,21 +86,6 @@ public class ${entity}Controller {
 
     /**
      * <p>
-     * Get ${entity} page list by ${entity}
-     * </p>
-     * @param page page
-     * @param ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}
-     * @return IPage<${entity}>
-     */
-    @GetMapping
-    public Page<${entity}> getPage(Page<?> page, ${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "createTime");
-        Pageable pageable = PageRequest.of(pager.getCurrent(), pager.getSize(), sort);
-        return ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Repository.findAll(Example.of(${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}), pageable);
-    }
-
-    /**
-     * <p>
      * Add ${entity}
      * </p>
      * @param ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}

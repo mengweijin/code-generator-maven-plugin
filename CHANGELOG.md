@@ -1,4 +1,7 @@
 ## CHANGELOG
+### [v1.0.11] 2021-12-26
+- 【TEMPLATE UPDATE】Removed generate page search in controller.
+
 ### [v1.0.10] 2021-12-19
 - 【Bug fixed】update jpa, mybatis, mybatis-plus templates.
 - 【Bug fixed】entity 中没有导入包 superEntityClassPackage 的问题。

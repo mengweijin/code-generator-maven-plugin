@@ -69,19 +69,6 @@ public class ${entity}Controller <% if(isNotEmpty(superControllerClass)){ %>exte
 
     /**
      * <p>
-     * Get ${entity} page list by ${entity}
-     * </p>
-     * @param page page
-     * @param ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}
-     * @return IPage<${entity}>
-     */
-    @GetMapping
-    public IPage<${entity}> getPage(IPage<${entity}> page, ${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}) {
-        return ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.page(page, new QueryWrapper<>(${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}));
-    }
-
-    /**
-     * <p>
      * Add ${entity}
      * </p>
      * @param ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}
