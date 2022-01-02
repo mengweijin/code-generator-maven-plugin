@@ -1,6 +1,5 @@
 package ${parameters.outputPackage}.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 <% if(entityLombokModel){ %>
 import lombok.extern.slf4j.Slf4j;
 <% } %>
@@ -24,7 +23,6 @@ import ${superControllerClassPackage};
 <% } %>
 import ${parameters.outputPackage}.entity.${entity};
 import ${parameters.outputPackage}.service.${entity}Service;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import java.io.Serializable;
 
 /**
