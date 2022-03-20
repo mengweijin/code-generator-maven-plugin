@@ -6,6 +6,12 @@
 - 【Library update】upgrade hutool to 5.7.22.
 - 【Library update】upgrade fastjson to 1.2.79.
 - 【Library update】upgrade snakeyaml to 1.30.
+- 【Library update】upgrade velocity to 2.3.
+- 【Library update】upgrade freemarker to 2.3.31.
+- 【Library update】upgrade maven-core to 3.8.4.
+- 【Library update】upgrade maven-plugin-api to 3.8.4.
+- 【Library update】upgrade maven-plugin-annotations to 3.6.4.
+- 【Library update】upgrade lombok to 1.18.22.
 
 ### [v1.0.11] 2021-12-26
 - 【TEMPLATE UPDATE】Removed generate page search in controller.
