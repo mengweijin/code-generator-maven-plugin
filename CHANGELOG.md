@@ -1,4 +1,12 @@
 ## CHANGELOG
+### [v1.0.12] 2022-03-20
+- 【Library update】upgrade mybatis-plus to 3.5.1.
+- 【Library update】upgrade mybatis-plus-generator to 3.5.2.
+- 【Library update】upgrade beetl to 3.10.0.RELEASE.
+- 【Library update】upgrade hutool to 5.7.22.
+- 【Library update】upgrade fastjson to 1.2.79.
+- 【Library update】upgrade snakeyaml to 1.30.
+
 ### [v1.0.11] 2021-12-26
 - 【TEMPLATE UPDATE】Removed generate page search in controller.
 
