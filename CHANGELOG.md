@@ -1,4 +1,9 @@
 ## CHANGELOG
+### [v1.0.13] 2022-05-14
+- 【TEMPLATE】Add @JsonSerialize(using = ToStringSerializer.class) on entity class template wheh field is Long type.
+- 【TEMPLATE】Add line break in <sql id="Base_Column_List"> of mapper.xml.
+- 【TEMPLATE】Add page query method in mybatis-plus controller.
+
 ### [v1.0.12] 2022-03-20
 - 【Library update】upgrade mybatis-plus to 3.5.1.
 - 【Library update】upgrade mybatis-plus-generator to 3.5.2.
