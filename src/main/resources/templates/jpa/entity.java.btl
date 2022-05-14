@@ -1,5 +1,9 @@
 package ${parameters.outputPackage}.entity;
 
+<% if(hasLongField){ %>
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+<% } %>
 <% if(isNotEmpty(superEntityClassPackage)){ %>
 import ${superEntityClassPackage};
 <% }else{ %>
@@ -55,6 +59,9 @@ public class ${entity} implements Serializable {
     @Id
     <% } else { %>
     @Column(name= "${field.name}")
+    <% } %>
+    <% if('Long' == field.propertyType){ %>
+    @JsonSerialize(using = ToStringSerializer.class)
     <% } %>
     private ${field.propertyType} ${field.propertyName};
 <% } %>

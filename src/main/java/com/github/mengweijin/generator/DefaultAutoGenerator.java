@@ -154,8 +154,13 @@ public class DefaultAutoGenerator {
         objectMap.put("idField", getIdField((TableInfo) objectMap.get("table")));
         objectMap.put("allFieldList", handleAllFieldList((TableInfo) objectMap.get("table")));
         objectMap.put("superEntityClassPackage", parameters.getSuperEntityClass());
+        objectMap.put("hasLongField", hasLongField((TableInfo) objectMap.get("table")));
 
         log.info("Beetl parameter map: {}", objectMap);
+    }
+
+    private static boolean hasLongField(TableInfo tableInfo) {
+        return tableInfo.getFields().stream().anyMatch(item -> "Long".equalsIgnoreCase(item.getPropertyType()));
     }
 
     private static IdField getIdField(TableInfo tableInfo) {

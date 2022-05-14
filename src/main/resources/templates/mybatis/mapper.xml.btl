@@ -31,10 +31,14 @@
 <% if(baseColumnList){ %>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-<% for(field in table.commonFields){ %>
+<% for(field in allFieldList){ %>
+    <% if(!fieldLP.last){ %>
         ${field.name},
+    <% } %>
+    <% if(fieldLP.last){ %>
+        ${field.name}
+    <% } %>
 <% } %>
-        ${table.fieldNames}
     </sql>
 
     <!-- 查询条件 -->
