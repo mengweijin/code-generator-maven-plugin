@@ -1,4 +1,7 @@
 ## CHANGELOG
+### [v1.0.14] 2022-05-22
+- 【TEMPLATE】Change template id property type from java.io.Serializable to real type.
+
 ### [v1.0.13] 2022-05-14
 - 【TEMPLATE】Add @JsonSerialize(using = ToStringSerializer.class) on entity class template wheh field is Long type.
 - 【TEMPLATE】Add line break in <sql id="Base_Column_List"> of mapper.xml.
