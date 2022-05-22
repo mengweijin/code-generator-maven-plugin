@@ -26,7 +26,6 @@ import ${superControllerClassPackage};
 <% } %>
 import ${parameters.outputPackage}.entity.${entity};
 import ${parameters.outputPackage}.service.${entity}Service;
-import java.io.Serializable;
 
 /**
  * <p>
@@ -77,7 +76,7 @@ public class ${entity}Controller <% if(isNotEmpty(superControllerClass)){ %>exte
      * @return ${entity}
      */
     @GetMapping("/{id}")
-    public ${entity} getById(@PathVariable("id") Serializable id) {
+    public ${entity} getById(@PathVariable("id") ${idField.propertyType} id) {
         return ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.getById(id);
     }
 
@@ -110,7 +109,7 @@ public class ${entity}Controller <% if(isNotEmpty(superControllerClass)){ %>exte
      * @param id id
      */
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Serializable id) {
+    public void delete(@PathVariable("id") ${idField.propertyType} id) {
         ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.removeById(id);
     }
 

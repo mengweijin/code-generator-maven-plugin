@@ -3,7 +3,6 @@ package ${parameters.outputPackage}.mapper;
 import ${parameters.outputPackage}.entity.${entity};
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
-import java.io.Serializable;
 
 /**
  * <p>
@@ -22,7 +21,7 @@ public interface ${entity}Mapper {
      * @param id id
      * @return ${entity}
      */
-    ${entity} getById(Serializable id);
+    ${entity} getById(${idField.propertyType} id);
 
     /**
      * select ${entity} List
@@ -54,7 +53,7 @@ public interface ${entity}Mapper {
      * @param id id
      * @return int
      */
-    int removeById(Serializable id);
+    int removeById(${idField.propertyType} id);
 
     /**
      * delete batch by ids
@@ -62,7 +61,7 @@ public interface ${entity}Mapper {
      * @param ids ids
      * @return int
      */
-    int deleteBatchByIds(Serializable[] ids);
+    int deleteBatchByIds(${idField.propertyType}[] ids);
 
 }
 

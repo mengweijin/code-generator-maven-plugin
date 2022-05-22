@@ -25,7 +25,6 @@ import ${parameters.outputPackage}.entity.${entity};
 import ${parameters.outputPackage}.repository.${entity}Repository;
 import ${parameters.outputPackage}.service.${entity}Service;
 import java.util.Optional;
-import java.io.Serializable;
 
 /**
  * <p>
@@ -75,7 +74,7 @@ public class ${entity}Controller {
      * @return ${entity}
      */
     @GetMapping("/{id}")
-    public Optional<${entity}> getById(@PathVariable("id") Serializable id) {
+    public Optional<${entity}> getById(@PathVariable("id") ${idField.propertyType} id) {
         return ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Repository.findById(id);
     }
 
@@ -108,7 +107,7 @@ public class ${entity}Controller {
      * @param id id
      */
     @DeleteMapping("/{id}")
-    public void delete(@Valid @PathVariable("id") Serializable id) {
+    public void delete(@Valid @PathVariable("id") ${idField.propertyType} id) {
         ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Repository.deleteById(id);
     }
 
