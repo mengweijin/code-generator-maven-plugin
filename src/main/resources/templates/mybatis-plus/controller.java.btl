@@ -64,7 +64,7 @@ public class ${entity}Controller <% if(isNotEmpty(superControllerClass)){ %>exte
      * @return PageDTO<${entity}>
      */
     @GetMapping("/page")
-    public PageDTO<${entity}> page(PageDTO<${entity}> page, @Valid @RequestParam ${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}) {
+    public PageDTO<${entity}> page(PageDTO<${entity}> page, @Valid @RequestParam(required = false) ${entity} ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}) {
         return ${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}Service.page(page, new QueryWrapper<>(${@cn.hutool.core.util.StrUtil.lowerFirst(entity)}));
     }
 

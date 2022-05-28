@@ -1,4 +1,7 @@
 ## CHANGELOG
+### [v1.0.15] 2022-05-28
+- 【TEMPLATE】Change mybatis plus controller template.
+
 ### [v1.0.14] 2022-05-22
 - 【TEMPLATE】Change template id property type from java.io.Serializable to real type.
 
