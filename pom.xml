@@ -24,7 +24,7 @@
         <hutool.version>5.8.2</hutool.version>
         <oshi-core.version>5.7.4</oshi-core.version>
         <snakeyaml.version>1.30</snakeyaml.version>
-        <fastjson.vsersion>1.2.79</fastjson.vsersion>
+        <fastjson.vsersion>1.2.83</fastjson.vsersion>
 
         <maven-core.version>3.8.4</maven-core.version>
         <maven-plugin-api.version>3.8.4</maven-plugin-api.version>
