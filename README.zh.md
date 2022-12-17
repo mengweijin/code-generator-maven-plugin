@@ -32,6 +32,9 @@ code-generator-maven-plugin 是一个基于baomidou mybatis-plus-generator实现
 - 理论可以扩展任意前后台跟数据库表有关系的技术：如：Vue, Element-UI 代码等。
 - 理论支持所有支持JDBC连接的数据库：例如：DB2, DM, H2, Mariadb, MySQL, Oracle, Postgre, Sqlite, SQLServer
 
+### SpringBoot 代码生成器
+[generator-spring-boot-starter](https://gitee.com/mengweijin/vitality)
+
 ## 如何使用?
 在Intellij IDEA 的 Maven 模块中找到下面图中的 code-generator 插件，然后双击对应的插件命令即可。
 

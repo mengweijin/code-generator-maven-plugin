@@ -32,6 +32,9 @@ code-generator-maven-plugin is based on baomidou's mybatis-plus-generator，a Ma
 - Theory can be extended to any background and front database table related technology: such as: vue.js.
 - The theory supports all databases that support JDBC connection: for example: DB2, DM, H2, Mariadb, MySQL, Oracle, Postgre, Sqlite, SQLServer, etc.
 
+### SpringBoot Code Generator
+[generator-spring-boot-starter](https://gitee.com/mengweijin/vitality)
+
 ## how to use?
 Locate the code-generator-maven-plugin in the Intellij IDEA Maven module shown below and double-click the corresponding plug-in command.
 
