@@ -1,4 +1,7 @@
 ## CHANGELOG
+### [v1.0.16] 2023-03-12
+- 【TEMPLATE】Add Customer template plugin.
+- 
 ### [v1.0.15] 2022-05-28
 - 【TEMPLATE】Change mybatis plus controller template.
 
