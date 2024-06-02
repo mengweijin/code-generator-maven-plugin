@@ -1,8 +1,8 @@
 package com.github.mengweijin.generator.mojo;
 
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.RuntimeUtil;
-import cn.hutool.core.util.StrUtil;
+import org.dromara.hutool.core.io.file.FileUtil;
+import org.dromara.hutool.core.text.StrUtil;
+import org.dromara.hutool.core.util.RuntimeUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

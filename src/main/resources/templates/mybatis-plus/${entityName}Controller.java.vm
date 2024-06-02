@@ -1,0 +1,99 @@
+package ${package};
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.mengweijin.vitality.framework.domain.R;
+import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+
+/**
+ * <p>
+ * $!{table.comment} ${entityName} Controller
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Slf4j
+@Validated
+@RestController
+@RequestMapping("${requestMapping}")
+public class ${entityName}Controller {
+
+    @Autowired
+    private ${entityName}Service ${entityPropertyName}Service;
+
+    /**
+     * <p>
+     * Get ${entityName} page by ${entityName}
+     * </p>
+     * @param page page
+     * @param entity ${entityPropertyName}
+     * @return Page<${entityName}>
+     */
+    @GetMapping("/page")
+    public Page<${entityName}> page(Page<${entityName}> page, ${entityName} entity) {
+        return ${entityPropertyName}Service.page(page, new QueryWrapper<>(entity));
+    }
+
+    /**
+     * <p>
+     * Get ${entityName} by id
+     * </p>
+     * @param id id
+     * @return ${entityName}
+     */
+    @GetMapping("/{id}")
+    public ${entityName} getById(@PathVariable("id") Long id) {
+        return ${entityPropertyName}Service.getById(id);
+    }
+
+    /**
+     * <p>
+     * Add ${entityName}
+     * </p>
+     * @param entity ${entityName}
+     */
+    @PostMapping
+    public R<Void> add(@Valid @RequestBody ${entityName} entity) {
+        boolean bool = ${entityPropertyName}Service.save(entity);
+        return R.bool(bool);
+    }
+
+    /**
+     * <p>
+     * Update ${entityName}
+     * </p>
+     * @param entity ${entityName}
+     */
+    @PutMapping
+    public R<Void> update(@Valid @RequestBody ${entityName} entity) {
+        boolean bool = ${entityPropertyName}Service.updateById(entity);
+        return R.bool(bool);
+    }
+
+    /**
+     * <p>
+     * Delete ${entityName} by id(s), Multiple ids can be separated by commas ",".
+     * </p>
+     * @param ids id
+     */
+    @DeleteMapping("/{ids}")
+    public R<Void> delete(@PathVariable("ids") Long[] ids) {
+        int i = vtlUserService.getBaseMapper().deleteBatchIds(Arrays.asList(ids));
+        return R.ajax(i);
+    }
+
+}
+
