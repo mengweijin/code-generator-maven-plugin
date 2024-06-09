@@ -21,7 +21,7 @@
     <!-- 通用查询结果列 -->
     <sql id="BaseColumnList">
 #foreach($field in ${allFields})
-        ${field.columnName}#if($foreach.hasNext),#end
+        ${field.name}#if($foreach.hasNext),#end
 #end
     </sql>
 
@@ -29,8 +29,8 @@
     <sql id="WhereCondition">
         <where>
 #foreach($field in ${allFields})
-            <if test="${field.propertyName} != null #if(${field.columnType}=="STRING")and ${field.propertyName} != ''#end">
-                and ${field.name} = #{${field.propertyName}}
+            <if test="${field.propertyName} != null#if(${field.columnType}=="STRING") and ${field.propertyName} != ''#end">
+                AND ${field.name} = #{${field.propertyName}}
             </if>
 #end
         </where>

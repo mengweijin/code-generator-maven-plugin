@@ -17,12 +17,12 @@ import org.apache.ibatis.annotations.Param;
 public interface ${entityName}Mapper extends BaseMapper<${entityName}> {
 
     /**
-     * 自定义分页查询
+     * Custom paging query
      * @param page page
-     * @param entity {@link ${entityName}}
+     * @param ${entityPropertyName} {@link ${entityName}}
      * @return IPage
      */
-    IPage<${entityName}> page(IPage<${entityName}> page, @Param("p") ${entityName} entity);
+    IPage<${entityName}> page(IPage<${entityName}> page, @Param("p") ${entityName} ${entityPropertyName});
 
 }
 

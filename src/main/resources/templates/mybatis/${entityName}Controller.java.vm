@@ -1,11 +1,11 @@
 package ${package};
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.mengweijin.vitality.framework.domain.R;
 import jakarta.validation.Valid;
+import java.util.Arrays;
+import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,25 +26,24 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @since ${date}
  */
 @Slf4j
+@AllArgsConstructor
 @Validated
 @RestController
 @RequestMapping("${requestMapping}")
 public class ${entityName}Controller {
 
-    @Autowired
     private ${entityName}Service ${entityPropertyName}Service;
 
     /**
      * <p>
-     * Get ${entityName} page by ${entityName}
+     * Get ${entityName} list by ${entityName}
      * </p>
-     * @param page page
-     * @param entity ${entityPropertyName}
-     * @return Page<${entityName}>
+     * @param ${entityPropertyName} {@link ${entityName}}
+     * @return List<${entityName}>
      */
-    @GetMapping("/page")
-    public Page<${entityName}> page(Page<${entityName}> page, ${entityName} entity) {
-        return ${entityPropertyName}Service.page(page, new QueryWrapper<>(entity));
+    @GetMapping("/list")
+    public List<${entityName}> list(${entityName} ${entityPropertyName}) {
+        return ${entityPropertyName}Service.list(${entityPropertyName});
     }
 
     /**
@@ -55,7 +54,7 @@ public class ${entityName}Controller {
      * @return ${entityName}
      */
     @GetMapping("/{id}")
-    public ${entityName} getById(@PathVariable("id") Long id) {
+    public ${entityName} getById(@PathVariable("id") ${idField.columnType.type} id) {
         return ${entityPropertyName}Service.getById(id);
     }
 
@@ -63,24 +62,24 @@ public class ${entityName}Controller {
      * <p>
      * Add ${entityName}
      * </p>
-     * @param entity ${entityName}
+     * @param ${entityPropertyName} {@link ${entityName}}
      */
     @PostMapping
-    public R<Void> add(@Valid @RequestBody ${entityName} entity) {
-        boolean bool = ${entityPropertyName}Service.save(entity);
-        return R.bool(bool);
+    public R<Void> add(@Valid @RequestBody ${entityName} ${entityPropertyName}) {
+        int i = ${entityPropertyName}Service.save(${entityPropertyName});
+        return R.ajax(i);
     }
 
     /**
      * <p>
      * Update ${entityName}
      * </p>
-     * @param entity ${entityName}
+     * @param ${entityPropertyName} {@link ${entityName}}
      */
     @PutMapping
-    public R<Void> update(@Valid @RequestBody ${entityName} entity) {
-        boolean bool = ${entityPropertyName}Service.updateById(entity);
-        return R.bool(bool);
+    public R<Void> update(@Valid @RequestBody ${entityName} ${entityPropertyName}) {
+        int i = ${entityPropertyName}Service.updateById(${entityPropertyName});
+        return R.ajax(i);
     }
 
     /**
@@ -90,8 +89,8 @@ public class ${entityName}Controller {
      * @param ids id
      */
     @DeleteMapping("/{ids}")
-    public R<Void> delete(@PathVariable("ids") Long[] ids) {
-        int i = vtlUserService.getBaseMapper().deleteBatchIds(Arrays.asList(ids));
+    public R<Void> delete(@PathVariable("ids") ${idField.columnType.type}[] ids) {
+        int i = ${entityPropertyName}Service.deleteBatchIds(Arrays.asList(ids));
         return R.ajax(i);
     }
 

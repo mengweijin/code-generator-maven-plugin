@@ -1,0 +1,17 @@
+package ${package};
+
+import org.springframework.stereotype.Repository;
+
+/**
+ * <p>
+ * $!{table.comment} ${entityName} Repository
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Repository
+public interface ${entityName}Repository {
+
+}
+

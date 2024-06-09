@@ -47,6 +47,7 @@ public interface ITemplateEngine {
         objectMap.put("baseEntityName", StrUtil.subAfter(config.getBaseEntity(), ".", true));
         objectMap.put("baseEntityColumns", baseEntityColumns);
         objectMap.put("table", tableInfo);
+        objectMap.put("idField", GeneratorUtils.getIdField(tableInfo));
         objectMap.put("entityName", entityName);
         objectMap.put("entityPropertyName", StrUtil.lowerFirst(entityName));
         objectMap.put("entityFields", entityFields);

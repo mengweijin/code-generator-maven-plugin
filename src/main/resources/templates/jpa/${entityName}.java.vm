@@ -1,7 +1,5 @@
 package ${package};
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -10,6 +8,10 @@ import ${baseEntity};
 #else
 import java.io.Serializable;
 #end
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * <p>
@@ -26,7 +28,8 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 #end
 @Accessors(chain = true)
-@TableName("${table.name}")
+@Entity
+@Table(name = "${table.name}")
 #if("$!{baseEntityName}" != "")
 public class ${entityName} extends ${baseEntityName} {
 #else
@@ -36,24 +39,15 @@ public class ${entityName} implements Serializable {
 #end
 #foreach($field in ${entityFields})
 
-#if(${field.keyFlag})
-#set($keyPropertyName=${field.propertyName})
-#end
 #if("$!field.comment" != "")
     /**
     * ${field.comment}
     */
 #end
 #if(${field.keyFlag})
-    @TableId("${field.annotationColumnName}")
-#end
-## 乐观锁注解
-#if(${field.versionField})
-    @Version
-#end
-## 逻辑删除注解
-#if(${field.logicDeleteField})
-    @TableLogic
+    @Id
+#else
+    @Column(name= "${field.name}")
 #end
     private ${field.propertyType} ${field.propertyName};
 #end

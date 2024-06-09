@@ -21,6 +21,7 @@ import java.util.logging.Logger;
  */
 @Getter
 public class DriverShim implements Driver {
+
     private Driver driver;
 
     DriverShim(Driver driver) {

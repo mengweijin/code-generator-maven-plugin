@@ -1,0 +1,85 @@
+package ${package};
+
+import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * <p>
+ * $!{table.comment} ${entityName} Service
+ *  Add @Transactional(rollbackFor = Exception.class) if you need.
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Slf4j
+@AllArgsConstructor
+@Service
+public class ${entityName}Service {
+
+    private ${entityName}Mapper ${entityPropertyName}Mapper;
+
+    /**
+     * <p>
+     * Select ${entityName} by id
+     * </p>
+     * @param id id
+     */
+    public ${entityName} getById(${idField.columnType.type} id) {
+        return ${entityPropertyName}Mapper.getById(id);
+    }
+
+    /**
+     * <p>
+     * Select List<${entityName}>
+     * </p>
+     * @param ${entityPropertyName} {@link ${entityName}}
+     */
+    public List<${entityName}> list(${entityName} ${entityPropertyName}) {
+        return ${entityPropertyName}Mapper.selectList(${entityPropertyName});
+    }
+
+    /**
+     * <p>
+     * Add ${entityName}
+     * </p>
+     * @param ${entityPropertyName} {@link ${entityName}}
+     */
+    public int save(${entityName} ${entityPropertyName}) {
+        return ${entityPropertyName}Mapper.save(${entityPropertyName});
+    }
+
+    /**
+     * <p>
+     * Update ${entityName}
+     * </p>
+     * @param ${entityPropertyName} {@link ${entityName}}
+     */
+    public int updateById(${entityName} ${entityPropertyName}) {
+        return ${entityPropertyName}Mapper.updateById(${entityPropertyName});
+    }
+
+    /**
+     * <p>
+     * Delete ${entityName} by id
+     * </p>
+     * @param id id
+     */
+    public int deleteById(${idField.columnType.type} id) {
+        return ${entityPropertyName}Mapper.deleteById(id);
+    }
+
+    /**
+     * <p>
+     * Delete ${entityName} batch by ids
+     * </p>
+     * @param ids id
+     */
+    public int deleteBatchIds(List<${idField.columnType.type}> ids) {
+        return ${entityPropertyName}Mapper.deleteBatchIds(ids);
+    }
+}
+

@@ -15,7 +15,7 @@ public class Config {
 
     private String author = SystemUtil.get("user.name", false);
 
-    private String outputDir = "target/code-generator";
+    private String outputDir = "/target/code-generator";
 
     private String templateDir;
 

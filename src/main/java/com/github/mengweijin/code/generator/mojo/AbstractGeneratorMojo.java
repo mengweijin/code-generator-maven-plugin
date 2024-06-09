@@ -106,7 +106,7 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo {
             }
             String[] tables = GeneratorUtils.trimItems(tableNames.split("[,，]"));
 
-            System.out.println("请输入包模块名称（可以为空，直接按 Enter 键继续），然后按 Enter 键继续：");
+            System.out.println("请输入包模块名称（可以为空），按 Enter 键继续：");
             String moduleName = sc.nextLine();
             if(StrUtil.isNotBlank(moduleName)) {
                 config.setModuleName(StrUtil.trim(moduleName.toLowerCase()));

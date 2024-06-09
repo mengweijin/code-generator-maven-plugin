@@ -81,6 +81,10 @@ public class GeneratorUtils {
         return tableInfo.getFields().stream().filter(tableField -> !baseEntityColumns.contains(tableField.getColumnName().toUpperCase())).collect(Collectors.toList());
     }
 
+    public static TableField getIdField(TableInfo tableInfo) {
+        return tableInfo.getFields().stream().filter(TableField::isKeyFlag).findFirst().orElse(null);
+    }
+
     public static String renderString(String content, Map<String, Object> map){
         Set<Map.Entry<String, Object>> sets = map.entrySet();
         for(Map.Entry<String, Object> entry : sets) {
@@ -91,4 +95,5 @@ public class GeneratorUtils {
         }
         return content;
     }
+
 }

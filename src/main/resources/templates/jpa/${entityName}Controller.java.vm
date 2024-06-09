@@ -1,0 +1,81 @@
+package ${package};
+
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+import java.util.Optional;
+
+/**
+ * <p>
+ * $!{table.comment} Controller
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Slf4j
+@Validated
+@RestController
+@RequestMapping("${requestMapping}")
+public class ${entityName}Controller {
+
+    private ${entityName}Service ${entityPropertyName}Service;
+
+    private ${entityName}Repository ${entityPropertyName}Repository;
+
+    /**
+     * <p>
+     * Get ${entityName} by id
+     * </p>
+     * @param id id
+     * @return ${entityName}
+     */
+    @GetMapping("/{id}")
+    public Optional<${entityName}> getById(@PathVariable("id") ${idField.columnType.type} id) {
+        return ${entityPropertyName}Repository.findById(id);
+    }
+
+    /**
+     * <p>
+     * Add ${entityName}
+     * </p>
+     * @param ${entityPropertyName} {@link ${entityName}}
+     */
+    @PostMapping
+    public void add(@Valid @RequestBody ${entityName} ${entityPropertyName}) {
+        ${entityPropertyName}Repository.save(${entityPropertyName});
+    }
+
+    /**
+     * <p>
+     * Update ${entityName}
+     * </p>
+     * @param ${entityPropertyName} {@link ${entityName}}
+     */
+    @PutMapping
+    public void update(@Valid @RequestBody ${entityName} ${entityPropertyName}) {
+        ${entityPropertyName}Repository.save(${entityPropertyName});
+    }
+
+    /**
+     * <p>
+     * Delete ${entityName} by id
+     * </p>
+     * @param id id
+     */
+    @DeleteMapping("/{id}")
+    public void delete(@Valid @PathVariable("id") ${idField.columnType.type} id) {
+        ${entityPropertyName}Repository.deleteById(id);
+    }
+
+}

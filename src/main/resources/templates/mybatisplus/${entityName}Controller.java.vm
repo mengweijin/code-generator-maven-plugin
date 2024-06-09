@@ -1,0 +1,100 @@
+package ${package};
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.mengweijin.vitality.framework.domain.R;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+
+/**
+ * <p>
+ * $!{table.comment} ${entityName} Controller
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Slf4j
+@AllArgsConstructor
+@Validated
+@RestController
+@RequestMapping("${requestMapping}")
+public class ${entityName}Controller {
+
+    private ${entityName}Service ${entityPropertyName}Service;
+
+    /**
+     * <p>
+     * Get ${entityName} page by ${entityName}
+     * </p>
+     * @param page page
+     * @param ${entityPropertyName} {@link ${entityName}}
+     * @return Page<${entityName}>
+     */
+    @GetMapping("/page")
+    public Page<${entityName}> page(Page<${entityName}> page, ${entityName} ${entityPropertyName}) {
+        return ${entityPropertyName}Service.page(page, new QueryWrapper<>(${entityPropertyName}));
+    }
+
+    /**
+     * <p>
+     * Get ${entityName} by id
+     * </p>
+     * @param id id
+     * @return ${entityName}
+     */
+    @GetMapping("/{id}")
+    public ${entityName} getById(@PathVariable("id") ${idField.columnType.type} id) {
+        return ${entityPropertyName}Service.getById(id);
+    }
+
+    /**
+     * <p>
+     * Add ${entityName}
+     * </p>
+     * @param ${entityPropertyName} {@link ${entityName}}
+     */
+    @PostMapping
+    public R<Void> add(@Valid @RequestBody ${entityName} ${entityPropertyName}) {
+        boolean bool = ${entityPropertyName}Service.save(${entityPropertyName});
+        return R.bool(bool);
+    }
+
+    /**
+     * <p>
+     * Update ${entityName}
+     * </p>
+     * @param ${entityPropertyName} {@link ${entityName}}
+     */
+    @PutMapping
+    public R<Void> update(@Valid @RequestBody ${entityName} ${entityPropertyName}) {
+        boolean bool = ${entityPropertyName}Service.updateById(${entityPropertyName});
+        return R.bool(bool);
+    }
+
+    /**
+     * <p>
+     * Delete ${entityName} by id(s), Multiple ids can be separated by commas ",".
+     * </p>
+     * @param ids id
+     */
+    @DeleteMapping("/{ids}")
+    public R<Void> delete(@PathVariable("ids") ${idField.columnType.type}[] ids) {
+        int i = ${entityPropertyName}Service.getBaseMapper().deleteBatchIds(Arrays.asList(ids));
+        return R.ajax(i);
+    }
+
+}
+

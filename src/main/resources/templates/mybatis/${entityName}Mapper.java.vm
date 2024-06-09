@@ -1,0 +1,67 @@
+package ${package};
+
+import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+/**
+ * <p>
+ * $!{table.comment} ${entityName} Mapper
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Mapper
+public interface ${entityName}Mapper {
+
+    /**
+     * select ${entityName} by id
+     *
+     * @param id id
+     * @return ${entityName}
+     */
+    ${entityName} getById(${idField.columnType.type} id);
+
+    /**
+     * select ${entityName} List
+     *
+     * @param ${entityPropertyName} {@link ${entityName}}
+     * @return ${entityName}
+     */
+    List<${entityName}> selectList(${entityName} ${entityPropertyName});
+
+    /**
+     * insert ${entityName}
+     *
+     * @param ${entityPropertyName} {@link ${entityName}}
+     * @return int
+     */
+    int save(${entityName} ${entityPropertyName});
+
+    /**
+     * update ${entityName}
+     *
+     * @param ${entityPropertyName} {@link ${entityName}}
+     * @return int
+     */
+    int updateById(${entityName} ${entityPropertyName});
+
+    /**
+     * delete ${entityName} by id
+     *
+     * @param id id
+     * @return int
+     */
+    int deleteById(${idField.columnType.type} id);
+
+    /**
+     * delete batch by ids
+     *
+     * @param ids ids
+     * @return int
+     */
+    int deleteBatchIds(List<${idField.columnType.type}> ids);
+
+}
+

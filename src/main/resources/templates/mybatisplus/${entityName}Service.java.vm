@@ -20,13 +20,13 @@ import org.springframework.stereotype.Service;
 public class ${entityName}Service extends ServiceImpl<${entityName}Mapper, ${entityName}> {
 
     /**
-     * Custom paging queries
+     * Custom paging query
      * @param page page
-     * @param entity {@link ${entityName}}
+     * @param ${entityPropertyName} {@link ${entityName}}
      * @return IPage
      */
-    public IPage<${entityName}> page(IPage<${entityName}> page, ${entityName} entity){
-        return this.getBaseMapper().page(page, entity);
+    public IPage<${entityName}> page(IPage<${entityName}> page, ${entityName} ${entityPropertyName}){
+        return this.getBaseMapper().page(page, ${entityPropertyName});
     }
 }
 

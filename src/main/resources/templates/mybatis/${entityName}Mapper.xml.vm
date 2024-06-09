@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${package}.${entityName}Mapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="${package}.${entityName}">
+## id
+#foreach($field in ${allFields})
+    #if(${field.keyFlag})
+        <id column="${field.name}" property="${field.propertyName}" />
+    #end
+#end
+##生成其他字段
+#foreach($field in ${allFields})
+    #if(!${field.keyFlag})
+        <result column="${field.name}" property="${field.propertyName}" />
+    #end
+#end
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+#foreach($field in ${allFields})
+        ${field.columnName}#if($foreach.hasNext),#end
+#end
+    </sql>
+
+    <!-- 通用查询条件 -->
+    <sql id="WhereCondition">
+        <where>
+#foreach($field in ${allFields})
+            <if test="${field.propertyName} != null #if(${field.columnType}=="STRING")and ${field.propertyName} != ''#end">
+                AND ${field.name} = #{${field.propertyName}}
+            </if>
+#end
+        </where>
+    </sql>
+
+    <select id="getById" parameterType="java.io.Serializable" resultMap="BaseResultMap">
+        SELECT <include refid="BaseColumnList"/> FROM ${table.name} WHERE ${idField.name} = #{${idField.propertyName}}
+    </select>
+
+    <select id="selectList" parameterType="${package}.${entityName}" resultMap="BaseResultMap">
+        SELECT <include refid="BaseColumnList"/> FROM ${table.name} <include refid="WhereCondition"/>
+    </select>
+
+    <insert id="save" parameterType="${package}.${entityName}">
+        insert into ${table.name} (
+            #foreach($field in ${allFields})
+            <if test="${field.propertyName} != null #if(${field.columnType}=="STRING")and ${field.propertyName} != ''#end">
+                ${field.name}#if($foreach.hasNext),#end
+            </if>
+            #end
+        ) VALUES (
+            #foreach($field in ${allFields})
+            <if test="${field.propertyName} != null #if(${field.columnType}=="STRING")and ${field.propertyName} != ''#end">
+                ${field.propertyName}#if($foreach.hasNext),#end
+            </if>
+            #end
+        )
+    </insert>
+
+    <update id="updateById" parameterType="${package}.${entityName}">
+        UPDATE ${table.name}
+        <set>
+            #foreach($field in ${allFields})
+            <if test="${field.propertyName} != null #if(${field.columnType}=="STRING")and ${field.propertyName} != ''#end">
+                ${field.name} = #{${field.propertyName}}#if($foreach.hasNext),#end
+            </if>
+            #end
+        </set>
+        <where>
+            ${idField.name} = #{${idField.propertyName}}
+        </where>
+    </update>
+
+    <delete id="deleteById" parameterType="java.io.Serializable">
+        DELETE FROM ${table.name} WHERE ${idField.name} = #{${idField.propertyName}}
+    </delete>
+
+    <delete id="deleteBatchIds" parameterType="java.io.Serializable">
+        DELETE FROM ${table.name} WHERE ${idField.columnName} IN
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
