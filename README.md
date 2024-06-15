@@ -1,6 +1,6 @@
 # code-generator-maven-plugin
 
-Language: [中文](README.zh.md)
+Language: [English](README.md)
 
 <p align="center">	
 	<a target="_blank" href="https://search.maven.org/search?q=g:%22com.github.mengweijin%22%20AND%20a:%22code-generator-maven-plugin%22">
@@ -20,124 +20,81 @@ Language: [中文](README.zh.md)
 	</a>
 </p>
 
-## Description
-code-generator-maven-plugin is based on baomidou's mybatis-plus-generator，a Maven plugin that generates code in a Maven project。Key features：
-- code-generator:**MyBatis**：Generate Controller.java, Service.java, Mapper.java, mapper.xml, Entity.java under MyBatis based on database tables;
-- code-generator:**MyBatis-Plus**：Generate Controller.java, Service.java, Mapper.java, mapper.xml, Entity.java under MyBatis-Plus based on database tables;
-- code-generator:**JPA**：Generate Controller.java, Service.java, Repository.java, Entity.java under JPA based on database tables;
-- code-generator:**Customer**：Generate CRUD code based on database tables and specify custom template locations;
-- code-generator:**Dockerfile**：Generate the Dockerfile file for the current project, along with the associated scripts: DockerImageBuild.bat, DockerImageBuildRun.bat, DockerImageDelete.bat
-- code-generator:**Docker-Build**：Build Docker Image based on the locally installed Docker
-- code-generator:**Docker-Deploy**：Build Docker image and deploy Docker container based on locally installed Docker
-- code-generator:**Docker-Delete**：Delete deployed Docker containers and Docker images based on the locally installed Docker
-- Theory can be extended to any background and front database table related technology: such as: vue.js.
-- The theory supports all databases that support JDBC connection: for example: DB2, DM, H2, Mariadb, MySQL, Oracle, Postgre, Sqlite, SQLServer, etc.
+## 简介
+code-generator-maven-plugin 在 Maven 项目中生成代码的 Maven 插件。主要包括：
+- code-generator:**code**：基于数据库表，自定义 velocity 代码模板，生成 CRUD 或前端代码;
+- code-generator:**mybatis**：基于数据库表，使用插件默认 MyBatis 模板生成 CRUD 代码;
+- code-generator:**mybatis-plus**：基于数据库表，使用插件默认 MyBatis-Plus 模板生成 CRUD 代码;
+- code-generator:**jpa**：基于数据库表，使用插件默认 JPA 模板生成 CRUD 代码;
+- code-generator:**script**：生成脚本。包括：Dockerfile, app.sh, app.bat 等脚本。
 
-### SpringBoot Code Generator
-[generator-spring-boot-starter](https://gitee.com/mengweijin/vitality)
+备注：
+- code-generator:**code** 插件理论可以生成任意前后台跟数据库表有关系的代码：如：Vue, Element-UI 代码等。
+- 理论支持所有支持JDBC连接的数据库：例如：DB2, DM, H2, Mariadb, MySQL, Oracle, Postgre, Sqlite, SQLServer
 
-## how to use?
-Locate the code-generator-maven-plugin in the Intellij IDEA Maven module shown below and double-click the corresponding plug-in command.
+## 如何使用?
+
+在标准 SpringBoot 项目，以开发工具 Intellij IDEA 为例：在 Maven 中引入 code-generator-maven-plugin 插件
+~~~~xml
+<plugin>
+   <groupId>com.github.mengweijin</groupId>
+   <artifactId>code-generator-maven-plugin</artifactId>
+   <version>Latest Version</version>
+</plugin>
+~~~~ 
+
+在Intellij IDEA 的 Maven 模块中找到下面图中的 code-generator 插件，然后双击对应的插件命令即可。
+
+code-generator:**code** 插件需要在 maven 运行窗口根据提示输入数据库表名称，模块名称。并且执行前需要指定用户自定义模板的位置，参数参考文章下面的表格。
 
 ![image](docs/image/code-generator-maven-plugin.png)
 
-**Notes**
-* The default Java code generation is under the target/code-generator/ directory of the current project.
-* The default package path is com.github.mengweijin.
-* The default Dockerfile and other files are generated in the target directory of the current project.
-* The Customer plug-in must be configured with templateLocation parameters. By default, the templateType parameter is beetl.
+代码生成位置：在当前工程的 target/code-generator/ 目录下。
 
-## Generating Java Code
-### 1. General Use
-In the standard SpringBoot project, take Intellij IDEA, a development tool, as an example: the code-generator-maven-plugin was introduced into Maven
+至此，初步使用完成。
+
+## 全部配置使用（以 code-generator:code 插件为例）
 ~~~~xml
 <plugin>
-    <groupId>com.github.mengweijin</groupId>
-    <artifactId>code-generator-maven-plugin</artifactId>
-    <version>Latest Version</version>
-    <configuration>
-        <parameters>
-            <tables>sys_user, sys_role</tables>
-            <superEntityClass>com.github.mengweijin.quickboot.mybatis.BaseEntity</superEntityClass>
-        </parameters>
-    </configuration>
+   <groupId>com.github.mengweijin</groupId>
+   <artifactId>code-generator-maven-plugin</artifactId>
+   <version>Latest Version</version>
+   <configuration>
+      <config>
+         <baseEntity>com.github.mengweijin.vitality.framework.mybatis.entity.BaseEntity</baseEntity>
+         <templateDir>generator/vue</templateDir> 
+         <tablePrefix>vtl_</tablePrefix>
+         <author>mengweijin</author>
+         <dbInfo>
+            <username>root</username>
+            <password>root</password>
+            <url>jdbc:mysql://localhost:3306/vitality</url>
+         </dbInfo>
+      </config>
+   </configuration>
 </plugin>
 ~~~~
 
-### 2. Full Configuration to Use
-~~~~xml
-<plugin>
-    <groupId>com.github.mengweijin</groupId>
-    <artifactId>code-generator-maven-plugin</artifactId>
-    <version>Latest Version</version>
-    <configuration>
-        <parameters>
-            <outputPackage>com.github.mengweijin</outputPackage>
-            <author>mengweijin</author>
-            <dbInfo>
-                <username>root</username>
-                <password>root</password>
-                <url>jdbc:mysql://192.168.83.128:3306/mwj_cms</url>
-            </dbInfo>
-            <tables>sys_user, rlt_user_role</tables>
-            <tablePrefix>sys_, rlt_</tablePrefix>
-            <superEntityClass>com.github.mengweijin.BaseEntity</superEntityClass>
-            <lombokModel>true</lombokModel>
-            <!-- The following are the additional parameters for the Customer plug-in -->
-            <templateLocation>D:\code-generator-maven-plugin\src\main\resources\templates</templateLocation>
-            <templateType>beetl</templateType>
-        </parameters>
-    </configuration>
-</plugin>
-~~~~
+## 参数配置说明
+|            参数名称 | 是否必填 | 配置示例                                                               | 说明                                                                                                                      |
+|----------------:|:-----|:-------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------|
+|          author | 否    | mengweijin                                                         | 类注释上面@author的值。 默认：取当前电脑的用户名                                                                                            |
+| dbInfo.username | 否    | root                                                               | 数据库连接信息。如果是标准的SpringBoot工程，可以省略，会自动读取application.yml/yaml/properties文件。                                                 |
+| dbInfo.password | 否    | root                                                               | 同上                                                                                                                      |
+|      dbInfo.url | 否    | jdbc:mysql://192.168.83.128:3306/test                              | 同上。                                                                                                                     |
+|     tablePrefix | 否    | sys_, rlt_                                                         | 要生成代码对应的数据库表名称的前缀。配置后，生成的entity类就不会带有表前缀了。如：User, UserRole。如果不配置，生成的entity类就会带有表前缀。如：SysUser, RltUserRole。多个表名称前缀使用逗号分隔 |
+|      baseEntity | 否    | com.github.mengweijin.vitality.framework.mybatis.entity.BaseEntity | 生成的entity类继承的父类                                                                                                         |
+|     templateDir | 是    | generator/vue                                                      | 仅 code-generator:code 插件参数，用户自定义模板相对于项目根目录的位置。                                                                          |
 
-## Parameter configuration instructions
-|   Parameter Name | Mandatory | Sample                                                      | Description                                                                                                                                                                                                                                                                                                                                                    |
-|-----------------:|:----------|:------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|    outputPackage | No        | com.github.mengweijin                                       | The package path to code generation. The default: com.github.mengweijin                                                                                                                                                                                                                                                                                        |
-|           author | No        | mengweijin                                                  | Class annotation with the @Author value above. Default: take the user name of the current computer                                                                                                                                                                                                                                                             |
-|  dbInfo.username | No        | root                                                        | The database connection information. If it is a standard SpringBoot project, can be omitted, automatically read application.yml/yaml/properties file.                                                                                                                                                                                                          |
-|  dbInfo.password | No        | root                                                        | Same as above                                                                                                                                                                                                                                                                                                                                                  |
-|       dbInfo.url | No        | jdbc:mysql://192.168.83.128:3306/test                       | Same as above                                                                                                                                                                                                                                                                                                                                                  |
-|           tables | No        | sys_user, rlt_user_role                                     | Same as above                                                                                                                                                                                                                                                                                                                                                  |
-|      tablePrefix | No        | sys_, rlt_                                                  | The prefix of the database table name corresponding to the code to be generated. Once configured, the generated Entity class will no longer have a table prefix. For example, User, UserRole. If not configured, the generated Entity class is prefixed with a table. For example, SysUser, RltUserRole. Multiple table name prefixes are separated by commas. |
-| superEntityClass | No        | com.github.mengweijin.quickboot.mybatis.BaseEntity          | The generated Entity class inherits the parent class.                                                                                                                                                                                                                                                                                                          |
-|      lombokModel | No        | true                                                        | Whether the generated Entity is Lombok enabled. Unconfigured or true: Enable Lombok mode; Set to false: If Lombok is not enabled, the generated entity contains getter/setter/toString methods.                                                                                                                                                                |
-| templateLocation | Yes       | D:\code-generator-maven-plugin\src\main\resources\templates | Customer plug-in parameter only, user-defined template location. If the user wants to write the template file that generates the code himself, he can use the Customer plug-in and configure the absolute path to the folder where the template file resides. For example, it can be placed in the resources/generator/ directory of your project code.        |
-|     templateType | No        | beetl                                                       | Customer plug-in parameter only, user-defined template type. Optional values are "beetl, velocity, freemarker" and the corresponding template suffix is "btl, vm, ftl". This parameter is optional. If this parameter is not configured, the default value is beetl, which means that the template suffix should end with .btl.                                |
+## 常见问题
+1. H2 数据库中表存在，但没有生成代码。
+   * H2数据库默认区分表名称大小写，要么保证输入的表名称大小写完全一致，要么第一次创建 H2 数据库表时，jdbc url 参数增加 IGNORECASE=TRUE 参数。
+2. 如何自定义生成代码的模板？
+    * 使用 code-generator:code 插件，并在 pom.xml 中配置 templateDir 参数。
+    * 模板文件参考 code-generator-maven-plugin 工程下，src\main\resources\templates 目录下的 velocity 模板 *.vm 文件。
+    * 模板参数参考 ITemplateEngine.java 类中的 getObjectMap 方法或其他 .vm 中用到的参数。
 
-## FAQs
-1. The database table exists, but no code file is generated, and the program does not report an error.
-  * Configure database table names to be exactly the same as table names in the database.
-  For example, when an H2 database creates a table with a script, the script name is written in lowercase,
-  but the generated table name may be in upper case, so you need to configure the upper case table name here.
-2. The problem "Table \[table_name] does not exist in database!!" when generating code for a multi-module project using the H2 database. 
-  * When the project structure is multi-module, the project structure is as follows:
-   ````txt
-   - project-parent
-      - h2
-         - test.mv.db
-      - project-child
-         - src
-            - main
-               - java
-               - resources
-         - pom.xml(The code-generator-maven-plugin is configured here)
-      - pom.xml(The project-parent's pom.xml)
-   ````
-  * As you can see, the /h2/test.mv.db file is in the root path of the entire project
-  * The URL configured in our program is jdbc:h2:file:./h2/test;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
-  * When using the code-generator-maven-plugin, the above URL cannot be configured because the root path of the plug-in in a multi-module project is project-child and is not where the /h2/test.mv.db file is located
-  * At this point we can use the following two ways to manually specify:
-    * Use absolute path: jdbc:h2:file:C:/Source/code/gitee/quickboot/h2/test;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
-    * Use relative paths (one more layer ../ symbol): jdbc:h2:file:./../h2/test;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
-  * Note: Only multi-module projects need to be specified this way; individual projects are not affected.
-3. How do I customize templates?
-    * See the template file in the src\main\resources\templates directory in the code-generator-maven-plugin project. You can also change the suffix to anything else. See the templateType parameter description.
-    * Note the naming of the template file. The first paragraph is part of the name of the generated file. The second paragraph is the suffix of the generated file; The third part is the suffix of template type;
-    * Template content parameter. Refer to the existing template file content, you can use in the end there are basic inside, can be used directly.
-
-## Futures
-You are welcome to suggest better ways to improve this widget.
-## Contributions
-You are welcome to contribute code, let more people more time to accompany the people you care about.
+## 期望
+欢迎您提出更好的意见，帮助完善这个小插件.
+## 贡献
+欢迎您贡献代码，让更多的人多点时间陪陪关心的人。

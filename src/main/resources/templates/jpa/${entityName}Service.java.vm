@@ -1,0 +1,25 @@
+package ${package};
+
+import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+/**
+ * <p>
+ * $!{table.comment} ${entityName} Service
+ *  Add @Transactional(rollbackFor = Exception.class) if you need.
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Slf4j
+@AllArgsConstructor
+@Service
+public class ${entityName}Service {
+
+    private ${entityName}Repository ${entityPropertyName}Repository;
+
+}
+
