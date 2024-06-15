@@ -80,7 +80,9 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo {
 
             this.initConfigTemplateDir();
 
-            config.setPackages(project.getGroupId());
+            if(StrUtil.isBlank(config.getPackages())) {
+                config.setPackages(project.getGroupId());
+            }
 
             String baseOutputDirPath = baseDir.getAbsolutePath() + "/target/code-generator/";
             String packagePath = StrUtil.replace(config.getPackages(), ".", "/");

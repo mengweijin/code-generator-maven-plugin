@@ -26,7 +26,7 @@ import java.util.Map;
  */
 @Slf4j
 @Getter
-public abstract class VelocityTemplateEngine implements ITemplateEngine {
+public abstract class AbstractVelocityTemplateEngine implements ITemplateEngine {
 
     private VelocityEngine velocityEngine;
 

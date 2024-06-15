@@ -1,0 +1,16 @@
+[Unit]
+Description=app-server
+After=syslog.target network.target
+
+[Service]
+Type=forking
+WorkingDirectory=/opt/app/
+ExecStart=/bin/bash ./app.sh start
+ExecStop=/bin/bash ./app.sh stop
+ExecReload=/bin/bash ./app.sh restart
+PrivateTmp=true
+TimeoutStartSec=0
+KillMode=none
+
+[Install]
+WantedBy=multi-user.target

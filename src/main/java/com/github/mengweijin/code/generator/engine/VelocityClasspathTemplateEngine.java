@@ -19,7 +19,7 @@ import java.util.jar.JarFile;
 /**
  * @author mengweijin
  */
-public class VelocityClasspathTemplateEngine extends VelocityTemplateEngine {
+public class VelocityClasspathTemplateEngine extends AbstractVelocityTemplateEngine {
 
     /**
      * classpath

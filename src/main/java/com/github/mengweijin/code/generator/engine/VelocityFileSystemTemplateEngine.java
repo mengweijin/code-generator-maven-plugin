@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 /**
  * @author mengweijin
  */
-public class VelocityFileSystemTemplateEngine extends VelocityTemplateEngine {
+public class VelocityFileSystemTemplateEngine extends AbstractVelocityTemplateEngine {
 
     /**
      * file system
