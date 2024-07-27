@@ -90,7 +90,8 @@ public abstract class AbstractVelocityTemplateEngine implements ITemplateEngine 
         try (FileOutputStream fos = new FileOutputStream(outputFile);
              OutputStreamWriter ow = new OutputStreamWriter(fos, ConstVal.UTF8);
              BufferedWriter writer = new BufferedWriter(ow)) {
-            template.merge(new VelocityContext(objectMap), writer);
+            VelocityContext context = new VelocityContext(objectMap);
+            template.merge(context, writer);
             log.info("生成成功！模板：{}；文件：{}", templatePath, outputFile);
         } catch (IOException e) {
             log.error("生成失败！模板:{};  文件:{}", templatePath, outputFile);

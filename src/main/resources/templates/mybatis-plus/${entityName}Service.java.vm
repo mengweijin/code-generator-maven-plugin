@@ -1,10 +1,12 @@
 package ${package};
 
-import lombok.extern.slf4j.Slf4j;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
+import org.dromara.hutool.core.text.StrUtil;
 import org.springframework.stereotype.Service;
+import java.util.Objects;
 
 /**
  * <p>
@@ -26,7 +28,16 @@ public class ${entityName}Service extends ServiceImpl<${entityName}Mapper, ${ent
      * @return IPage
      */
     public IPage<${entityName}> page(IPage<${entityName}> page, ${entityName} ${entityPropertyName}){
-        return this.getBaseMapper().page(page, ${entityPropertyName});
+        LambdaQueryWrapper<Notice> query = new LambdaQueryWrapper<>();
+        query
+        #foreach($field in ${allFields})
+            #set($upperFirstName = $hutoolStrUtil.upperFirst(${field.propertyName}))
+            #if(${field.columnType}=="STRING")
+                .eq(StrUtil.isNotBlank(${entityPropertyName}.get$upperFirstName()), ${entityName}::get$upperFirstName, ${entityPropertyName}.get$upperFirstName())#if(!$foreach.hasNext);#end
+            #else
+                .eq(!Objects.isNull(${entityPropertyName}.get$upperFirstName()), ${entityName}::get$upperFirstName, ${entityPropertyName}.get$upperFirstName())#if(!$foreach.hasNext);#end
+            #end
+        #end
+        return this.page(page, query);
     }
 }
-

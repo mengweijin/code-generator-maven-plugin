@@ -34,7 +34,7 @@ public interface ITemplateEngine {
         List<String> commonColumns = GeneratorUtils.resolveCommonColumns(commonFields);
 
         String requestMapping = "/" + StrUtil.toSymbolCase(entityName, '-');
-        if(StrUtil.isNotBlank(config.getModuleName())) {
+        if (StrUtil.isNotBlank(config.getModuleName())) {
             requestMapping = StrUtil.addPrefixIfNot(config.getModuleName(), "/") + requestMapping;
         }
 
@@ -57,6 +57,8 @@ public interface ITemplateEngine {
         objectMap.put("commonColumns", commonColumns);
         objectMap.put("allColumns", CollUtil.addAll(new ArrayList<>(entityColumns), new ArrayList<>(commonColumns)));
         objectMap.put("requestMapping", requestMapping);
+
+        objectMap.put("hutoolStrUtil", org.dromara.hutool.core.text.StrUtil.class);
         return objectMap;
     }
 
