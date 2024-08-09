@@ -2,7 +2,8 @@ package ${package};
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.github.mengweijin.vitality.framework.domain.R;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.mengweijin.framework.domain.R;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +45,7 @@ public class ${entityName}Controller {
      * @return Page<${entityName}>
      */
     @GetMapping("/page")
-    public IPage<${entityName}> page(IPage<${entityName}> page, ${entityName} ${entityPropertyName}) {
+    public IPage<${entityName}> page(Page<${entityName}> page, ${entityName} ${entityPropertyName}) {
         return ${entityPropertyName}Service.page(page, ${entityPropertyName});
     }
 

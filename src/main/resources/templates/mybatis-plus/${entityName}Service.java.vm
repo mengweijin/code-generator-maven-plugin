@@ -28,7 +28,7 @@ public class ${entityName}Service extends ServiceImpl<${entityName}Mapper, ${ent
      * @return IPage
      */
     public IPage<${entityName}> page(IPage<${entityName}> page, ${entityName} ${entityPropertyName}){
-        LambdaQueryWrapper<Notice> query = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<${entityName}> query = new LambdaQueryWrapper<>();
         query
         #foreach($field in ${allFields})
             #set($upperFirstName = $hutoolStrUtil.upperFirst(${field.propertyName}))
