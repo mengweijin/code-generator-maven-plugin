@@ -39,6 +39,7 @@ public interface ITemplateEngine {
         }
 
         Map<String, Object> objectMap = new HashMap<>();
+        objectMap.put("module", config.getModuleName());
         objectMap.put("package", config.getPackages());
         objectMap.put("author", config.getAuthor());
         objectMap.put("date", DateUtil.format(LocalDateTime.now(), DatePattern.NORM_DATE_PATTERN));
@@ -61,6 +62,5 @@ public interface ITemplateEngine {
         objectMap.put("hutoolStrUtil", org.dromara.hutool.core.text.StrUtil.class);
         return objectMap;
     }
-
 
 }
