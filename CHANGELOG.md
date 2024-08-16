@@ -1,7 +1,13 @@
 ## CHANGELOG
+### [v1.1.1-SNAPSHOT] 
+- 【ENHANCEMENT】update template and add module args.
+
+### [v1.1.0] 2024-06-16
+- 【REFACTOR】Refactor all code and templates.
+
 ### [v1.0.16] 2023-03-12
 - 【TEMPLATE】Add Customer template plugin.
-- 
+
 ### [v1.0.15] 2022-05-28
 - 【TEMPLATE】Change mybatis plus controller template.
 
