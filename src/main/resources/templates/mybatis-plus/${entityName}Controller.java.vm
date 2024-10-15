@@ -105,8 +105,8 @@ public class ${entityName}Controller {
      */
     @DeleteMapping("/{ids}")
     public R<Void> delete(@PathVariable("ids") ${idField.columnType.type}[] ids) {
-        int i = ${entityPropertyName}Service.getBaseMapper().deleteByIds(Arrays.asList(ids));
-        return R.ajax(i);
+        boolean bool = ${entityPropertyName}Service.removeBatchByIds(Arrays.asList(ids));
+        return R.ajax(bool);
     }
 
 }
