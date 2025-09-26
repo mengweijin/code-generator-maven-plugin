@@ -3,7 +3,7 @@
 Language: [English](README.md)
 
 <p align="center">	
-	<a target="_blank" href="https://search.maven.org/search?q=g:%22com.github.mengweijin%22%20AND%20a:%22code-generator-maven-plugin%22">
+	<a target="_blank" href="https://central.sonatype.com/artifact/com.github.mengweijin/code-generator-maven-plugin/versions">
 		<img src="https://img.shields.io/maven-central/v/com.github.mengweijin/code-generator-maven-plugin" />
 	</a>
 	<a target="_blank" href="https://github.com/mengweijin/code-generator-maven-plugin/blob/master/LICENSE">
