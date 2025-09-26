@@ -2,7 +2,6 @@ package ${package};
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +23,6 @@ import java.util.Optional;
  * @since ${date}
  */
 @Slf4j
-@Validated
 @RestController
 @RequestMapping("${requestMapping}")
 public class ${entityName}Controller {
@@ -52,7 +50,7 @@ public class ${entityName}Controller {
      * @param ${entityPropertyName} {@link ${entityName}}
      */
     @PostMapping
-    public void add(@Valid @RequestBody ${entityName} ${entityPropertyName}) {
+    public void add(@Validated @RequestBody ${entityName} ${entityPropertyName}) {
         ${entityPropertyName}Repository.save(${entityPropertyName});
     }
 
@@ -63,7 +61,7 @@ public class ${entityName}Controller {
      * @param ${entityPropertyName} {@link ${entityName}}
      */
     @PutMapping
-    public void update(@Valid @RequestBody ${entityName} ${entityPropertyName}) {
+    public void update(@Validated @RequestBody ${entityName} ${entityPropertyName}) {
         ${entityPropertyName}Repository.save(${entityPropertyName});
     }
 

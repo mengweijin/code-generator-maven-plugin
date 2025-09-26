@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.mengweijin.framework.domain.R;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -29,7 +28,6 @@ import java.util.List;
  */
 @Slf4j
 @AllArgsConstructor
-@Validated
 @RestController
 @RequestMapping("${requestMapping}")
 public class ${entityName}Controller {
@@ -80,7 +78,7 @@ public class ${entityName}Controller {
      * @param ${entityPropertyName} {@link ${entityName}}
      */
     @PostMapping
-    public R<Void> add(@Valid @RequestBody ${entityName} ${entityPropertyName}) {
+    public R<Void> add(@Validated @RequestBody ${entityName} ${entityPropertyName}) {
         boolean bool = ${entityPropertyName}Service.save(${entityPropertyName});
         return R.ajax(bool);
     }
@@ -92,7 +90,7 @@ public class ${entityName}Controller {
      * @param ${entityPropertyName} {@link ${entityName}}
      */
     @PutMapping
-    public R<Void> update(@Valid @RequestBody ${entityName} ${entityPropertyName}) {
+    public R<Void> update(@Validated @RequestBody ${entityName} ${entityPropertyName}) {
         boolean bool = ${entityPropertyName}Service.updateById(${entityPropertyName});
         return R.ajax(bool);
     }
@@ -105,8 +103,8 @@ public class ${entityName}Controller {
      */
     @DeleteMapping("/{ids}")
     public R<Void> delete(@PathVariable("ids") ${idField.columnType.type}[] ids) {
-        int i = ${entityPropertyName}Service.getBaseMapper().deleteByIds(Arrays.asList(ids));
-        return R.ajax(i);
+        boolean bool = ${entityPropertyName}Service.removeBatchByIds(Arrays.asList(ids));
+        return R.ajax(bool);
     }
 
 }
