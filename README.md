@@ -2,7 +2,13 @@
 
 Language: [English](README.md)
 
-<p align="center">	
+<p align="center">
+    <a target="_blank" href="https://github.com/mengweijin/code-generator-maven-plugin">
+		<img src="https://img.shields.io/badge/repo-Github-purple" />
+	</a>
+    <a target="_blank" href="https://gitee.com/mengweijin/code-generator-maven-plugin">
+		<img src="https://img.shields.io/badge/repo-码云 Gitee-purple" />
+	</a>
 	<a target="_blank" href="https://central.sonatype.com/artifact/com.github.mengweijin/code-generator-maven-plugin/versions">
 		<img src="https://img.shields.io/maven-central/v/com.github.mengweijin/code-generator-maven-plugin" />
 	</a>
